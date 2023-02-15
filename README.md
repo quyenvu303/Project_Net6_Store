@@ -1,0 +1,1 @@
+# Net6_Store
