@@ -1,0 +1,93 @@
+<p-panel header="Danh sách sản phẩm">
+    <!--  Filter Search-->
+    <div class="grid">
+        <div class="col-4">
+            <button pButton type="button" (click)="showAddModal()" icon="fa fa-plus-square-o" iconPos="left"
+                label=""></button>
+            <button pButton type="button" (click)="showOpenModal()" *ngIf="selectedItems.length == 1"
+                class="ml-1 p-button-help" icon="fa fa-eye" iconPos="left" label=""></button>
+            <button pButton type="button" (click)="showEditModal()" *ngIf="selectedItems.length == 1"
+                class="ml-1 p-button-help" icon="fas fa-edit" iconPos="left" label=""></button>
+            <button pButton type="button" (click)="deleteItems()" *ngIf="selectedItems.length > 0"
+                class="ml-1 p-button-danger" icon="fa fa-trash" iconPos="left" label=""></button>
+        </div>
+        <div class="col-1"></div>
+        <div class="col-7">
+            <div class="formgroup-inline">
+                <div class="field">
+                    <label for="txt-keyword" class="p-sr-only">Từ khóa</label>
+                    <input id="txt-keyword" [(ngModel)]="keyword" pInputText type="text" placeholder="Gõ từ khóa"
+                        [style]="{ width: '100%' }" />
+                </div>
+                <div class="field">
+                    <p-dropdown [options]="ListWarehouse" [(ngModel)]="WarehouseGuid" placeholder="Chọn kho hàng"
+                        [showClear]="true" autoWidth="false" [style]="{ width: '100%' }" skipValidation></p-dropdown>
+                </div>
+                <div class="field">
+                    <p-dropdown [options]="ListCategory" [(ngModel)]="categoryId" placeholder="Loại sản phẩm"
+                        [showClear]="true" autoWidth="false" [style]="{ width: '100%' }" skipValidation></p-dropdown>
+                </div>
+                <div class="field">
+                    <p-dropdown [options]="ListStatus" [(ngModel)]="status" placeholder="xuất bán"
+                        [showClear]="true" autoWidth="false" [style]="{ width: '100%' }" skipValidation></p-dropdown>
+                </div>
+                <button type="button" pButton (click)="loadData()" icon="fa fa-search" iconPos="left"
+                    label="Tìm"></button>
+            </div>
+        </div>
+    </div>
+    <!--  Table-->
+    <p-table #pnl [value]="items" [(selection)]="selectedItems" selectionMode="multiple">
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 10px">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th pSortableColumn="productId">Mã sản phẩm <p-sortIcon field="productId"></p-sortIcon></th>
+                <th pSortableColumn="productName">Tên sản phẩm <p-sortIcon field="productName"></p-sortIcon></th>
+                <th pSortableColumn="categoryName">Loại sản phẩm <p-sortIcon field="categoryName"></p-sortIcon></th>
+                <th pSortableColumn="warehouseName">Kho <p-sortIcon field="warehouseName"></p-sortIcon></th>
+                <th pSortableColumn="origin">Xuất xứ <p-sortIcon field="origin"></p-sortIcon></th>
+                <th pSortableColumn="quantity">Số lượng<p-sortIcon field="quantity"></p-sortIcon></th>
+                <th pSortableColumn="price">Giá <p-sortIcon field="price"></p-sortIcon></th>
+                <th pSortableColumn="priceSale">Giá Sale <p-sortIcon field="priceSale"></p-sortIcon></th>
+                <th >Trạng thái </th>
+                <th >Tình trạng </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-row>
+            <tr>
+                <td style="width: 10px">
+                    <span class="ui-column-title"></span>
+                    <p-tableCheckbox [value]="row"></p-tableCheckbox>
+                </td>
+                <td style="width: 10%;">{{row.productId}}</td>
+                <td style="width: 15%;">{{row.productName}}</td>
+                <td style="width: 10%;">{{row.categoryName}}</td>
+                <td style="width: 10%;">{{row.warehouseName}}</td>
+                <td style="width: 10%;">{{row.origin}}</td>
+                <td style="width: 7%;">{{row.quantity}}</td>
+                <td style="width: 10%;">{{row.price}}</td>
+                <td style="width: 10%;">{{row.priceSale}}</td>
+                <td style="width: 10%;">
+                    <p-badge *ngIf="row.isActive == 1" severity="success" value="Sử dụng"></p-badge>
+                    <p-badge *ngIf="row.isActive == 0" severity="danger" value="Không sử dụng"></p-badge>
+                </td>
+                <td style="width: 10%;">
+                    <p-badge *ngIf="row.status == 1" severity="success" value="Xuất bán"></p-badge>
+                    <p-badge *ngIf="row.status == 0" severity="danger" value="Không bán"></p-badge>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div style="text-align: left;">Tổng bản ghi: {{ totalCount | number}}</div>
+        </ng-template>
+    </p-table>
+    <!--paginator-->
+    <p-paginator [rows]="maxResultCount" [totalRecords]="totalCount"
+        [rowsPerPageOptions]="[10,20,30,50,100,200]"></p-paginator>
+    <!--Blocked UI-->
+    <p-blockUI [blocked]="blockedPanel" [target]="pnl">
+        <p-progressSpinner></p-progressSpinner>
+    </p-blockUI>
+</p-panel>

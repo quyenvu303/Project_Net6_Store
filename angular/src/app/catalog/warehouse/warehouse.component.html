@@ -1,0 +1,68 @@
+<p-panel header="Danh sách kho hàng">
+    <!--  Filter Search-->
+    <div class="grid">
+        <div class="col-4">
+            <button pButton type="button" (click)="showAddModal()" icon="fa fa-plus-square-o" iconPos="left"
+                label=""></button>
+            <button pButton type="button" (click)="showOpenModal()" *ngIf="selectedItems.length == 1"
+                class="ml-1 p-button-help" icon="fa fa-eye" iconPos="left" label=""></button>
+            <button pButton type="button" (click)="showEditModal()" *ngIf="selectedItems.length == 1"
+                class="ml-1 p-button-help" icon="fas fa-edit" iconPos="left" label=""></button>
+            <button pButton type="button" (click)="deleteItems()" *ngIf="selectedItems.length > 0"
+                class="ml-1 p-button-danger" icon="fa fa-trash" iconPos="left" label=""></button>
+        </div>
+        <div class="col-4"></div>
+        <div class="col-4">
+            <div class="formgroup-inline">
+                <div class="field">
+                    <label for="txt-keyword" class="p-sr-only">Từ khóa</label>
+                    <input id="txt-keyword" [(ngModel)]="keyword" pInputText type="text" placeholder="Gõ từ khóa"
+                        [style]="{ width: '100%' }" />
+                </div>
+                <div class="field">
+                    <p-dropdown [options]="ListStatus" [(ngModel)]="status" placeholder="sử dụng"
+                        [showClear]="true" autoWidth="false" [style]="{ width: '100%' }" skipValidation></p-dropdown>
+                </div>
+                <button type="button" pButton (click)="loadData()" icon="fa fa-search" iconPos="left"
+                    label="Tìm"></button>
+            </div>
+        </div>
+    </div>
+    <!--  Table-->
+    <p-table #pnl [value]="items" [(selection)]="selectedItems" selectionMode="multiple">
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 10px">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th pSortableColumn="warehouseId">Mã kho <p-sortIcon field="warehouseId"></p-sortIcon></th>
+                <th pSortableColumn="title">Tên kho <p-sortIcon field="title"></p-sortIcon></th>
+                <th>Trạng thái</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-row>
+            <tr>
+                <td style="width: 10px">
+                    <span class="ui-column-title"></span>
+                    <p-tableCheckbox [value]="row"></p-tableCheckbox>
+                </td>
+                <td style="width: 20%;">{{row.warehouseId}}</td>
+                <td style="width: 60%;">{{row.title}}</td>
+                <td style="width: 40%;">
+                    <p-badge *ngIf="row.status == 1" severity="success" value="Sử dụng"></p-badge>
+                    <p-badge *ngIf="row.status == 0" severity="danger" value="Không sử dụng"></p-badge>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div style="text-align: left;">Tổng bản ghi: {{ totalCount | number}}</div>
+        </ng-template>
+    </p-table>
+    <!--paginator-->
+    <p-paginator [rows]="maxResultCount" [totalRecords]="totalCount"
+        [rowsPerPageOptions]="[10,20,30,50,100,200]"></p-paginator>
+    <!--Blocked UI-->
+    <p-blockUI [blocked]="blockedPanel" [target]="pnl">
+        <p-progressSpinner></p-progressSpinner>
+    </p-blockUI>
+</p-panel>

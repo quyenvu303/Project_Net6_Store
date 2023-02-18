@@ -1,0 +1,24 @@
+<form [formGroup]="form" skipValidation >
+    <p-panel #pnl>
+        <!--  Form-->
+        <div class="formgrid grid">
+            <div class="field col-11">
+                <label for="title" class="block">Tiêu đề<span class="required">*</span></label>
+                <input formControlName="title" class="w-full" pInputText type="text" />
+            </div>
+            <div class="field-checkbox col-1">
+                <p-checkbox formControlName="status" binary="true" id="status"></p-checkbox>
+                <label for="status">Sử dụng</label>
+            </div>
+            <div class="field col-12">
+                <label for="description" class="block">Mô tả</label>
+                <p-editor formControlName="description" [style]="{'height':'250px'}" skipValidation></p-editor>
+            </div>
+        </div>
+        
+        <!--Blocked UI-->
+        <p-blockUI [blocked]="blockedPanel" [target]="pnl">
+            <p-progressSpinner></p-progressSpinner>
+        </p-blockUI>
+    </p-panel>
+</form>

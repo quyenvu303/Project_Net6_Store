@@ -1,0 +1,121 @@
+﻿using AutoMapper.Internal.Mappers;
+using Store.Categories;
+using Store.Products;
+using Store.Warehouses;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Reflection.Metadata;
+using System.Text;
+using System.Threading.Tasks;
+using Volo.Abp;
+using Volo.Abp.Application.Dtos;
+using Volo.Abp.Application.Services;
+using Volo.Abp.Domain.Repositories;
+using Volo.Abp.Uow;
+using static System.Net.Mime.MediaTypeNames;
+
+namespace Store.Admin.Products
+{
+    public class ProductsAppService : CrudAppService<
+        Product,
+        ProductDto,
+        Guid,
+        PagedResultRequestDto,
+        CreateUpdateProductDto,
+        CreateUpdateProductDto>, IProductAppService
+    {
+        private readonly ProductManager _productManager;
+        private readonly IRepository<Category> _categoryRepository;
+        private readonly IRepository<Warehouse> _warehouseRepository;
+        public ProductsAppService(
+            IRepository<Product, Guid> repository,
+            IRepository<Category> categoryRepository,
+            IRepository<Warehouse> warehouseRepository,
+        ProductManager productManager)
+            : base(repository)
+        {
+            _productManager = productManager;
+            _categoryRepository = categoryRepository;
+            _warehouseRepository = warehouseRepository;
+        }
+
+        public override async Task<ProductDto> CreateAsync(CreateUpdateProductDto input)
+        {
+            var product = await _productManager.CreateAsync(input.ProductId, input.ProductName, input.Slug, input.CategoryId,
+                input.WarehouseGuid, input.Origin, input.Image, input.Quantity, input.Price, input.PriceSale,
+                input.Parameter, input.Description, input.IsActive, input.Status);
+            var result = await Repository.InsertAsync(product);
+            return ObjectMapper.Map<Product, ProductDto>(result);
+        }
+        public override async Task<ProductDto> UpdateAsync(Guid id, CreateUpdateProductDto input)
+        {
+            var pro = await Repository.GetAsync(id);
+            if (pro == null)
+            {
+                throw new BusinessException(StoreDomainErrorCodes.ProductIsNotExists);
+            }
+            pro.ProductId = input.ProductId;
+            pro.ProductName = input.ProductName;
+            pro.Slug = input.Slug;
+            if (pro.CategoryId != input.CategoryId)
+            {
+                pro.CategoryId = input.CategoryId;
+                var category = await _categoryRepository.GetAsync(x=>x.Id == input.CategoryId);
+                pro.CategoryName = category.CategoryName;
+            }
+            if (pro.WarehouseGuid != input.WarehouseGuid)
+            {
+                pro.WarehouseGuid = input.WarehouseGuid;
+                var Wa = await _warehouseRepository.GetAsync(x => x.Id == input.WarehouseGuid);
+                pro.WarehouseName = Wa.Title;
+            }
+            pro.Origin = input.Origin;
+            pro.Image = input.Image;
+            pro.Quantity = input.Quantity;
+            pro.Price = input.Price;
+            pro.PriceSale = input.PriceSale;
+            pro.Parameter = input.Parameter;
+            pro.Description = input.Description;
+            pro.IsActive = input.IsActive;
+            pro.Status = input.Status;
+
+            await Repository.UpdateAsync(pro);
+
+            return ObjectMapper.Map<Product, ProductDto>(pro);
+        }
+
+        public async Task DeleteMultileAsync(IEnumerable<Guid> ids)
+        {
+            await Repository.DeleteManyAsync(ids);
+            await UnitOfWorkManager.Current.SaveChangesAsync();
+        }
+
+        public async Task<List<ProductInlistDto>> GetListAllAsync()
+        {
+            var query = await Repository.GetQueryableAsync();
+            query = query.Where(x => x.IsActive == true);
+            var data = await AsyncExecuter.ToListAsync(query);
+            return ObjectMapper.Map<List<Product>, List<ProductInlistDto>>(data);
+        }
+
+        public async Task<PagedResultDto<ProductInlistDto>> GetListFilterAsync(ProductFilter input)
+        {
+            var query = await Repository.GetQueryableAsync();
+            query = query.WhereIf(!string.IsNullOrWhiteSpace(input.Keyword), 
+                x => x.ProductName.Contains(input.Keyword) 
+                || x.ProductId.Contains(input.Keyword)
+                || x.CategoryName.Contains(input.Keyword) 
+                || x.WarehouseName.Contains(input.Keyword)
+                || x.Origin.Contains(input.Keyword));
+            query = query.WhereIf(input.CategoryId.HasValue, x => x.CategoryId == input.CategoryId);
+            query = query.WhereIf(input.WarehouseGuid.HasValue, x => x.WarehouseGuid == input.WarehouseGuid);
+            query = query.Where(x => x.Status == input.Status);
+            var totalCount = await AsyncExecuter.LongCountAsync(query);
+            var data = await AsyncExecuter.ToListAsync(query.Skip(input.SkipCount).Take(input.MaxResultCount));
+
+            return new PagedResultDto<ProductInlistDto>(totalCount, ObjectMapper.Map<List<Product>, List<ProductInlistDto>>(data));
+        }
+    }
+}

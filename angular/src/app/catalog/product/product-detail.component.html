@@ -1,0 +1,74 @@
+<form [formGroup]="form" skipValidation (ngSubmit)="saveChange()">
+    <p-panel #pnl>
+        <!--  Form-->
+        <div class="formgrid grid">
+            <div class="field col-2">
+                <label for="productId" class="block">Mã sản phẩm<span class="required">*</span></label>
+                <input formControlName="productId" class="w-full" pInputText type="text" />
+            </div>
+            <div class="field col-4">
+                <label for="productName" class="block">Tên sản phẩm<span class="required">*</span></label>
+                <input formControlName="productName" (keyup)="generateSlug()" class="w-full" pInputText type="text" />
+            </div>
+            <div class="field col-2">
+                <label for="categoryId" class="block">Loại sản phẩm<span class="required">*</span></label>
+                <p-dropdown [options]="ListCategory" formControlName="categoryId" placeholder="Chọn loại sản phẩm"
+                    [showClear]="true" autoWidth="false" [style]="{ width: '100%' }"></p-dropdown>
+            </div>
+            <div class="field col-2">
+                <label for="warehouseGuid" class="block">Kho<span class="required">*</span></label>
+                <p-dropdown [options]="ListWarehouse" formControlName="warehouseGuid" placeholder="Chọn kho"
+                    [showClear]="true" autoWidth="false" [style]="{ width: '100%' }"></p-dropdown>
+            </div>
+            <div class="field col-2">
+                <label for="quantity" class="block">Số lượng<span class="required">*</span></label>
+                <p-inputNumber formControlName="quantity"></p-inputNumber>
+            </div>
+            <div class="field col-2">
+                <label for="origin" class="block">Xuất xứ<span class="required">*</span></label>
+                <input formControlName="origin" class="w-full" pInputText type="text" />
+            </div>
+            <div class="field col-4">
+                <label for="slug" class="block">Slug <span class="required">*</span></label>
+                <input id="slug" pInputText type="text" class="w-full" formControlName="slug" />
+                <app-validation-message
+                  [entityForm]="form"
+                  fieldName="slug"
+                  [validationMessages]="validationMessages"
+                ></app-validation-message>
+              </div>
+            <div class="field col-2">
+                <label for="price" class="block">Giá<span class="required">*</span></label>
+                <p-inputNumber formControlName="price"></p-inputNumber>
+            </div>
+            <div class="field col-2">
+                <label for="priceSale" class="block">Giá Sale<span class="required">*</span></label>
+                <p-inputNumber formControlName="priceSale"></p-inputNumber>
+            </div>
+            <div class="field-checkbox col-1">
+                <p-checkbox formControlName="isActive" binary="true" id="isActive"></p-checkbox>
+                <label for="isActive">Hiển thị</label>
+            </div>
+            <div class="field-checkbox col-1">
+                <p-checkbox formControlName="status" binary="true" id="status"></p-checkbox>
+                <label for="status">Xuất bán</label>
+            </div>
+            <div class="field col-12">
+                <label for="parameter" class="block">Thông số cơ bản<span class="required">*</span></label>
+                <p-editor formControlName="parameter" [style]="{'height':'200px'}" skipValidation></p-editor>
+            </div>
+            <div class="field col-12">
+                <label for="description" class="block">Mô tả</label>
+                <p-editor formControlName="description" [style]="{'height':'200px'}" skipValidation></p-editor>
+            </div>
+        </div>
+        <ng-template pTemplate="footer">
+            <button type="submit" [disabled]="!form.valid || btnDisabled" pButton icon="fa fa-save" iconPos="left"
+                label="Lưu lại"></button>
+        </ng-template>
+        <!--Blocked UI-->
+        <p-blockUI [blocked]="blockedPanel" [target]="pnl">
+            <p-progressSpinner></p-progressSpinner>
+        </p-blockUI>
+    </p-panel>
+</form>
