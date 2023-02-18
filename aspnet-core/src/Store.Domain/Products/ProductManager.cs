@@ -25,10 +25,21 @@ namespace Store.Products
             _productRepository = productRepository;
         }
 
-        public async Task<Product> CreateAsync(string productId, string productName, string slug,
-            Guid categoryId, Guid warehouseGuid, string origin,
-            string image, int? quantity, decimal? price, decimal? priceSale,
-            string parameter, string description, bool? isActive, bool? status)
+        public async Task<Product> CreateAsync(
+            string productId,
+            string productName,
+            string slug,
+            Guid categoryId,
+            Guid warehouseGuid,
+            string origin,
+            //string image,
+            int? quantity, 
+            decimal? price, 
+            decimal? priceSale,
+            string parameter, 
+            string description, 
+            bool? isActive,
+            bool? status)
         {
             if (await _productRepository.AnyAsync(x=>x.ProductId == productId))
                 throw new UserFriendlyException("Mã sản phẩm đã tồn tại", StoreDomainErrorCodes.ProductIdAlreadyExists);
@@ -38,9 +49,24 @@ namespace Store.Products
 
             var _categoryName = await _CategoryRepository.GetAsync(categoryId);
             var _warehouseName = await _WarehouseRepository.GetAsync(warehouseGuid);
-            return new Product(Guid.NewGuid(), productId, productName, slug, categoryId, warehouseGuid,
-                             origin, image, quantity, price, priceSale, parameter, description, isActive,
-                             status, _categoryName?.CategoryName, _warehouseName?.Title);
+            return new Product(
+                Guid.NewGuid(), 
+                productId, 
+                productName, 
+                slug, 
+                categoryId,
+                warehouseGuid,
+                origin, 
+                null,
+                quantity, 
+                price, 
+                priceSale,
+                parameter,
+                description, 
+                isActive,
+                status, 
+                _categoryName?.CategoryName,
+                _warehouseName?.Title);
         }
     }
 }

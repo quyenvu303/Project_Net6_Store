@@ -1,5 +1,5 @@
 import { AuthService, PagedResultDto } from '@abp/ng.core';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ProductDto, ProductInlistDto, ProductsService } from '@proxy/products';
 import { Subject, takeUntil } from 'rxjs';
 import { MessageService } from 'primeng/api';
@@ -10,6 +10,7 @@ import { UtilityService } from 'src/app/shared/services/utility.service';
 import { CategoriesService, CategoryInlistDto } from '@proxy/categories';
 import { WarehouseDto, WarehouseInlistDto, WarehouseService } from '@proxy/warehouses';
 import { forkJoin } from 'rxjs';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   providers: [MessageService],
@@ -28,6 +29,8 @@ export class ProductViewComponent implements OnInit, OnDestroy {
   ListWarehouse: any[] = [];
   WarehouseGuid: string = '';
 
+  // Image ảnh
+  public image;
 
   constructor(
     private ProductService: ProductsService, 
@@ -38,7 +41,25 @@ export class ProductViewComponent implements OnInit, OnDestroy {
     private ref: DynamicDialogRef,
     private notificationSerivce: NotificationService,
     private utilService: UtilityService,
+    private cd: ChangeDetectorRef,
+    private sanitizer: DomSanitizer
     ) { }
+    validationMessages = {
+      productId: [{ type: 'required', message: 'Không được để trống' }],
+      productName: [
+        { type: 'required', message: 'Bạn phải nhập tên' },
+        { type: 'maxlength', message: 'Bạn không được nhập quá 255 kí tự' },
+      ],
+      categoryId: [{ type: 'required', message: 'Không được để trống' }],
+      warehouseGuid: [{ type: 'required', message: 'Không được để trống' }],
+      origin: [{ type: 'required', message: 'Không được để trống' }],
+      slug: [{ type: 'required', message: 'Không được để trống' }],
+      quantity: [{ type: 'required', message: 'Không được để trống' }],
+      price: [{ type: 'required', message: 'Không được để trống' }],
+      priceSale: [{ type: 'required', message: 'Không được để trống' }],
+      parameter: [{ type: 'required', message: 'Không được để trống' }],
+      description: [{ type: 'required', message: 'Không được để trống' }],
+    };
   ngOnDestroy(): void {
     if (this.ref) {
       this.ref.close();
@@ -53,6 +74,7 @@ export class ProductViewComponent implements OnInit, OnDestroy {
     this.loadWarehouse();
     this.initFormData();
   }
+
   initFormData() {
     //Load data to form
     var categoryService = this.CategoryService.getListAll();
@@ -91,10 +113,13 @@ export class ProductViewComponent implements OnInit, OnDestroy {
   }
   loadFormDetail(id: string) {
     this.toggleBlockUI(true);
-    this.ProductService.get(id).pipe(takeUntil(this.ngUnsubscribe))
+    this.ProductService
+    .get(id)
+    .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe({
         next: (response: ProductDto) => {
           this.selectedEntity = response;
+          this.loadThumbnail(this.selectedEntity.image);
           this.buiLdForm();
           this.toggleBlockUI(false);
         },
@@ -135,7 +160,9 @@ export class ProductViewComponent implements OnInit, OnDestroy {
       });
     });
   };
-
+  generateSlug() {
+    this.form.controls['slug'].setValue(this.utilService.MakeSeoTitle(this.form.get('productName').value));
+  }
   private buiLdForm() {
     this.form = this.fb.group({
       productId: new FormControl(this.selectedEntity.productId || null,
@@ -151,12 +178,76 @@ export class ProductViewComponent implements OnInit, OnDestroy {
       priceSale: new FormControl(this.selectedEntity.priceSale || null, Validators.required),
       parameter: new FormControl(this.selectedEntity.parameter || null, Validators.required),
       description: new FormControl(this.selectedEntity.description || null, Validators.compose([Validators.required, Validators.maxLength(250)])),
-      isActive: new FormControl(this.selectedEntity.isActive ),
-      status: new FormControl(this.selectedEntity.status ),
+      isActive: new FormControl(this.selectedEntity.isActive),
+      status: new FormControl(this.selectedEntity.status),
+      image: new FormControl(this.selectedEntity.image|| null),
+      imageName: new FormControl(this.selectedEntity.image || null),
+      imageContent: new FormControl(null),
     });
   }
 
-  
+  saveChange() {
+    this.toggleBlockUI(true);
+
+    if (this.utilService.isEmpty(this.config.data?.id) == true) {
+      this.ProductService
+        .create(this.form.value)
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe({
+          next: () => {
+            this.toggleBlockUI(false);
+            this.ref.close(this.form.value);
+          },
+          error: err => {
+            this.notificationSerivce.showError(err.error.error.message);
+            this.toggleBlockUI(false);
+          },
+        });
+    } else {
+      this.ProductService
+        .update(this.config.data?.id, this.form.value)
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe({
+          next: () => {
+            this.toggleBlockUI(false);
+            this.ref.close(this.form.value);
+          },
+          error: err => {
+            this.notificationSerivce.showError(err.error.error.message);
+            this.toggleBlockUI(false);
+          },
+        });
+    }
+  }
+
+
+  loadThumbnail(fileName: string) {
+    this.ProductService
+      .getImage(fileName)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe({
+        next: (response: string) => {
+          var fileExt = this.selectedEntity.image?.split('.').pop();
+          this.image = this.sanitizer.bypassSecurityTrustResourceUrl(
+            `data:image/${fileExt};base64, ${response}`
+          );
+        },
+      });
+  }
+  onFileChange(event){
+    const reader = new FileReader();
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.form.patchValue({
+          imageName: file.name != null ? file.name : null,
+          imageContent: reader.result,
+        });
+        this.cd.markForCheck();
+      };
+    }
+  }
   private toggleBlockUI(enabled: boolean){
     if(enabled == true){
       this.blockedPanel = true

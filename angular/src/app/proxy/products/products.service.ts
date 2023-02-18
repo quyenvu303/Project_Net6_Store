@@ -44,6 +44,16 @@ export class ProductsService {
     { apiName: this.apiName });
   
 
+  getImage = (fileName: string) =>
+    this.restService.request<any, string>({
+      method: 'GET',
+      responseType: 'text',
+      url: '/api/app/products/image',
+      params: { fileName },
+    },
+    { apiName: this.apiName });
+  
+
   getList = (input: PagedResultRequestDto) =>
     this.restService.request<any, PagedResultDto<ProductDto>>({
       method: 'GET',

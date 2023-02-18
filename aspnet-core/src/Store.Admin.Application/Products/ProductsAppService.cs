@@ -8,10 +8,12 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
+using Volo.Abp.BlobStoring;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Uow;
 using static System.Net.Mime.MediaTypeNames;
@@ -29,23 +31,43 @@ namespace Store.Admin.Products
         private readonly ProductManager _productManager;
         private readonly IRepository<Category> _categoryRepository;
         private readonly IRepository<Warehouse> _warehouseRepository;
+        private readonly IBlobContainer<ProductImageContainer> _fileContainer;
         public ProductsAppService(
             IRepository<Product, Guid> repository,
             IRepository<Category> categoryRepository,
             IRepository<Warehouse> warehouseRepository,
-        ProductManager productManager)
+            ProductManager productManager,
+            IBlobContainer<ProductImageContainer> fileContainer)
             : base(repository)
         {
             _productManager = productManager;
             _categoryRepository = categoryRepository;
             _warehouseRepository = warehouseRepository;
+            _fileContainer = fileContainer;
         }
 
         public override async Task<ProductDto> CreateAsync(CreateUpdateProductDto input)
         {
-            var product = await _productManager.CreateAsync(input.ProductId, input.ProductName, input.Slug, input.CategoryId,
-                input.WarehouseGuid, input.Origin, input.Image, input.Quantity, input.Price, input.PriceSale,
-                input.Parameter, input.Description, input.IsActive, input.Status);
+            var product = await _productManager.CreateAsync(
+                input.ProductId, 
+                input.ProductName,
+                input.Slug,
+                input.CategoryId,
+                input.WarehouseGuid, 
+                input.Origin, 
+                //input.Image, 
+                input.Quantity, 
+                input.Price, 
+                input.PriceSale,
+                input.Parameter, 
+                input.Description, 
+                input.IsActive, 
+                input.Status);
+            if (input.ImageContent != null && input.ImageContent.Length > 0)
+            {
+                await SaveImageAsync(input.ImageName, input.ImageContent);
+                product.Image = input.ImageName;
+            }
             var result = await Repository.InsertAsync(product);
             return ObjectMapper.Map<Product, ProductDto>(result);
         }
@@ -72,7 +94,11 @@ namespace Store.Admin.Products
                 pro.WarehouseName = Wa.Title;
             }
             pro.Origin = input.Origin;
-            pro.Image = input.Image;
+            if (input.ImageContent != null && input.ImageContent.Length > 0)
+            {
+                await SaveImageAsync(input.ImageName, input.ImageContent);
+                pro.Image = input.ImageName;
+            }
             pro.Quantity = input.Quantity;
             pro.Price = input.Price;
             pro.PriceSale = input.PriceSale;
@@ -85,7 +111,28 @@ namespace Store.Admin.Products
 
             return ObjectMapper.Map<Product, ProductDto>(pro);
         }
+        public async Task<string> GetImageAsync(string fileName)
+        {
+            if (string.IsNullOrEmpty(fileName))
+            {
+                return null;
+            }
+            var thumbnailContent = await _fileContainer.GetAllBytesOrNullAsync(fileName);
 
+            if (thumbnailContent is null)
+            {
+                return null;
+            }
+            var result = Convert.ToBase64String(thumbnailContent);
+            return result;
+        }
+        private async Task SaveImageAsync(string fileName, string base64)
+        {
+            Regex regex = new Regex(@"^[\w/\:.-]+;base64,");
+            base64 = regex.Replace(base64, string.Empty);
+            byte[] bytes = Convert.FromBase64String(base64);
+            await _fileContainer.SaveAsync(fileName, bytes, overrideExisting: true);
+        }
         public async Task DeleteMultileAsync(IEnumerable<Guid> ids)
         {
             await Repository.DeleteManyAsync(ids);
@@ -117,5 +164,7 @@ namespace Store.Admin.Products
 
             return new PagedResultDto<ProductInlistDto>(totalCount, ObjectMapper.Map<List<Product>, List<ProductInlistDto>>(data));
         }
+
+        
     }
 }

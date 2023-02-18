@@ -8,7 +8,8 @@ export interface CreateUpdateProductDto {
   categoryId?: string;
   warehouseGuid?: string;
   origin?: string;
-  image?: string;
+  imageName?: string;
+  imageContent?: string;
   quantity?: number;
   price?: number;
   priceSale?: number;
