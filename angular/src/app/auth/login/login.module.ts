@@ -12,6 +12,8 @@ import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
 import { BlockUIModule } from 'primeng/blockui';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { TokenStorageService } from 'src/app/shared/services/token.service';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
     imports: [
@@ -30,6 +32,6 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
         ProgressSpinnerModule
     ],
     declarations: [LoginComponent],
-    providers:[AuthService]
+    providers: [AuthService, TokenStorageService, MessageService],
 })
 export class LoginModule { }

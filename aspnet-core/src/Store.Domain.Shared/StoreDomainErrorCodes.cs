@@ -15,4 +15,6 @@ public static class StoreDomainErrorCodes
     public const string WarehouseNameAlreadyExists = "Store:WarehouseNameAlreadyExists";
     public const string WarehouseIsNotExists = "Store:WarehouseIsNotExists";
 
+    public const string RoleNameAlreadyExists = "Store:RoleNameAlreadyExists";
+
 }

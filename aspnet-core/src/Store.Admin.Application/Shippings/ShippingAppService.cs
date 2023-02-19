@@ -1,4 +1,5 @@
 ﻿using AutoMapper.Internal.Mappers;
+using Microsoft.AspNetCore.Authorization;
 using Store.Shippings;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ using Volo.Abp.Uow;
 
 namespace Store.Admin.Shippings
 {
+    [Authorize]
     public class ShippingAppService : CrudAppService<
          Shipping,
          ShippingDto,

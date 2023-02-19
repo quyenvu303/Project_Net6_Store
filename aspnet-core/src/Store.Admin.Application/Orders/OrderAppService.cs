@@ -1,4 +1,5 @@
 ﻿using AutoMapper.Internal.Mappers;
+using Microsoft.AspNetCore.Authorization;
 using Store.Orders;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using Volo.Abp.Domain.Repositories;
 
 namespace Store.Admin.Orders
 {
+    [Authorize]
     public class OrderAppService : CrudAppService<
          Order,
          OrderDto,

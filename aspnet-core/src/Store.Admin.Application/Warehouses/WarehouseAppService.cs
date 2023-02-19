@@ -1,4 +1,5 @@
 ﻿using AutoMapper.Internal.Mappers;
+using Microsoft.AspNetCore.Authorization;
 using Store.Warehouses;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ using Volo.Abp.Uow;
 
 namespace Store.Admin.Warehouses
 {
+    [Authorize]
     public class WarehouseAppService : CrudAppService<
         Warehouse,
         WarehouseDto,

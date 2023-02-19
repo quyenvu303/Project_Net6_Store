@@ -80,6 +80,15 @@ export class ProductsService {
     { apiName: this.apiName });
   
 
+  getSuggestNewCode = () =>
+    this.restService.request<any, string>({
+      method: 'GET',
+      responseType: 'text',
+      url: '/api/app/products/suggest-new-code',
+    },
+    { apiName: this.apiName });
+  
+
   update = (id: string, input: CreateUpdateProductDto) =>
     this.restService.request<any, ProductDto>({
       method: 'PUT',

@@ -1,4 +1,5 @@
 ﻿using AutoMapper.Internal.Mappers;
+using Microsoft.AspNetCore.Authorization;
 using Store.Categories;
 using Store.Products;
 using Store.Warehouses;
@@ -20,6 +21,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace Store.Admin.Products
 {
+    [Authorize]
     public class ProductsAppService : CrudAppService<
         Product,
         ProductDto,
@@ -32,18 +34,21 @@ namespace Store.Admin.Products
         private readonly IRepository<Category> _categoryRepository;
         private readonly IRepository<Warehouse> _warehouseRepository;
         private readonly IBlobContainer<ProductImageContainer> _fileContainer;
+        private readonly ProductCodeGenerator _productCodeGenerator;
         public ProductsAppService(
             IRepository<Product, Guid> repository,
             IRepository<Category> categoryRepository,
             IRepository<Warehouse> warehouseRepository,
             ProductManager productManager,
-            IBlobContainer<ProductImageContainer> fileContainer)
+            IBlobContainer<ProductImageContainer> fileContainer,
+            ProductCodeGenerator productCodeGenerator)
             : base(repository)
         {
             _productManager = productManager;
             _categoryRepository = categoryRepository;
             _warehouseRepository = warehouseRepository;
             _fileContainer = fileContainer;
+            _productCodeGenerator = productCodeGenerator;
         }
 
         public override async Task<ProductDto> CreateAsync(CreateUpdateProductDto input)
@@ -165,6 +170,10 @@ namespace Store.Admin.Products
             return new PagedResultDto<ProductInlistDto>(totalCount, ObjectMapper.Map<List<Product>, List<ProductInlistDto>>(data));
         }
 
-        
+        public async Task<string> GetSuggestNewCodeAsync()
+        {
+            return await _productCodeGenerator.GenerateAsync();
+        }
+
     }
 }

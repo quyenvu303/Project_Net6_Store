@@ -1,4 +1,6 @@
 ﻿using AutoMapper.Internal.Mappers;
+using Microsoft.AspNetCore.Authorization;
+using Store.Admin.Permissions;
 using Store.Categories;
 using System;
 using System.Collections.Generic;
@@ -14,6 +16,7 @@ using Volo.Abp.Uow;
 
 namespace Store.Admin.Categories
 {
+    //[Authorize(StorePermissions.Category.Default, Policy = "AdminOnly")]
     public class CategoriesAppService : CrudAppService<
          Category,
          CategoryDto,
@@ -55,13 +58,13 @@ namespace Store.Admin.Categories
             return ObjectMapper.Map<Category, CategoryDto>(ca);
         }
 
-
+      //  [Authorize(StorePermissions.Category.Delete)]
         public async Task DeleteMultileAsync(IEnumerable<Guid> ids)
         {
             await Repository.DeleteManyAsync(ids);
             await UnitOfWorkManager.Current.SaveChangesAsync();
         }
-
+        //[Authorize(StorePermissions.Category.Default)]
         public async Task<List<CategoryInlistDto>> GetListAllAsync()
         {
             var query = await Repository.GetQueryableAsync();
@@ -69,7 +72,7 @@ namespace Store.Admin.Categories
             var data = await AsyncExecuter.ToListAsync(query);
             return ObjectMapper.Map<List<Category>, List<CategoryInlistDto>>(data);
         }
-
+        //[Authorize(StorePermissions.Category.Default)]
         public async Task<PagedResultDto<CategoryInlistDto>> GetListFilterAsync(BaseListFilterDto input)
         {
             var query = await Repository.GetQueryableAsync();

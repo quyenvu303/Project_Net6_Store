@@ -70,8 +70,6 @@ export class ProductViewComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.buiLdForm();
-    this.loadCategory();
-    this.loadWarehouse();
     this.initFormData();
   }
 

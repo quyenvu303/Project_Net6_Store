@@ -1,9 +1,9 @@
 <form [formGroup]="form" skipValidation (ngSubmit)="saveChange()">
-    <p-panel #pnl>
+    <p-panel #pnl [toggleable]="true">
         <!--  Form-->
         <div class="formgrid grid">
             <div class="field col-2">
-                <label for="productId" class="block">Mã sản phẩm<span class="required">*</span></label>
+                <label for="productId" class="block">Mã code<span class="required">*</span></label>
                 <input formControlName="productId" class="w-full" pInputText type="text" />
             </div>
             <div class="field col-4">

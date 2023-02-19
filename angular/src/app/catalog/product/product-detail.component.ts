@@ -11,7 +11,7 @@ import { CategoriesService, CategoryInlistDto } from '@proxy/categories';
 import { WarehouseDto, WarehouseInlistDto, WarehouseService } from '@proxy/warehouses';
 import { forkJoin } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
-
+import {formatDate} from '@angular/common';
 @Component({
   providers: [MessageService],
   selector: 'app-product-detail',
@@ -28,6 +28,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   categoryId: string = '';
   ListWarehouse: any[] = [];
   WarehouseGuid: string = '';
+  myDate = formatDate(new Date(), 'yyyy/MM/dd', 'en');
 
   // Image ảnh
   public image;
@@ -70,9 +71,21 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.buiLdForm();
-    this.loadCategory();
-    this.loadWarehouse();
     this.initFormData();
+  }
+
+  getNewSuggestionCode() {
+    this.ProductService
+      .getSuggestNewCode()
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe({
+        next: (response: string) => {
+          this.form.patchValue({
+           
+            productId: response,
+          });
+        }
+      });
   }
 
   initFormData() {
@@ -103,7 +116,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
         });
         //Load edit data to form
         if (this.utilService.isEmpty(this.config.data?.id) == true) {
-          //this.getNewSuggestionCode();
+          this.getNewSuggestionCode();
           this.toggleBlockUI(false);
         } else {
           this.loadFormDetail(this.config.data?.id);

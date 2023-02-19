@@ -60,7 +60,7 @@ export class LoginComponent implements OnDestroy {
     private router: Router,
     private tokenService: TokenStorageService,
     private notificationService: NotificationService,
-    private primengConfig: PrimeNGConfig
+    private primengConfig: PrimeNGConfig,
 
   ) {
     this.loginForm = this.fb.group({
@@ -86,10 +86,7 @@ export class LoginComponent implements OnDestroy {
           this.router.navigate(['']);
         },
         error: (ex) => {
-            this.msgs1 = [
-              { severity: 'error', summary: 'Cảnh báo', detail: "Tài khoản hoặc mật khẩu không chính xác" },
-              ];
-              this.primengConfig.ripple = true;
+          this.notificationService.showError("Tài khoản hoặc mật khẩu không chính xác.")
           this.toggleBlockUI(false);
         },
       });

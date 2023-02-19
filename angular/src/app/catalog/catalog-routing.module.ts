@@ -15,7 +15,7 @@ const routes: Routes = [
     {
       path: 'category',
       component: CategoryComponent,
-      //canActivate: [PermissionGuard],
+     // canActivate: [PermissionGuard],
       data: {
         requiredPolicy: 'Catalog.category',
       },
@@ -23,7 +23,7 @@ const routes: Routes = [
     {
       path: 'product',
       component: ProductComponent,
-      //canActivate: [PermissionGuard],
+     // canActivate: [PermissionGuard],
       data: {
         requiredPolicy: 'Catalog.product',
       },
@@ -31,7 +31,7 @@ const routes: Routes = [
     {
       path: 'shipping',
       component: ShippingComponent,
-      //canActivate: [PermissionGuard],
+     // canActivate: [PermissionGuard],
       data: {
         requiredPolicy: 'Catalog.shipping',
       },
@@ -47,7 +47,7 @@ const routes: Routes = [
     {
       path: 'warehouse',
       component: WarehouseComponent,
-     // canActivate: [PermissionGuard],
+      //canActivate: [PermissionGuard],
       data: {
         requiredPolicy: 'Catalog.warehouse',
       },
@@ -63,7 +63,7 @@ const routes: Routes = [
     {
       path: 'contact',
       component: ContactComponent,
-     // canActivate: [PermissionGuard],
+    //  canActivate: [PermissionGuard],
       data: {
         requiredPolicy: 'Catalog.contact',
       },

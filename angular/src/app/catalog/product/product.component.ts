@@ -13,6 +13,7 @@ import { WarehouseDto, WarehouseService } from '@proxy/warehouses';
 import { ProductDetailComponent } from './product-detail.component';
 import { Categories } from '@proxy';
 import { ProductViewComponent } from './product-view.component';
+import { trigger } from '@angular/animations';
 
 @Component({
   providers: [MessageService],

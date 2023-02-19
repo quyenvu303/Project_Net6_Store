@@ -1,4 +1,5 @@
-﻿using Store.Blogs;
+﻿using Microsoft.AspNetCore.Authorization;
+using Store.Blogs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ using Volo.Abp.ObjectMapping;
 
 namespace Store.Admin.Blogs
 {
+    [Authorize]
     public class BlogsAppService : CrudAppService<
         Blog,
         BlogDto,

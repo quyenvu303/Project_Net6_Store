@@ -1,4 +1,5 @@
-﻿using Store.Contacts;
+﻿using Microsoft.AspNetCore.Authorization;
+using Store.Contacts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ using Volo.Abp.ObjectMapping;
 
 namespace Store.Admin.Contacts
 {
+    [Authorize]
     public class ContactsAppService : CrudAppService<
         Contact,
         ContactDto,

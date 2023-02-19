@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -51,6 +51,7 @@ public class StoreAdminHttpApiHostModule : AbpModule
 
         ConfigureConventionalControllers();
         ConfigureAuthentication(context, configuration);
+        ConfigureLocalization();
         ConfigureCache(configuration);
         ConfigureVirtualFileSystem(context);
         ConfigureDataProtection(context, configuration, hostingEnvironment);
@@ -122,7 +123,15 @@ public class StoreAdminHttpApiHostModule : AbpModule
                 options.CustomSchemaIds(type => type.FullName);
             });
     }
+    private void ConfigureLocalization()
+    {
+        Configure<AbpLocalizationOptions>(options =>
+        {
+            options.Languages.Add(new LanguageInfo("en", "en", "English"));
+            options.Languages.Add(new LanguageInfo("vi", "vn", "Tiếng Việt"));
 
+        });
+    }
     private void ConfigureDataProtection(
         ServiceConfigurationContext context,
         IConfiguration configuration,

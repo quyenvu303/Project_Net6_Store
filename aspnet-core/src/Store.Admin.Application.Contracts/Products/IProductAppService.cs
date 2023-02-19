@@ -19,5 +19,7 @@ namespace Store.Admin.Products
         Task DeleteMultileAsync(IEnumerable<Guid> ids);
 
         Task<string> GetImageAsync(string fileName);
+
+        Task<string> GetSuggestNewCodeAsync();
     }
 }

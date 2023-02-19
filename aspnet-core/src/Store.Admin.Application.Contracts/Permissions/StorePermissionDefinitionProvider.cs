@@ -6,11 +6,26 @@ namespace Store.Admin.Permissions;
 
 public class StorePermissionDefinitionProvider : PermissionDefinitionProvider
 {
-    public override void Define(IPermissionDefinitionContext context)
+    public override void Define(IPermissionDefinitionContext context)   
     {
-        var myGroup = context.AddGroup(StorePermissions.GroupName);
-        //Define your own permissions here. Example:
-        //myGroup.AddPermission(StorePermissions.MyPermission1, L("Permission:MyPermission1"));
+
+        //Catalog
+        var catalogGroup = context.AddGroup(StorePermissions.CatalogGroupName, L("Permission:Catalog"));
+        //Add Category
+        var categoryPermission = catalogGroup.AddPermission(StorePermissions.Category.Default, L("Permission:Catalog.Category"));
+        categoryPermission.AddChild(StorePermissions.Category.Create, L("Permission:Catalog.Category.Create"));
+        categoryPermission.AddChild(StorePermissions.Category.Update, L("Permission:Catalog.Category.Update"));
+        categoryPermission.AddChild(StorePermissions.Category.Delete, L("Permission:Catalog.Category.Delete"));
+        //Add product
+        var productPermission = catalogGroup.AddPermission(StorePermissions.Product.Default, L("Permission:Catalog.Product"));
+        productPermission.AddChild(StorePermissions.Product.Create, L("Permission:Catalog.Product.Create"));
+        productPermission.AddChild(StorePermissions.Product.Update, L("Permission:Catalog.Product.Update"));
+        productPermission.AddChild(StorePermissions.Product.Delete, L("Permission:Catalog.Product.Delete"));
+        //Add Order
+        var orderPermission = catalogGroup.AddPermission(StorePermissions.Order.Default, L("Permission:Catalog.Order"));
+        orderPermission.AddChild(StorePermissions.Order.Create, L("Permission:Catalog.Order.Create"));
+        orderPermission.AddChild(StorePermissions.Order.Update, L("Permission:Catalog.Order.Update"));
+        orderPermission.AddChild(StorePermissions.Order.Delete, L("Permission:Catalog.Order.Delete"));
     }
 
     private static LocalizableString L(string name)
