@@ -79,13 +79,13 @@ export class AppMenuComponent implements OnInit {
                 label: 'Phân quyền',
                 icon: 'pi pi-sitemap',
                 routerLink: ['/system/role'],
-                permission: 'AbpIdentity.Roles',
+               // permission: 'AbpIdentity.Roles',
               },
               {
                 label: 'Danh sách người dùng',
                 icon: 'pi	pi-users',
                 routerLink: ['/system/user'],
-                permission: 'AbpIdentity.Users',
+                //permission: 'AbpIdentity.Users',
               },
             ]
           },

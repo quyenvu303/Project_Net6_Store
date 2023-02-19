@@ -22,11 +22,11 @@ import { RoleComponent } from './role/role.component';
 import { RoleDetailComponent } from './role/role-detail.component';
 import { PermissionGrantComponent } from './role/permission-grant.component';
 import { SystemRoutingModule } from './system-routing.module';
-/* import { UserComponent } from './user/user.component'; */
-/* import { UserDetailComponent } from './user/user-detail.component';
-import { RoleAssignComponent } from './user/role-assign.component'; */
+import { UserComponent } from './user/user.component';
+import { UserDetailComponent } from './user/user-detail.component';
+import { RoleAssignComponent } from './user/role-assign.component';
 import { PickListModule } from 'primeng/picklist';
-/* import { SetPasswordComponent } from './user/set-password.component'; */
+import { SetPasswordComponent } from './user/set-password.component';
 import { KeyFilterModule } from 'primeng/keyfilter';
 
 @NgModule({
@@ -34,10 +34,10 @@ import { KeyFilterModule } from 'primeng/keyfilter';
         RoleComponent,
         RoleDetailComponent,
         PermissionGrantComponent,
-       // UserComponent,
-        /*     UserDetailComponent,
-            RoleAssignComponent,
-            SetPasswordComponent */
+        UserComponent,
+        UserDetailComponent,
+        RoleAssignComponent,
+        SetPasswordComponent
     ],
     imports: [
         SharedModule,
@@ -66,9 +66,9 @@ import { KeyFilterModule } from 'primeng/keyfilter';
     entryComponents: [
         RoleDetailComponent,
         PermissionGrantComponent,
-        /*     UserDetailComponent,
-            RoleAssignComponent,
-            SetPasswordComponent */
+        UserDetailComponent,
+        RoleAssignComponent,
+        SetPasswordComponent
     ],
 })
 export class SystemModule { }

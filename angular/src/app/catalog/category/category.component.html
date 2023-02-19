@@ -3,13 +3,16 @@
     <div class="grid">
         <div class="col-4">
             <button pButton type="button" (click)="showAddModal()" icon="fa fa-plus-square-o" iconPos="left"
-                label=""></button>
+                label=""appAction="CREATE"></button>
+
             <button pButton type="button" (click)="showOpenModal()" *ngIf="selectedItems.length == 1"
-                class="ml-1 p-button-help" icon="fa fa-eye" iconPos="left" label=""></button>
+                class="ml-1 p-button-help" icon="fa fa-eye" iconPos="left" label="" appAction="open"></button>
+
             <button pButton type="button" (click)="showEditModal()" *ngIf="selectedItems.length == 1"
-                class="ml-1 p-button-help" icon="fas fa-edit" iconPos="left" label=""></button>
+                class="ml-1 p-button-help" icon="fas fa-edit" iconPos="left" label="" appAction="UPDATE"></button>
+
             <button pButton type="button" (click)="deleteItems()" *ngIf="selectedItems.length > 0"
-                class="ml-1 p-button-danger" icon="fa fa-trash" iconPos="left" label=""></button>
+                class="ml-1 p-button-danger" icon="fa fa-trash" iconPos="left" label="" appAction="DELETE"></button>
         </div>
         <div class="col-4"></div>
         <div class="col-4">
