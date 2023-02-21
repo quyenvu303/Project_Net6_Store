@@ -17,6 +17,10 @@
     "Permission:Catalog.Warehouse": "Kho",
     "Permission:Catalog.Warehouse.Create": "Tạo mới kho",
     "Permission:Catalog.Warehouse.Update": "Cập nhật kho",
-    "Permission:Catalog.Warehouse.Delete": "Xóa kho"
+    "Permission:Catalog.Warehouse.Delete": "Xóa kho",
+    "Permission:Catalog.Blog": "Bài viết",
+    "Permission:Catalog.Blog.Create": "Tạo mới bài viết",
+    "Permission:Catalog.Blog.Update": "Cập nhật bài viết",
+    "Permission:Catalog.Blog.Delete": "Xóa bài viết"
   }
 }

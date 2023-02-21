@@ -5,7 +5,7 @@
             <button pButton type="button" (click)="showAddModal()" icon="fa fa-plus-square-o" iconPos="left"
                 label=""></button>
             <button pButton type="button" (click)="showOpenModal()" *ngIf="selectedItems.length == 1"
-                class="ml-1 p-button-help" icon="fa fa-eye" iconPos="left" label=""></button>
+                class="ml-1 p-button-help" icon="fa fa-eye" iconPos="left" label=""appAction="open"></button>
             <button pButton type="button" (click)="showEditModal()" *ngIf="selectedItems.length == 1"
                 class="ml-1 p-button-help" icon="fas fa-edit" iconPos="left" label=""></button>
             <button pButton type="button" (click)="deleteItems()" *ngIf="selectedItems.length > 0"

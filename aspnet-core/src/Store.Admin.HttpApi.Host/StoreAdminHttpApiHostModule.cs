@@ -28,9 +28,9 @@ using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.VirtualFileSystem;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Store.Admin;
-
 [DependsOn(
     typeof(StoreHttpApiModule),
     typeof(AbpAutofacModule),
@@ -105,7 +105,17 @@ public class StoreAdminHttpApiHostModule : AbpModule
                 options.Authority = configuration["AuthServer:Authority"];
                 options.RequireHttpsMetadata = Convert.ToBoolean(configuration["AuthServer:RequireHttpsMetadata"]);
                 options.Audience = "Store.Admin";
+                //options.TokenValidationParameters = new
+                //  TokenValidationParameters()
+                //{
+                //    ValidateAudience = false,
+                //    ValidateIssuer = false,
+                //};
             });
+        context.Services.AddAuthorization(options =>
+        {
+            options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+        });
     }
 
     private static void ConfigureSwaggerServices(ServiceConfigurationContext context, IConfiguration configuration)

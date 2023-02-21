@@ -82,6 +82,7 @@ export class CategoryDetailComponent implements OnInit, OnDestroy {
         next: (response: CategoryDto) => {
           this.selectedEntity = response;
           this.buildForm();
+          this.setMode('open');
           this.toggleBlockUI(false);
         },
         error: () => {
@@ -104,6 +105,18 @@ export class CategoryDetailComponent implements OnInit, OnDestroy {
       isActive: new FormControl(this.selectedEntity.isActive ),
     });
   }
+
+  setMode(mode: string) {
+    if (mode == 'open') {
+      this.form.controls['categoryId'].disable();
+      this.form.controls['categoryName'].disable();
+      this.form.controls['parentId'].disable();
+      this.form.controls['sortOrder'].disable();
+      this.form.controls['isActive'].disable();
+      this.form.controls['description'].disable();
+    } 
+  }
+
 
   saveChange() {
     this.toggleBlockUI(true);

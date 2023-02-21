@@ -22,12 +22,13 @@ export class AppMenuComponent implements OnInit {
                 label: 'Danh sách loại sản phẩm',
                 icon: 'pi pi-list',
                 routerLink: ['/catalog/category'],
+                permission: 'StoreAdminCatalog.Category',
               },
               {
                 label: 'Danh sách sản phẩm',
                 icon: 'pi pi-microsoft',
                 routerLink: ['/catalog/product'],
-                //permission: 'Catalog.product',
+                permission: 'StoreAdminCatalog.Product',
               },
             ]
           },
@@ -37,7 +38,8 @@ export class AppMenuComponent implements OnInit {
               {
                 label: 'Quản lý đơn hàng',
                 icon: 'pi pi-shopping-cart',
-                routerLink: ['/catalog/order']
+                routerLink: ['/catalog/order'],
+                permission: 'StoreAdminCatalog.Order',
               }
             ]
           },
@@ -48,7 +50,7 @@ export class AppMenuComponent implements OnInit {
                 label: 'Kho',
                 icon: 'fa fa-warehouse',
                 routerLink: ['/catalog/warehouse'],
-                //permission: 'Catalog.warehouse',
+                permission: 'StoreAdminCatalog.Warehouse',
               }
             ]
           },
@@ -63,7 +65,8 @@ export class AppMenuComponent implements OnInit {
               {
                 label: 'Tin tức',
                 icon: 'fa fa-newspaper-o',
-                routerLink: ['/catalog/blog']
+                routerLink: ['/catalog/blog'],
+                permission: 'StoreAdminCatalog.Blog',
               },
               {
                 label: 'Contact',
@@ -79,13 +82,13 @@ export class AppMenuComponent implements OnInit {
                 label: 'Phân quyền',
                 icon: 'pi pi-sitemap',
                 routerLink: ['/system/role'],
-               // permission: 'AbpIdentity.Roles',
+                permission: 'AbpIdentity.Roles',
               },
               {
                 label: 'Danh sách người dùng',
                 icon: 'pi	pi-users',
                 routerLink: ['/system/user'],
-                //permission: 'AbpIdentity.Users',
+                permission: 'AbpIdentity.Users',
               },
             ]
           },

@@ -1,5 +1,6 @@
 ﻿using AutoMapper.Internal.Mappers;
 using Microsoft.AspNetCore.Authorization;
+using Store.Admin.Permissions;
 using Store.Categories;
 using Store.Products;
 using Store.Warehouses;
@@ -21,7 +22,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace Store.Admin.Products
 {
-    [Authorize]
+    [Authorize(StorePermissions.Product.Default)]
     public class ProductsAppService : CrudAppService<
         Product,
         ProductDto,
@@ -49,8 +50,15 @@ namespace Store.Admin.Products
             _warehouseRepository = warehouseRepository;
             _fileContainer = fileContainer;
             _productCodeGenerator = productCodeGenerator;
+
+            GetPolicyName = StorePermissions.Product.Default;
+            GetListPolicyName = StorePermissions.Product.Default;
+            CreatePolicyName = StorePermissions.Product.Create;
+            UpdatePolicyName = StorePermissions.Product.Update;
+            DeletePolicyName = StorePermissions.Product.Delete;
         }
 
+        [Authorize(StorePermissions.Product.Create)]
         public override async Task<ProductDto> CreateAsync(CreateUpdateProductDto input)
         {
             var product = await _productManager.CreateAsync(
@@ -76,6 +84,8 @@ namespace Store.Admin.Products
             var result = await Repository.InsertAsync(product);
             return ObjectMapper.Map<Product, ProductDto>(result);
         }
+       
+        [Authorize(StorePermissions.Product.Update)]
         public override async Task<ProductDto> UpdateAsync(Guid id, CreateUpdateProductDto input)
         {
             var pro = await Repository.GetAsync(id);
@@ -116,6 +126,8 @@ namespace Store.Admin.Products
 
             return ObjectMapper.Map<Product, ProductDto>(pro);
         }
+
+        [Authorize(StorePermissions.Product.Default)]
         public async Task<string> GetImageAsync(string fileName)
         {
             if (string.IsNullOrEmpty(fileName))
@@ -131,6 +143,8 @@ namespace Store.Admin.Products
             var result = Convert.ToBase64String(thumbnailContent);
             return result;
         }
+
+        [Authorize(StorePermissions.Product.Update)]
         private async Task SaveImageAsync(string fileName, string base64)
         {
             Regex regex = new Regex(@"^[\w/\:.-]+;base64,");
@@ -138,12 +152,15 @@ namespace Store.Admin.Products
             byte[] bytes = Convert.FromBase64String(base64);
             await _fileContainer.SaveAsync(fileName, bytes, overrideExisting: true);
         }
+
+        [Authorize(StorePermissions.Product.Delete)]
         public async Task DeleteMultileAsync(IEnumerable<Guid> ids)
         {
             await Repository.DeleteManyAsync(ids);
             await UnitOfWorkManager.Current.SaveChangesAsync();
         }
 
+        [Authorize(StorePermissions.Product.Default)]
         public async Task<List<ProductInlistDto>> GetListAllAsync()
         {
             var query = await Repository.GetQueryableAsync();
@@ -151,7 +168,8 @@ namespace Store.Admin.Products
             var data = await AsyncExecuter.ToListAsync(query);
             return ObjectMapper.Map<List<Product>, List<ProductInlistDto>>(data);
         }
-
+       
+        [Authorize(StorePermissions.Product.Default)]
         public async Task<PagedResultDto<ProductInlistDto>> GetListFilterAsync(ProductFilter input)
         {
             var query = await Repository.GetQueryableAsync();
@@ -169,7 +187,8 @@ namespace Store.Admin.Products
 
             return new PagedResultDto<ProductInlistDto>(totalCount, ObjectMapper.Map<List<Product>, List<ProductInlistDto>>(data));
         }
-
+      
+       
         public async Task<string> GetSuggestNewCodeAsync()
         {
             return await _productCodeGenerator.GenerateAsync();
