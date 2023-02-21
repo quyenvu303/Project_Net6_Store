@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
+using Store.Admin.Permissions;
 using Store.Roles;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ using Volo.Abp.SimpleStateChecking;
 
 namespace Store.Admin.Roles
 {
-    [Authorize]
+    [Authorize(IdentityPermissions.Roles.Default, Policy = "AdminOnly")]
     public class RolesAppService : CrudAppService<
         IdentityRole,
         RoleDto,
@@ -72,7 +73,6 @@ namespace Store.Admin.Roles
         }
 
         [Authorize(IdentityPermissions.Roles.Default)]
-
         public async Task<PagedResultDto<RoleInListDto>> GetListFilterAsync(BaseListFilterDto input)
         {
             var query = await Repository.GetQueryableAsync();
@@ -85,7 +85,6 @@ namespace Store.Admin.Roles
         }
 
         [Authorize(IdentityPermissions.Roles.Create)]
-
         public async override Task<RoleDto> CreateAsync(CreateUpdateRoleDto input)
         {
             var query = await Repository.GetQueryableAsync();
@@ -103,7 +102,6 @@ namespace Store.Admin.Roles
         }
 
         [Authorize(IdentityPermissions.Roles.Update)]
-
         public async override Task<RoleDto> UpdateAsync(Guid id, CreateUpdateRoleDto input)
         {
             var role = await Repository.GetAsync(id);
@@ -125,7 +123,6 @@ namespace Store.Admin.Roles
         }
 
         [Authorize(IdentityPermissions.Roles.Default)]
-
         public async Task<GetPermissionListResultDto> GetPermissionsAsync(string providerName, string providerKey)
         {
             //await CheckProviderPolicy(providerName);
@@ -213,7 +210,6 @@ namespace Store.Admin.Roles
         }
 
         [Authorize(IdentityPermissions.Roles.Update)]
-
         public virtual async Task UpdatePermissionsAsync(string providerName, string providerKey, UpdatePermissionsDto input)
         {
             // await CheckProviderPolicy(providerName);

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Store.Admin.Permissions;
 using Store.Blogs;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using Volo.Abp.ObjectMapping;
 
 namespace Store.Admin.Blogs
 {
-    [Authorize]
+    [Authorize(StorePermissions.Blog.Default)]
     public class BlogsAppService : CrudAppService<
         Blog,
         BlogDto,
@@ -22,14 +23,20 @@ namespace Store.Admin.Blogs
     {
         public BlogsAppService(IRepository<Blog, Guid> repository) : base(repository)
         {
+            GetPolicyName = StorePermissions.Blog.Default;
+            GetListPolicyName = StorePermissions.Blog.Default;
+            CreatePolicyName = StorePermissions.Blog.Create;
+            UpdatePolicyName = StorePermissions.Blog.Update;
+            DeletePolicyName = StorePermissions.Blog.Delete;
         }
-
+        [Authorize(StorePermissions.Blog.Delete)]
         public async Task DeleteMultileAsync(IEnumerable<Guid> ids)
         {
             await Repository.DeleteManyAsync(ids);
             await UnitOfWorkManager.Current.SaveChangesAsync();
         }
-
+        
+        [Authorize(StorePermissions.Blog.Default)]
         public async Task<List<BlogInlistDto>> GetListAllAsync()
         {
             var query = await Repository.GetQueryableAsync();
@@ -37,7 +44,8 @@ namespace Store.Admin.Blogs
             var data = await AsyncExecuter.ToListAsync(query);
             return ObjectMapper.Map<List<Blog>, List<BlogInlistDto>>(data);
         }
-
+        
+        [Authorize(StorePermissions.Blog.Default)]
         public async Task<PagedResultDto<BlogInlistDto>> GetListFilterAsync(BaseListFilterDto input)
         {
             var query = await Repository.GetQueryableAsync();

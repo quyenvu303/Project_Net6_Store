@@ -138,9 +138,9 @@ export class AppMenuitemComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.key = this.parentKey ? this.parentKey + '-' + this.index : String(this.index);
     this.permissionService.getGrantedPolicy$(this.item.permission)
-    .subscribe((result: boolean) => {
-      this.item.visible = result;
-    });
+      .subscribe((result: boolean) => {
+        this.item.visible = result;
+      });
     if (this.item.routerLink) {
       this.updateActiveStateFromRoute();
     }

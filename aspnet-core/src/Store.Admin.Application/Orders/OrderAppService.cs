@@ -1,5 +1,6 @@
 ﻿using AutoMapper.Internal.Mappers;
 using Microsoft.AspNetCore.Authorization;
+using Store.Admin.Permissions;
 using Store.Orders;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ using Volo.Abp.Domain.Repositories;
 
 namespace Store.Admin.Orders
 {
-    [Authorize]
+    [Authorize(StorePermissions.Order.Default)]
     public class OrderAppService : CrudAppService<
          Order,
          OrderDto,
@@ -23,8 +24,14 @@ namespace Store.Admin.Orders
     {
         public OrderAppService(IRepository<Order, Guid> repository) : base(repository)
         {
+            GetPolicyName = StorePermissions.Order.Default;
+            GetListPolicyName = StorePermissions.Order.Default;
+            CreatePolicyName = StorePermissions.Order.Create;
+            UpdatePolicyName = StorePermissions.Order.Update;
+            DeletePolicyName = StorePermissions.Order.Delete;
         }
 
+        [Authorize(StorePermissions.Order.Default)]
         public async Task<List<OrderInlistDto>> GetListAllAsync()
         {
             var query = await Repository.GetQueryableAsync();
@@ -32,7 +39,7 @@ namespace Store.Admin.Orders
             var data = await AsyncExecuter.ToListAsync(query);
             return ObjectMapper.Map<List<Order>, List<OrderInlistDto>>(data);
         }
-
+        [Authorize(StorePermissions.Order.Default)]
         public async Task<PagedResultDto<OrderInlistDto>> GetListFilterAsync(BaseListFilterDto input)
         {
             var query = await Repository.GetQueryableAsync();

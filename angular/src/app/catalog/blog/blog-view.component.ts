@@ -57,6 +57,7 @@ export class BlogViewComponent implements OnInit, OnDestroy {
         next: (response: BlogDto) => {
           this.selectedEntity = response;
           this.buiLdForm();
+          this.setMode('open');
           this.toggleBlockUI(false);
         },
         error: () => {
@@ -76,40 +77,12 @@ export class BlogViewComponent implements OnInit, OnDestroy {
       status: new FormControl(this.selectedEntity.status),
     });
   }
-  saveChange() {
-    this.toggleBlockUI(true);
-
-    if (this.utilService.isEmpty(this.config.data?.id) == true) {
-      this.BlogService
-        .create(this.form.value)
-        .pipe(takeUntil(this.ngUnsubscribe))
-        .subscribe({
-          next: () => {
-            this.toggleBlockUI(false);
-
-            this.ref.close(this.form.value);
-          },
-          error: err => {
-            this.notificationSerivce.showError(err.error.error.message);
-
-            this.toggleBlockUI(false);
-          },
-        });
-    } else {
-      this.BlogService
-        .update(this.config.data?.id, this.form.value)
-        .pipe(takeUntil(this.ngUnsubscribe))
-        .subscribe({
-          next: () => {
-            this.toggleBlockUI(false);
-            this.ref.close(this.form.value);
-          },
-          error: err => {
-            this.notificationSerivce.showError(err.error.error.message);
-            this.toggleBlockUI(false);
-          },
-        });
-    }
+  setMode(mode: string) {
+    if (mode == 'open') {
+      this.form.controls['title'].disable();
+      this.form.controls['description'].disable();
+      this.form.controls['status'].disable();
+    } 
   }
 
   private toggleBlockUI(enabled: boolean) {

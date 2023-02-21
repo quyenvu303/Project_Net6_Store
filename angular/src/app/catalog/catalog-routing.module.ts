@@ -12,66 +12,59 @@ import { BlogComponent } from './blog/blog.component';
 /* const routes: Routes = [{ path: '', component: CategoryComponent }]; */
 
 const routes: Routes = [
-    {
-      path: 'category',
-      component: CategoryComponent,
-     // canActivate: [PermissionGuard],
-      data: {
-        requiredPolicy: 'Catalog.category',
-      },
+  {
+    path: 'category',
+    component: CategoryComponent,
+    canActivate: [PermissionGuard],
+    data: {
+      requiredPolicy: 'StoreAdminCatalog.Category',
     },
-    {
-      path: 'product',
-      component: ProductComponent,
-     // canActivate: [PermissionGuard],
-      data: {
-        requiredPolicy: 'Catalog.product',
-      },
+  },
+  {
+    path: 'product',
+    component: ProductComponent,
+    canActivate: [PermissionGuard],
+    data: {
+      requiredPolicy: 'StoreAdminCatalog.Product',
     },
-    {
-      path: 'shipping',
-      component: ShippingComponent,
-     // canActivate: [PermissionGuard],
-      data: {
-        requiredPolicy: 'Catalog.shipping',
-      },
+  },
+  {
+    path: 'shipping',
+    component: ShippingComponent,
+  },
+  {
+    path: 'order',
+    component: OrderComponent,
+    canActivate: [PermissionGuard],
+    data: {
+      requiredPolicy: 'StoreAdminCatalog.Order',
     },
-    {
-      path: 'order',
-      component: OrderComponent,
-     // canActivate: [PermissionGuard],
-      data: {
-        requiredPolicy: 'Catalog.order',
-      },
+  },
+  {
+    path: 'warehouse',
+    component: WarehouseComponent,
+    canActivate: [PermissionGuard],
+    data: {
+      requiredPolicy: 'StoreAdminCatalog.Warehouse',
     },
-    {
-      path: 'warehouse',
-      component: WarehouseComponent,
-      //canActivate: [PermissionGuard],
-      data: {
-        requiredPolicy: 'Catalog.warehouse',
-      },
+  },
+  {
+    path: 'blog',
+    component: BlogComponent,
+    canActivate: [PermissionGuard],
+    data: {
+      requiredPolicy: 'StoreAdminCatalog.Blog',
     },
-    {
-      path: 'blog',
-      component: BlogComponent,
-     // canActivate: [PermissionGuard],
-      data: {
-        requiredPolicy: 'Catalog.blog',
-      },
-    },
-    {
-      path: 'contact',
-      component: ContactComponent,
-    //  canActivate: [PermissionGuard],
-      data: {
-        requiredPolicy: 'Catalog.contact',
-      },
-    },
-  ];
+  },
+  {
+    path: 'contact',
+    component: ContactComponent,
+   
+  },
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class CatalogRoutingModule {}
+export class CatalogRoutingModule { }

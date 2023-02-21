@@ -119,6 +119,7 @@ export class ProductViewComponent implements OnInit, OnDestroy {
           this.selectedEntity = response;
           this.loadThumbnail(this.selectedEntity.image);
           this.buiLdForm();
+          this.setMode('open');
           this.toggleBlockUI(false);
         },
         error: () => {
@@ -183,7 +184,23 @@ export class ProductViewComponent implements OnInit, OnDestroy {
       imageContent: new FormControl(null),
     });
   }
-
+  setMode(mode: string) {
+    if (mode == 'open') {
+      this.form.controls['productId'].disable();
+      this.form.controls['productName'].disable();
+      this.form.controls['categoryId'].disable();
+      this.form.controls['warehouseGuid'].disable();
+      this.form.controls['quantity'].disable();
+      this.form.controls['origin'].disable();
+      this.form.controls['slug'].disable();
+      this.form.controls['price'].disable();
+      this.form.controls['priceSale'].disable();
+      this.form.controls['isActive'].disable();
+      this.form.controls['status'].disable();
+      this.form.controls['parameter'].disable();
+      this.form.controls['description'].disable();
+    } 
+  }
   saveChange() {
     this.toggleBlockUI(true);
 

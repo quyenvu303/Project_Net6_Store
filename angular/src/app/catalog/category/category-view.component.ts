@@ -109,7 +109,7 @@ export class CategoryViewComponent implements OnInit, OnDestroy {
     if (mode == 'open') {
       this.form.controls['categoryId'].disable();
       this.form.controls['categoryName'].disable();
-      //this.form.controls['ListCategory'].disable();
+      this.form.controls['parentId'].disable();
       this.form.controls['sortOrder'].disable();
       this.form.controls['isActive'].disable();
       this.form.controls['description'].disable();

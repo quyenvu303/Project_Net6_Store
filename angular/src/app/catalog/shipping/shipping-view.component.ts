@@ -58,6 +58,7 @@ export class ShippingViewComponent implements OnInit, OnDestroy {
         next: (response: ShippingDto) => {
           this.selectedEntity = response;
           this.buiLdForm();
+          this.setMode('open');
           this.toggleBlockUI(false);
         },
         error: () => {
@@ -65,7 +66,14 @@ export class ShippingViewComponent implements OnInit, OnDestroy {
         }
       });
   }
-
+  setMode(mode: string) {
+    if (mode == 'open') {
+      this.form.controls['shippingName'].disable();
+      this.form.controls['shippingFee'].disable();
+      this.form.controls['description'].disable();
+      this.form.controls['status'].disable();
+    } 
+  }
   private buiLdForm() {
     this.form = this.fb.group({
       shippingName: new FormControl(this.selectedEntity.shippingName || null,

@@ -16,7 +16,7 @@ using Volo.Abp.Uow;
 
 namespace Store.Admin.Categories
 {
-    //[Authorize(StorePermissions.Category.Default, Policy = "AdminOnly")]
+    [Authorize(StorePermissions.Category.Default)]
     public class CategoriesAppService : CrudAppService<
          Category,
          CategoryDto,
@@ -32,8 +32,15 @@ namespace Store.Admin.Categories
         {
             _categoryManager = categoryManager;
             _categoryRepository = repository;
+
+            GetPolicyName = StorePermissions.Category.Default;
+            GetListPolicyName = StorePermissions.Category.Default;
+            CreatePolicyName = StorePermissions.Category.Create;
+            UpdatePolicyName = StorePermissions.Category.Update;
+            DeletePolicyName = StorePermissions.Category.Delete;
         }
 
+        [Authorize(StorePermissions.Category.Create)]
         public override async Task<CategoryDto> CreateAsync(CreateUpdateCategoryDto input)
         {
             var product = await _categoryManager.CreateAsync(input.CategoryId, input.CategoryName, input.SortOrder, input.Description,
@@ -41,6 +48,8 @@ namespace Store.Admin.Categories
             var result = await Repository.InsertAsync(product);
             return ObjectMapper.Map<Category, CategoryDto>(result);
         }
+
+        [Authorize(StorePermissions.Category.Update)]
         public override async Task<CategoryDto> UpdateAsync(Guid id, CreateUpdateCategoryDto input)
         {
             var ca = await Repository.GetAsync(id);
@@ -58,13 +67,14 @@ namespace Store.Admin.Categories
             return ObjectMapper.Map<Category, CategoryDto>(ca);
         }
 
-      //  [Authorize(StorePermissions.Category.Delete)]
+        [Authorize(StorePermissions.Category.Delete)]
         public async Task DeleteMultileAsync(IEnumerable<Guid> ids)
         {
             await Repository.DeleteManyAsync(ids);
             await UnitOfWorkManager.Current.SaveChangesAsync();
         }
-        //[Authorize(StorePermissions.Category.Default)]
+       
+        [Authorize(StorePermissions.Category.Default)]
         public async Task<List<CategoryInlistDto>> GetListAllAsync()
         {
             var query = await Repository.GetQueryableAsync();
@@ -72,7 +82,8 @@ namespace Store.Admin.Categories
             var data = await AsyncExecuter.ToListAsync(query);
             return ObjectMapper.Map<List<Category>, List<CategoryInlistDto>>(data);
         }
-        //[Authorize(StorePermissions.Category.Default)]
+       
+        [Authorize(StorePermissions.Category.Default)]
         public async Task<PagedResultDto<CategoryInlistDto>> GetListFilterAsync(BaseListFilterDto input)
         {
             var query = await Repository.GetQueryableAsync();

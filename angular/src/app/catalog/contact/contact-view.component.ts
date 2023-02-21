@@ -57,6 +57,7 @@ export class ContactViewComponent implements OnInit, OnDestroy {
         next: (response: ContactDto) => {
           this.selectedEntity = response;
           this.buiLdForm();
+          this.setMode('open');
           this.toggleBlockUI(false);
         },
         error: () => {
@@ -64,7 +65,13 @@ export class ContactViewComponent implements OnInit, OnDestroy {
         }
       });
   }
-
+  setMode(mode: string) {
+    if (mode == 'open') {
+      this.form.controls['title'].disable();
+      this.form.controls['status'].disable();
+      this.form.controls['description'].disable();
+    } 
+  }
   private buiLdForm() {
     this.form = this.fb.group({
       title: new FormControl(this.selectedEntity.title || null,
