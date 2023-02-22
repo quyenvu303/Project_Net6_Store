@@ -1,0 +1,103 @@
+﻿@using Store.Public.Categories
+@model List<CategoryInlistDto>
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="text-center">
+                <img class="mb-10" src="/assets/imgs/template/favicon.svg" alt="Ecom">
+                <div class="preloader-dots"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<header class="header header-container sticky-bar">
+    <div class="container">
+        <div class="main-header">
+            <div class="header-left">
+                <div class="header-logo"><a href="index.html"><img alt="Ecom" src="/assets/imgs/template/logo.svg"></a></div>
+                <div class="header-search" style="width: 40%;">
+                    <div class="box-header-search">
+                        <form class="form-search" method="post" action="#">
+                            <div class="box-category">
+                                <select class="select-active select2-hidden-accessible" data-select2-id="1" tabindex="-1"
+                                        aria-hidden="true">
+                                    <option>Danh mục</option>
+                                    @foreach (var item in Model)
+                                    {
+                                            <option value="@item.Id"> @item.CategoryName</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="box-keysearch">
+                                <input class="form-control font-xs" type="text" value="" placeholder="Search for items">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="header-nav">
+                    <nav class="nav-main-menu d-none d-xl-block">
+                        <ul class="main-menu">
+                            <li class="has-children">
+                                <a href="shop.html">Shop</a>
+                                <ul class="sub-menu two-col">
+                                    @foreach (var item in Model)
+                                    {
+                                        <li><a href="/products/@(item.CategoryId).html">@item.CategoryName</a></li>
+                                    }
+                                </ul>
+                            </li>
+                            <li class="has-children">
+                                <a href="#">Pages</a>
+                                <ul class="sub-menu">
+                                    <li><a href="page-about-us.html">About Us</a></li>
+                                    <li><a href="page-contact.html">Contact Us</a></li>
+                                    <li><a href="page-careers.html">Careers</a></li>
+                                    <li><a href="page-term.html">Term and Condition</a></li>
+                                    <li><a href="page-register.html">Register</a></li>
+                                    <li><a href="page-login.html">Login</a></li>
+                                    <li><a href="page-404.html">Error 404</a></li>
+                                </ul>
+                            </li>
+                            <li class="has-children">
+                                <a href="blog.html">Blog</a>
+                                <ul class="sub-menu">
+                                    <li><a href="blog-single-3.html">Blog Single - No sidebar</a></li>
+                                </ul>
+                            </li>
+                            <li class="has-children">
+                                <a href="page-contact.html">Contact</a>
+                                <ul class="sub-menu">
+                                    <li><a href="blog.html">Blog - No Sidebar</a></li>
+                                    <li><a href="blog-single-3.html">Blog Single - No sidebar</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="burger-icon burger-icon-white">
+                        <span class="burger-icon-top"></span><span class="burger-icon-mid"></span><span class="burger-icon-bottom"></span>
+                    </div>
+                </div>
+                <div class="header-shop">
+                    <div class="d-inline-block box-dropdown-cart">
+                        <span class="font-lg icon-list icon-cart">
+                            <span>Cart</span><span class="number-item font-xs">2</span>
+                        </span>
+                    </div>
+                    <div class="d-inline-block box-dropdown-cart">
+                        <span class="font-lg icon-list icon-account"><span>Account</span></span>
+                        <div class="dropdown-account">
+                            <ul>
+                                <li><a href="page-account.html">My Account</a></li>
+                                <li><a href="page-login.html">Sign out</a></li>
+                            </ul>
+                        </div>
+                    </div><a class="font-lg icon-list icon-wishlist" href="shop-wishlist.html">
+                        <span>Wishlist</span><span class="number-item font-xs">5</span>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</header>

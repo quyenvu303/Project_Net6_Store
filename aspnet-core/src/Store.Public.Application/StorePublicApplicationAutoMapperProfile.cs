@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Store.Categories;
+using Store.Public.Categories;
 
 namespace Store.Public;
 
@@ -6,8 +8,8 @@ public class StorePublicApplicationAutoMapperProfile : Profile
 {
     public StorePublicApplicationAutoMapperProfile()
     {
-        /* You can configure your AutoMapper mapping configuration here.
-         * Alternatively, you can split your mapping configurations
-         * into multiple profile classes for a better organization. */
+        // Category
+        CreateMap<Category, CategoryDto>();
+        CreateMap<Category, CategoryInlistDto>();
     }
 }
