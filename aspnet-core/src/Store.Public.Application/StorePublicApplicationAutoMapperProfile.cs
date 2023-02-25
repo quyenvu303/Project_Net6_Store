@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Store.Categories;
+using Store.Products;
 using Store.Public.Categories;
+using Store.Public.Products;
 
 namespace Store.Public;
 
@@ -11,5 +13,9 @@ public class StorePublicApplicationAutoMapperProfile : Profile
         // Category
         CreateMap<Category, CategoryDto>();
         CreateMap<Category, CategoryInlistDto>();
+
+        // Category
+        CreateMap<Product, ProductDto>();
+        CreateMap<Product, ProductInlistDto>();
     }
 }

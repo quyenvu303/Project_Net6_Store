@@ -20,11 +20,17 @@
                         <div class="sidebar-head">
                             <h6 class="color-gray-900">Product Categories</h6>
                         </div>
-                        <div class="sidebar-content">
-                            <ul class="list-nav-arrow">
-                                <li><a href="shop-grid.html">Computers &amp; Laptop<span class="number">09</span></a></li>
-                            </ul>
-                        </div>
+                        @*@foreach (var items in Model.Categories)
+                        {*@
+                            <div class="sidebar-content">
+                                <ul class="list-nav-arrow">
+                                    <li><a href="shop-grid.html">Computers &amp; Laptop<span class="number">09</span></a></li>
+                                </ul>
+                            </div>
+
+
+                        @*}*@
+
                     </div>
                 </div>
                 <div class="col-xl-9 col-lg-8 col-md-8 mb-30">
@@ -98,6 +104,46 @@
         </div>
     </div>
 </section>
+<section class="section-box">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5">
+                <h3>Featured Categories</h3>
+                <p class="font-base">Choose your necessary products from this feature categories.</p>
+            </div>
+        </div>
+        <div class="mt-50">
+            <div class="row">
+                @foreach (var items in Model.Categories)
+                {
+                    var url = $"/product/{items.CategoryId}.html";
+                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12">
+                        <div class="card-grid-style-2 card-grid-style-2-small hover-up">
+                            <div class="image-box">
+                                <a href="@url" title="@items.CategoryName">
+                                    <img src="assets/imgs/page/homepage1/smartphone.png" alt="@items.CategoryName">
+                                </a>
+                            </div>
+                            <div class="info-right">
+                                <a class="color-brand-3 font-sm-bold" title="@items.CategoryName" href="@url">
+                                    <h6>@items.CategoryName</h6>
+                                </a>
+                                <ul class="list-links-disc">
+                                    @foreach (var child in items.Children)
+                                    {
+                                        var childUrl = $"/products/{child.CategoryId}.html";
+                                        <li><a class="font-sm" href="@childUrl">@child.CategoryName</a></li>
+                                    }
+                                </ul>
+                                <a class="btn btn-gray-abs" title="@items.CategoryName" href="@url">View all</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
 <section class="section-box pt-50">
     <div class="container">
         <div class="row">
@@ -141,6 +187,8 @@
                     <partial name="_Product_BestSellers" />
                     <partial name="_Product_BestSellers" />
                     <partial name="_Product_BestSellers" />
+
+
                 </div>
             </div>
         </div>
