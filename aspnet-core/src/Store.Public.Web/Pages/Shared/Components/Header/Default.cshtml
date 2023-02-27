@@ -1,5 +1,27 @@
 ﻿@using Store.Public.Categories
 @model List<CategoryInlistDto>
+<div class="sidebar-left">
+    <a class="btn btn-open"></a>
+    <ul class="menu-texts menu-close">
+        <li class="has-children">
+            @foreach (var items in Model)
+            {
+                var url = $"/product/{items.CategoryId}.html";
+                <a href="@url">
+                    <span class="img-link"><img src="" alt=""></span>
+                    <span class="text-link">@items.CategoryName</span>
+                </a>
+                <ul class="sub-menu">
+                    @foreach (var child in items.Children)
+                    {
+                        var childUrl = $"/products/{child.CategoryId}.html";
+                        <li><a class="font-sm" href="@childUrl">@child.CategoryName</a></li>
+                    }
+                </ul>
+            }
+        </li>
+    </ul>
+</div>
 <div id="preloader-active">
     <div class="preloader d-flex align-items-center justify-content-center">
         <div class="preloader-inner position-relative">
@@ -24,7 +46,7 @@
                                     <option>Danh mục</option>
                                     @foreach (var item in Model)
                                     {
-                                            <option value="@item.Id"> @item.CategoryName</option>
+                                        <option value="@item.Id"> @item.CategoryName</option>
                                     }
                                 </select>
                             </div>
@@ -101,3 +123,129 @@
     </div>
 
 </header>
+<div class="mobile-header-active mobile-header-wrapper-style perfect-scrollbar">
+    <div class="mobile-header-wrapper-inner">
+        <div class="mobile-header-content-area">
+            <div class="mobile-logo"><a class="d-flex" href="index.html"><img alt="Ecom" src="assets/imgs/template/logo.svg"></a></div>
+            <div class="perfect-scroll">
+                <div class="mobile-menu-wrap mobile-header-border">
+                    <nav class="mt-15">
+                        <ul class="mobile-menu font-heading">
+                            @foreach (var items in Model)
+                            {
+                                var url = $"/product/{items.CategoryId}.html";
+                                <li class="has-children">
+                                    <a class="active" href="@url">@items.CategoryName</a>
+                                    <ul class="sub-menu">
+                                        @foreach (var child in items.Children)
+                                        {
+                                            var childUrl = $"/products/{child.CategoryId}.html";
+                                            <li><a class="font-sm" href="@childUrl">@child.CategoryName</a></li>
+                                        }
+                                    </ul>
+                                </li>
+                            }
+
+                        </ul>
+                    </nav>
+                </div>
+                <div class="mobile-account">
+                    <div class="mobile-header-top">
+                        <div class="user-account">
+                            <a href="page-account.html"><img src="assets/imgs/template/ava_1.png" alt="Ecom"></a>
+                            <div class="content">
+                                <h6 class="user-name">Hello<span class="text-brand"> Steven !</span></h6>
+                                <p class="font-xs text-muted">You have 3 new messages</p>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="mobile-menu">
+                        <li><a href="page-account.html">My Account</a></li>
+                        <li><a href="page-account.html">Order Tracking</a></li>
+                        <li><a href="page-account.html">My Orders</a></li>
+                        <li><a href="page-account.html">My Wishlist</a></li>
+                        <li><a href="page-account.html">Setting</a></li>
+                        <li><a href="page-login.html">Sign out</a></li>
+                    </ul>
+                </div>
+                <div class="mobile-banner">
+                    <div class="bg-5 block-iphone">
+                        <span class="color-brand-3 font-sm-lh32">Starting from $899</span>
+                        <h3 class="font-xl mb-10">iPhone 12 Pro 128Gb</h3>
+                        <p class="font-base color-brand-3 mb-10">Special Sale</p><a class="btn btn-arrow" href="shop-grid.html">learn more</a>
+                    </div>
+                </div>
+                <div class="site-copyright color-gray-400 mt-30">Copyright 2022 &copy; Ecom - Marketplace Template.<br>Designed by<a href="http://alithemes.com" target="_blank">&nbsp; AliThemes</a></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sidebar-left">
+    <a class="btn btn-open" href="#"></a>
+    <ul class="menu-icons hidden">
+        <li><a href="javascript:void(0)"><img src="assets/imgs/template/monitor.svg" alt="Ecom"></a></li>
+        <li><a href="javascript:void(0)"><img src="assets/imgs/template/mobile.svg" alt="Ecom"></a></li>
+    </ul>
+    <ul class="menu-texts menu-close">
+        <li class="has-children">
+            @foreach (var items in Model)
+            {
+                var url = $"/product/{items.CategoryId}.html";
+                <a href="@url"><span class="img-link"><img src="assets/imgs/template/cat_icon.png" alt="@items.CategoryName"></span><span class="text-link">@items.CategoryName</span></a>
+                <ul class="sub-menu">
+                    @foreach (var child in items.Children)
+                    {
+                        var childUrl = $"/products/{child.CategoryId}.html";
+                        <li><a class="font-sm" href="@childUrl">@child.CategoryName</a></li>
+                    }
+                </ul>
+            }
+        </li>
+
+    </ul>
+</div>
+<div class="mobile-header-active mobile-header-wrapper-style perfect-scrollbar">
+    <div class="mobile-header-wrapper-inner">
+        <div class="mobile-header-content-area">
+            <div class="mobile-logo"><a class="d-flex" href="index.html"><img alt="Ecom" src="assets/imgs/template/logo.svg"></a></div>
+            <div class="perfect-scroll">
+                <div class="mobile-menu-wrap mobile-header-border">
+                    <nav class="mt-15">
+                        <ul class="mobile-menu font-heading">
+                            @foreach (var items in Model)
+                            {
+                                var url = $"/product/{items.CategoryId}.html";
+                                <li class="has-children">
+                                    <a class="active" href="@url">@items.CategoryName</a>
+                                    <ul class="sub-menu">
+                                        @foreach (var child in items.Children)
+                                        {
+                                            var childUrl = $"/products/{child.CategoryId}.html";
+                                            <li><a class="font-sm" href="@childUrl">@child.CategoryName</a></li>
+                                        }
+                                    </ul>
+                                </li>
+                            }
+
+                        </ul>
+                    </nav>
+                </div>
+                <div class="mobile-account">
+                    <div class="mobile-header-top">
+                        <div class="user-account">
+                            <a href="page-account.html"><img src="assets/imgs/template/ava_1.png" alt="Ecom"></a>
+                            <div class="content">
+                                <h6 class="user-name">Hello<span class="text-brand"> Steven !</span></h6>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="mobile-menu">
+                        <li><a href="page-account.html">My Account</a></li>
+                        <li><a href="page-account.html">Setting</a></li>
+                        <li><a href="page-login.html">Sign out</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

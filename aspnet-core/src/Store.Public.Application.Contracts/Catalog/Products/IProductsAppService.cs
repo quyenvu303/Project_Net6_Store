@@ -7,13 +7,14 @@ using Volo.Abp.Application.Services;
 
 namespace Store.Public.Products
 {
-    public interface IProductAppService : IReadOnlyAppService<
+    public interface IProductsAppService : IReadOnlyAppService<
         ProductDto,
         Guid,
         PagedResultRequestDto>
     {
         Task<PagedResult<ProductInlistDto>> GetListFilterAsync(ProductFilter input);
         Task<List<ProductInlistDto>> GetListAllAsync();
+        Task<List<ProductInlistDto>> GetListTopSellersAsync(int numberOfRecords);
         Task<string> GetImageAsync(string fileName);
 
     }

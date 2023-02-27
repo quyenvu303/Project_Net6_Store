@@ -14,7 +14,7 @@ public class StorePublicApplicationAutoMapperProfile : Profile
         CreateMap<Category, CategoryDto>();
         CreateMap<Category, CategoryInlistDto>();
 
-        // Category
+        // Product
         CreateMap<Product, ProductDto>();
         CreateMap<Product, ProductInlistDto>();
     }

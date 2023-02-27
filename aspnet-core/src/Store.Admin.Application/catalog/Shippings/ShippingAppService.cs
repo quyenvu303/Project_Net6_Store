@@ -1,6 +1,6 @@
 ﻿using AutoMapper.Internal.Mappers;
 using Microsoft.AspNetCore.Authorization;
-using Store.Admin.Catalog.Shippings;
+using Store.Admin.Shippings;
 using Store.Admin.Permissions;
 using Store.Shippings;
 using System;

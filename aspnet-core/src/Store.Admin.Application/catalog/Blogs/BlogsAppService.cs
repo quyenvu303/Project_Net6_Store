@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Store.Admin.Catalog.Blogs;
+using Store.Admin.Blogs;
 using Store.Admin.Permissions;
 using Store.Blogs;
 using System;

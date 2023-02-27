@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Store.Admin.Catalog.Contacts;
+using Store.Admin.Contacts;
 using Store.Contacts;
 using System;
 using System.Collections.Generic;

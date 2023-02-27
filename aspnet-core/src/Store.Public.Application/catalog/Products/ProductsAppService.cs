@@ -1,6 +1,5 @@
 ﻿using AutoMapper.Internal.Mappers;
 using Microsoft.AspNetCore.Authorization;
-using Store.Categories;
 using Store.Products;
 using Store.Warehouses;
 using System;
@@ -25,27 +24,14 @@ namespace Store.Public.Products
         Product,
         ProductDto,
         Guid,
-        PagedResultRequestDto>, IProductAppService
+        PagedResultRequestDto>, IProductsAppService
     {
-        private readonly ProductManager _productManager;
-        private readonly IRepository<Category> _categoryRepository;
-        private readonly IRepository<Warehouse> _warehouseRepository;
         private readonly IBlobContainer<ProductImageContainer> _fileContainer;
-        private readonly ProductCodeGenerator _productCodeGenerator;
-        public ProductsAppService(
-            IRepository<Product, Guid> repository,
-            IRepository<Category> categoryRepository,
-            IRepository<Warehouse> warehouseRepository,
-            ProductManager productManager,
-            IBlobContainer<ProductImageContainer> fileContainer,
-            ProductCodeGenerator productCodeGenerator)
+        public ProductsAppService(IRepository<Product, Guid> repository,
+            IBlobContainer<ProductImageContainer> fileContainer)
             : base(repository)
         {
-            _productManager = productManager;
-            _categoryRepository = categoryRepository;
-            _warehouseRepository = warehouseRepository;
             _fileContainer = fileContainer;
-            _productCodeGenerator = productCodeGenerator;
         }
 
         public async Task<string> GetImageAsync(string fileName)
@@ -91,6 +77,14 @@ namespace Store.Public.Products
             );
         }
 
-
+        public async Task<List<ProductInlistDto>> GetListTopSellersAsync(int numberOfRecords)
+        {
+            var query = await Repository.GetQueryableAsync();
+            query = query.Where(x => x.IsActive == true)
+                .OrderByDescending(x => x.CreationTime)
+                .Take(numberOfRecords);
+            var data = await AsyncExecuter.ToListAsync(query);
+            return ObjectMapper.Map<List<Product>, List<ProductInlistDto>>(data);
+        }
     }
 }
