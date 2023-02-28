@@ -15,5 +15,8 @@ namespace Store.Public.Categories
     {
         Task<PagedResult<CategoryInlistDto>> GetListFilterAsync(BaseListFilterDto input);
         Task<List<CategoryInlistDto>> GetListAllAsync();
+        Task<string> GetImageAsync(string fileName);
+
+        Task<CategoryDto> GetByCategoryIdAsync(string CategoryId);
     }
 }

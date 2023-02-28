@@ -10,6 +10,8 @@ namespace Store.Admin.Categories
         public string CategoryName { get; set; }
         public int? SortOrder { get; set; }
         public string Description { get; set; }
+        public string IconName { get; set; }
+        public string IconContent { get; set; }
         public Guid? ParentId { get; set; }
         public bool? IsActive { get; set; }
     }

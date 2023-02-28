@@ -1,8 +1,10 @@
 ﻿using AutoMapper.Internal.Mappers;
 using Microsoft.AspNetCore.Authorization;
+using Store.Categories;
 using Store.Products;
 using Store.Warehouses;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -15,8 +17,10 @@ using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.BlobStoring;
 using Volo.Abp.Domain.Repositories;
+using Volo.Abp.ObjectMapping;
 using Volo.Abp.Uow;
 using static System.Net.Mime.MediaTypeNames;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Store.Public.Products
 {
@@ -27,11 +31,26 @@ namespace Store.Public.Products
         PagedResultRequestDto>, IProductsAppService
     {
         private readonly IBlobContainer<ProductImageContainer> _fileContainer;
+        private readonly IRepository<Category> _categoryRepository;
         public ProductsAppService(IRepository<Product, Guid> repository,
-            IBlobContainer<ProductImageContainer> fileContainer)
+            IBlobContainer<ProductImageContainer> fileContainer,
+            IRepository<Category, Guid> categoryrepository1
+            )
             : base(repository)
         {
             _fileContainer = fileContainer;
+            _categoryRepository = categoryrepository1;
+        }
+
+        public async Task<List<ProductInlistDto>> GetByIdAsync(string CategoryId)
+        {
+            var category = await _categoryRepository.GetAsync(x => x.CategoryId == CategoryId);
+
+            var product = await Repository.GetQueryableAsync();
+            product = product.Where(x => x.CategoryId == category.Id);
+            var data = await AsyncExecuter.ToListAsync(product);
+            return ObjectMapper.Map<List<Product>, List<ProductInlistDto>>(data);
+
         }
 
         public async Task<string> GetImageAsync(string fileName)
@@ -61,7 +80,13 @@ namespace Store.Public.Products
         public async Task<PagedResult<ProductInlistDto>> GetListFilterAsync(ProductFilter input)
         {
             var query = await Repository.GetQueryableAsync();
+
+            var category = await _categoryRepository.GetAsync(x => x.CategoryId == input.CateId);
+            var product = await Repository.GetQueryableAsync();
+            product = product.Where(x => x.CategoryId == category.Id);
+
             query = query.WhereIf(!string.IsNullOrWhiteSpace(input.Keyword), x => x.ProductName.Contains(input.Keyword) || x.CategoryName.Contains(input.Keyword));
+            query = query.Where(x => x.CategoryId == category.Id);
 
             var totalCount = await AsyncExecuter.LongCountAsync(query);
             var data = await AsyncExecuter

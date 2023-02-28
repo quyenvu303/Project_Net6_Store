@@ -17,5 +17,6 @@ namespace Store.Admin.Categories
         Task<PagedResultDto<CategoryInlistDto>> GetListFilterAsync(BaseListFilterDto input);
         Task<List<CategoryInlistDto>> GetListAllAsync();
         Task DeleteMultileAsync(IEnumerable<Guid> ids);
+        Task<string> GetImageAsync(string fileName);
     }
 }

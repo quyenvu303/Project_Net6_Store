@@ -40,6 +40,7 @@ using Volo.Abp.VirtualFileSystem;
 using Store.EntityFrameworkCore;
 using Store.Localization;
 using Store.MultiTenancy;
+using Volo.Abp.Caching.StackExchangeRedis;
 
 namespace Store.Public.Web;
 
@@ -54,7 +55,8 @@ namespace Store.Public.Web;
     typeof(AbpAspNetCoreMvcUiLeptonXLiteThemeModule),
     typeof(AbpTenantManagementWebModule),
     typeof(AbpAspNetCoreSerilogModule),
-    typeof(AbpSwashbuckleModule)
+    typeof(AbpSwashbuckleModule),
+    typeof(AbpCachingStackExchangeRedisModule)
     )]
 public class StorePublicWebModule : AbpModule
 {

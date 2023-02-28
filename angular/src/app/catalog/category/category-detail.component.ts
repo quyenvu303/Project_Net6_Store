@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { CategoriesService, CategoryDto, CategoryInlistDto } from '@proxy/categories';
 import { forkJoin, Subject, take, takeUntil } from 'rxjs';
 import { Message, MessageService } from 'primeng/api';
@@ -6,6 +6,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { UtilityService } from 'src/app/shared/services/utility.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   providers: [MessageService],
   selector: 'app-category-detail',
@@ -20,6 +21,8 @@ export class CategoryDetailComponent implements OnInit, OnDestroy {
   parentId: string = '';
   //dropdown
   ListCategory: any[] = [];
+  // Image ảnh
+  public icon;
 
   constructor(
     private CategoryService: CategoriesService,
@@ -28,6 +31,8 @@ export class CategoryDetailComponent implements OnInit, OnDestroy {
     private ref: DynamicDialogRef,
     private notificationSerivce: NotificationService,
     private utilService: UtilityService,
+    private cd: ChangeDetectorRef,
+    private sanitizer: DomSanitizer
     ) { }
 
   validationMessages = {
@@ -81,13 +86,42 @@ export class CategoryDetailComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (response: CategoryDto) => {
           this.selectedEntity = response;
+          this.loadThumbnail(this.selectedEntity.icon);
           this.buildForm();
-          this.setMode('open');
+         // this.setMode('open');
           this.toggleBlockUI(false);
         },
         error: () => {
           this.toggleBlockUI(false);
         }
+      });
+  }
+  onFileChange(event){
+    const reader = new FileReader();
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.form.patchValue({
+          iconName: file.name != null ? file.name : null,
+          iconContent: reader.result,
+        });
+        this.cd.markForCheck();
+      };
+    }
+  }
+
+  loadThumbnail(fileName: string) {
+    this.CategoryService
+      .getImage(fileName)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe({
+        next: (response: string) => {
+          var fileExt = this.selectedEntity.icon?.split('.').pop();
+          this.icon = this.sanitizer.bypassSecurityTrustResourceUrl(
+            `data:image/${fileExt};base64, ${response}`
+          );
+        },
       });
   }
 
@@ -103,6 +137,8 @@ export class CategoryDetailComponent implements OnInit, OnDestroy {
       sortOrder: new FormControl(this.selectedEntity.sortOrder || null, Validators.required),
       description: new FormControl(this.selectedEntity.description || null, Validators.compose([Validators.required, Validators.maxLength(250)])),
       isActive: new FormControl(this.selectedEntity.isActive ),
+      iconName: new FormControl(this.selectedEntity.icon || null),
+      iconContent: new FormControl(null),
     });
   }
 

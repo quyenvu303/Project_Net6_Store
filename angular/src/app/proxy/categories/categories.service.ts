@@ -45,6 +45,16 @@ export class CategoriesService {
     { apiName: this.apiName });
   
 
+  getImage = (fileName: string) =>
+    this.restService.request<any, string>({
+      method: 'GET',
+      responseType: 'text',
+      url: '/api/app/categories/image',
+      params: { fileName },
+    },
+    { apiName: this.apiName });
+  
+
   getList = (input: PagedResultRequestDto) =>
     this.restService.request<any, PagedResultDto<CategoryDto>>({
       method: 'GET',

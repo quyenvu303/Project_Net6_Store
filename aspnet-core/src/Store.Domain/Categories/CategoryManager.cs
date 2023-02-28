@@ -16,14 +16,21 @@ namespace Store.Categories
         {
             _CategoryRepository = CategoryRepository;
         }
-        public async Task<Category> CreateAsync(string categoryId, string categoryName, int? sortOrder, string description, Guid? parentId, bool? isActive)
+        public async Task<Category> CreateAsync(
+            string categoryId,
+            string categoryName,
+            int? sortOrder,
+            string description, 
+            //string icon, 
+            Guid? parentId,
+            bool? isActive)
         {
             if (await _CategoryRepository.AnyAsync(x => x.CategoryId == categoryId))
                 throw new UserFriendlyException("Mã đã tồn tại", StoreDomainErrorCodes.CategoryIdAlreadyExists);
             if (await _CategoryRepository.AnyAsync(x => x.CategoryName == categoryName))
                 throw new UserFriendlyException("Tên đã tồn tại", StoreDomainErrorCodes.CategoryNameAlreadyExists);
 
-            return new Category(Guid.NewGuid(), categoryId,categoryName,sortOrder,description,parentId,isActive);
+            return new Category(Guid.NewGuid(), categoryId,categoryName,sortOrder,description,null,parentId,isActive);
         }
     }
 }

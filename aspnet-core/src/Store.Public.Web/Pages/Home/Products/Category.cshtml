@@ -1,0 +1,113 @@
+﻿@page "/products/{CategoryId}.html"
+@model Store.Public.Web.Pages.Home.Products.CategoryModel
+@{
+}
+
+<div class="section-box">
+    <div class="breadcrumbs-div">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li><a class="font-xs color-gray-1000" href="/">Home</a></li>
+                <li><a class="font-xs color-gray-500">@Model.Category.CategoryName</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="section-box shop-template mt-30">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9 order-first order-lg-last">
+                <div class="box-filters mt-0 pb-5 border-bottom">
+                    <div class="row">
+                        <div class="col-xl-2 col-lg-3 mb-10 text-lg-start text-center"></div>
+                        <div class="col-xl-10 col-lg-9 mb-10 text-lg-end text-center">
+                            <div class="d-inline-block"><a class="view-type-grid mr-5 active" href=""></a><a class="view-type-list" href="shop-list.html"></a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-20">
+                    @foreach (var item in Model.ProductData.Results)
+                    {
+                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+
+                            <partial name="_Product_BestSellers" model="item" />
+
+                        </div>
+                    }
+                </div>
+                <partial name="_Paginator" model="Model.ProductData" />
+            </div>
+            <div class="col-lg-3 order-last order-lg-first">
+                <div class="sidebar-border mb-0">
+                    <div class="sidebar-head">
+                        <h6 class="color-gray-900">Product Categories</h6>
+                    </div>
+                    <div class="sidebar-content">
+                        <ul class="list-nav-arrow">
+                            @foreach (var item in Model.Categories)
+                            {
+                                <li><a href="/products/@(item.CategoryId).html">@item.CategoryName</a></li>
+                            }
+                        </ul>
+                        <div>
+                            <div class="collapse" id="moreMenu">
+                                <ul class="list-nav-arrow">
+                                    <li><a href="shop-grid.html">Home theater<span class="number">98</span></a></li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sidebar-border mb-40">
+
+                    <div class="sidebar-content">
+                        <h6 class="color-gray-900 mt-10 mb-10">Price</h6>
+                        <ul class="list-checkbox">
+                            <li>
+                                <label class="cb-container">
+                                    <input type="checkbox" checked="checked"><span class="text-small">Free - $100</span><span class="checkmark"></span>
+                                </label><span class="number-item">145</span>
+                            </li>
+                            <li>
+                                <label class="cb-container">
+                                    <input type="checkbox"><span class="text-small">$100 - $200</span><span class="checkmark"></span>
+                                </label><span class="number-item">56</span>
+                            </li>
+                            <li>
+                                <label class="cb-container">
+                                    <input type="checkbox"><span class="text-small">$200 - $400</span><span class="checkmark"></span>
+                                </label><span class="number-item">23</span>
+                            </li>
+                            <li>
+                                <label class="cb-container">
+                                    <input type="checkbox"><span class="text-small">$400 - $600</span><span class="checkmark"></span>
+                                </label><span class="number-item">43</span>
+                            </li>
+                            <li>
+                                <label class="cb-container">
+                                    <input type="checkbox"><span class="text-small">$600 - $800</span><span class="checkmark"></span>
+                                </label><span class="number-item">65</span>
+                            </li>
+                            <li>
+                                <label class="cb-container">
+                                    <input type="checkbox"><span class="text-small">Over $1000</span><span class="checkmark"></span>
+                                </label><span class="number-item">56</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="box-slider-item">
+                    <div class="head pb-15 border-brand-2">
+                        <h5 class="color-gray-900">Product Tags</h5>
+                    </div>
+                    <div class="content-slider mb-50">
+                        <a class="btn btn-border mr-5" href="shop-grid.html">Games</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

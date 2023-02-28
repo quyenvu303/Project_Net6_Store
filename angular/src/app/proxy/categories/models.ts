@@ -5,6 +5,7 @@ export interface CategoryDto {
   categoryName?: string;
   sortOrder?: number;
   description?: string;
+  icon?: string;
   parentId?: string;
   isActive?: boolean;
   id?: string;
@@ -15,6 +16,7 @@ export interface CategoryInlistDto extends EntityDto<string> {
   categoryName?: string;
   sortOrder?: number;
   description?: string;
+  icon?: string;
   parentId?: string;
   isActive?: boolean;
 }
@@ -24,6 +26,8 @@ export interface CreateUpdateCategoryDto {
   categoryName?: string;
   sortOrder?: number;
   description?: string;
+  iconName?: string;
+  iconContent?: string;
   parentId?: string;
   isActive?: boolean;
 }

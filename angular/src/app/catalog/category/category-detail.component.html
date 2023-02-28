@@ -30,6 +30,13 @@
                 <p-checkbox formControlName="isActive" binary="true" id="isActive"></p-checkbox>
                 <label for="isActive">Hiển thị</label>
             </div>
+            <div class="field col-12 md:col-6">
+                <label for="icon">Hình ảnh</label>
+                <input id="icon" type="file" (change)="onFileChange($event)" class="w-full">
+            </div>
+            <div class="field col-12 md:col-6">
+                <p-image [src]="icon" [alt]="selectedEntity.icon" width="250" [preview]="true"></p-image>
+            </div>
             <div class="field col-12">
                 <label for="description" class="block">Mô tả</label>
                 <p-editor formControlName="description" [style]="{'height':'320px'}" skipValidation></p-editor>

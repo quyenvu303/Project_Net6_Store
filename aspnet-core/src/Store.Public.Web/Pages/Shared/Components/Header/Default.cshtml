@@ -1,12 +1,13 @@
 ﻿@using Store.Public.Categories
 @model List<CategoryInlistDto>
-<div class="sidebar-left">
+@inject ICategoriesAppService _categoryappService;
+@*<div class="sidebar-left">
     <a class="btn btn-open"></a>
     <ul class="menu-texts menu-close">
         <li class="has-children">
             @foreach (var items in Model)
             {
-                var url = $"/product/{items.CategoryId}.html";
+                var url = $"/products/{items.CategoryId}.html";
                 <a href="@url">
                     <span class="img-link"><img src="" alt=""></span>
                     <span class="text-link">@items.CategoryName</span>
@@ -31,12 +32,12 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
 <header class="header header-container sticky-bar">
     <div class="container">
         <div class="main-header">
             <div class="header-left">
-                <div class="header-logo"><a href="index.html"><img alt="Ecom" src="/assets/imgs/template/logo.svg"></a></div>
+                <div class="header-logo"><a href=""><img alt="Ecom" src="/assets/imgs/template/logo.svg"></a></div>
                 <div class="header-search" style="width: 40%;">
                     <div class="box-header-search">
                         <form class="form-search" method="post" action="#">
@@ -133,7 +134,8 @@
                         <ul class="mobile-menu font-heading">
                             @foreach (var items in Model)
                             {
-                                var url = $"/product/{items.CategoryId}.html";
+                                var url = $"/products/{items.CategoryId}.html";
+
                                 <li class="has-children">
                                     <a class="active" href="@url">@items.CategoryName</a>
                                     <ul class="sub-menu">
@@ -183,15 +185,22 @@
 <div class="sidebar-left">
     <a class="btn btn-open" href="#"></a>
     <ul class="menu-icons hidden">
-        <li><a href="javascript:void(0)"><img src="assets/imgs/template/monitor.svg" alt="Ecom"></a></li>
-        <li><a href="javascript:void(0)"><img src="assets/imgs/template/mobile.svg" alt="Ecom"></a></li>
+        @foreach (var items in Model)
+        {
+            var fileContent = await _categoryappService.GetImageAsync(items.Icon);
+            var base64Image = Store.Helpers.ImageHelper.ShowBase64(items.Icon, fileContent);
+            <li><a href="javascript:void(0)"><img src="@base64Image" alt="@items.CategoryName"></a></li>
+        }
     </ul>
     <ul class="menu-texts menu-close">
-        <li class="has-children">
-            @foreach (var items in Model)
-            {
-                var url = $"/product/{items.CategoryId}.html";
-                <a href="@url"><span class="img-link"><img src="assets/imgs/template/cat_icon.png" alt="@items.CategoryName"></span><span class="text-link">@items.CategoryName</span></a>
+        @foreach (var items in Model)
+        {
+            var url = $"/products/{items.CategoryId}.html";
+            var fileContent = await _categoryappService.GetImageAsync(items.Icon);
+            var base64Image = Store.Helpers.ImageHelper.ShowBase64(items.Icon, fileContent);
+            <li class="has-children">
+
+                <a href="@url"><span class="img-link"><img src="@base64Image" alt="@items.CategoryName" style="width:50%"></span><span class="text-link">@items.CategoryName</span></a>
                 <ul class="sub-menu">
                     @foreach (var child in items.Children)
                     {
@@ -199,9 +208,8 @@
                         <li><a class="font-sm" href="@childUrl">@child.CategoryName</a></li>
                     }
                 </ul>
-            }
-        </li>
-
+            </li>
+        }
     </ul>
 </div>
 <div class="mobile-header-active mobile-header-wrapper-style perfect-scrollbar">
@@ -214,7 +222,7 @@
                         <ul class="mobile-menu font-heading">
                             @foreach (var items in Model)
                             {
-                                var url = $"/product/{items.CategoryId}.html";
+                                var url = $"/products/{items.CategoryId}.html";
                                 <li class="has-children">
                                     <a class="active" href="@url">@items.CategoryName</a>
                                     <ul class="sub-menu">

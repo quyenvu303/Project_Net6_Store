@@ -17,5 +17,7 @@ namespace Store.Public.Products
         Task<List<ProductInlistDto>> GetListTopSellersAsync(int numberOfRecords);
         Task<string> GetImageAsync(string fileName);
 
+        Task<List<ProductInlistDto>> GetByIdAsync(string CategoryId);
+
     }
 }

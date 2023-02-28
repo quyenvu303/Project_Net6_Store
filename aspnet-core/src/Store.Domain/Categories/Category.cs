@@ -10,13 +10,15 @@ namespace Store.Categories
     public class Category : CreationAuditedAggregateRoot<Guid>
     {
         public Category() { }
-        public Category(Guid id, string categoryId, string categoryName, int? sortOrder, string description, Guid? parentId, bool? isActive)
+        public Category(Guid id, string categoryId, string categoryName, int? sortOrder, 
+            string description, string icon, Guid? parentId, bool? isActive)
         {
             Id = id;
             CategoryId = categoryId;
             CategoryName = categoryName;
             SortOrder = sortOrder;
             Description = description;
+            Icon = icon;
             ParentId = parentId;
             IsActive = isActive;
         }
@@ -25,6 +27,7 @@ namespace Store.Categories
         public string CategoryName { get; set; }
         public int? SortOrder { get; set; }
         public string Description { get; set; }
+        public string Icon { get; set; }
         public Guid? ParentId { get; set; }
         public bool? IsActive { get; set; }
 

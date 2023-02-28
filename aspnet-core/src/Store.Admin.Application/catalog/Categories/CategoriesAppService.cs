@@ -3,14 +3,17 @@ using Microsoft.AspNetCore.Authorization;
 using Store.Admin.Categories;
 using Store.Admin.Permissions;
 using Store.Categories;
+using Store.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
+using Volo.Abp.BlobStoring;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.ObjectMapping;
 using Volo.Abp.Uow;
@@ -28,11 +31,15 @@ namespace Store.Admin.Categories
     {
         private readonly CategoryManager _categoryManager;
         private readonly IRepository<Category> _categoryRepository;
-        public CategoriesAppService(IRepository<Category, Guid> repository, CategoryManager categoryManager)
+        private readonly IBlobContainer<CategoryIconContainer> _fileContainer;
+        public CategoriesAppService(IRepository<Category, Guid> repository,
+            CategoryManager categoryManager,
+            IBlobContainer<CategoryIconContainer> fileContainer)
             : base(repository)
         {
             _categoryManager = categoryManager;
             _categoryRepository = repository;
+            _fileContainer = fileContainer;
 
             GetPolicyName = StorePermissions.Category.Default;
             GetListPolicyName = StorePermissions.Category.Default;
@@ -44,8 +51,19 @@ namespace Store.Admin.Categories
         [Authorize(StorePermissions.Category.Create)]
         public override async Task<CategoryDto> CreateAsync(CreateUpdateCategoryDto input)
         {
-            var product = await _categoryManager.CreateAsync(input.CategoryId, input.CategoryName, input.SortOrder, input.Description,
-                input.ParentId, input.IsActive);
+            var product = await _categoryManager.CreateAsync(
+                input.CategoryId,
+                input.CategoryName,
+                input.SortOrder,
+                input.Description,
+                //input.Icon,
+                input.ParentId,
+                input.IsActive);
+            if (input.IconContent != null && input.IconContent.Length > 0)
+            {
+                await SaveImageAsync(input.IconName, input.IconContent);
+                product.Icon = input.IconName;
+            }
             var result = await Repository.InsertAsync(product);
             return ObjectMapper.Map<Category, CategoryDto>(result);
         }
@@ -62,6 +80,11 @@ namespace Store.Admin.Categories
             ca.CategoryName = input.CategoryName;
             ca.SortOrder = input.SortOrder;
             ca.Description = input.Description;
+            if (input.IconContent != null && input.IconContent.Length > 0)
+            {
+                await SaveImageAsync(input.IconName, input.IconContent);
+                ca.Icon = input.IconName;
+            }
             ca.ParentId = input.ParentId;
             ca.IsActive = input.IsActive;
             await Repository.UpdateAsync(ca);
@@ -96,6 +119,30 @@ namespace Store.Admin.Categories
             return new PagedResultDto<CategoryInlistDto>(totalCount, ObjectMapper.Map<List<Category>, List<CategoryInlistDto>>(data));
         }
 
+        [Authorize(StorePermissions.Category.Default)]
+        public async Task<string> GetImageAsync(string fileName)
+        {
+            if (string.IsNullOrEmpty(fileName))
+            {
+                return null;
+            }
+            var thumbnailContent = await _fileContainer.GetAllBytesOrNullAsync(fileName);
 
+            if (thumbnailContent is null)
+            {
+                return null;
+            }
+            var result = Convert.ToBase64String(thumbnailContent);
+            return result;
+        }
+
+        [Authorize(StorePermissions.Category.Update)]
+        private async Task SaveImageAsync(string fileName, string base64)
+        {
+            Regex regex = new Regex(@"^[\w/\:.-]+;base64,");
+            base64 = regex.Replace(base64, string.Empty);
+            byte[] bytes = Convert.FromBase64String(base64);
+            await _fileContainer.SaveAsync(fileName, bytes, overrideExisting: true);
+        }
     }
 }

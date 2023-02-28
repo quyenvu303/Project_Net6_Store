@@ -193,7 +193,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
       description: new FormControl(this.selectedEntity.description || null, Validators.compose([Validators.required, Validators.maxLength(250)])),
       isActive: new FormControl(this.selectedEntity.isActive),
       status: new FormControl(this.selectedEntity.status),
-      imageName: new FormControl(this.selectedEntity.image || null),
+      imageName: new FormControl(this.selectedEntity.image),
       imageContent: new FormControl(null),
     });
   }

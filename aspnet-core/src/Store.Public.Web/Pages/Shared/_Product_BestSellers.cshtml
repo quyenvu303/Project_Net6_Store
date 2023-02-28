@@ -1,8 +1,8 @@
-﻿@model Store.Public.Products.ProductInlistDto
-@using Store.Public.Products;
+﻿@using Store.Public.Products;
+@model Store.Public.Products.ProductInlistDto
 @inject IProductsAppService _productsAppService;
 @{
-    var url = $"/product/{Model.Slug}.html";
+    var url = $"/products/{Model.Slug}.html";
     var fileContent = await _productsAppService.GetImageAsync(Model.Image);
     var base64Image = Store.Helpers.ImageHelper.ShowBase64(Model.Image, fileContent);
 }
