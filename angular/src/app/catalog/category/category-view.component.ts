@@ -132,6 +132,7 @@ export class CategoryViewComponent implements OnInit, OnDestroy {
         Validators.compose([Validators.required, Validators.maxLength(250)])
       ),
       parentId: new FormControl(this.selectedEntity.parentId),
+      slug: new FormControl(this.selectedEntity.slug),
       sortOrder: new FormControl(this.selectedEntity.sortOrder || null, Validators.required),
       description: new FormControl(this.selectedEntity.description || null, Validators.compose([Validators.required, Validators.maxLength(250)])),
       isActive: new FormControl(this.selectedEntity.isActive),
@@ -143,6 +144,7 @@ export class CategoryViewComponent implements OnInit, OnDestroy {
     if (mode == 'open') {
       this.form.controls['categoryId'].disable();
       this.form.controls['categoryName'].disable();
+      this.form.controls['slug'].disable();
       this.form.controls['parentId'].disable();
       this.form.controls['sortOrder'].disable();
       this.form.controls['isActive'].disable();

@@ -45,7 +45,7 @@ public class IndexModel : PublicPageModel
         },
        () => new DistributedCacheEntryOptions
        {
-           AbsoluteExpiration = DateTimeOffset.Now.AddHours(12)
+           AbsoluteExpiration = DateTimeOffset.Now.AddHours(1)
        });
 
         TopSellerProducts = cacheItem.TopSellerProducts;

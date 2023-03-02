@@ -19,5 +19,7 @@ namespace Store.Public.Products
 
         Task<List<ProductInlistDto>> GetByIdAsync(string CategoryId);
 
+        Task<ProductDto> GetBySlugAsync(string slug);
+        Task<List<ProductInlistDto>> GetProductBySlugAsync(string slug,string categorySlug);
     }
 }

@@ -3,6 +3,7 @@ import type { EntityDto } from '@abp/ng.core';
 export interface CategoryDto {
   categoryId?: string;
   categoryName?: string;
+  slug?: string;
   sortOrder?: number;
   description?: string;
   icon?: string;
@@ -14,6 +15,7 @@ export interface CategoryDto {
 export interface CategoryInlistDto extends EntityDto<string> {
   categoryId?: string;
   categoryName?: string;
+  slug?: string;
   sortOrder?: number;
   description?: string;
   icon?: string;
@@ -24,6 +26,7 @@ export interface CategoryInlistDto extends EntityDto<string> {
 export interface CreateUpdateCategoryDto {
   categoryId?: string;
   categoryName?: string;
+  slug?: string;
   sortOrder?: number;
   description?: string;
   iconName?: string;

@@ -54,6 +54,7 @@ namespace Store.Admin.Categories
             var product = await _categoryManager.CreateAsync(
                 input.CategoryId,
                 input.CategoryName,
+                input.Slug,
                 input.SortOrder,
                 input.Description,
                 //input.Icon,
@@ -78,6 +79,7 @@ namespace Store.Admin.Categories
             }
             ca.CategoryId = input.CategoryId;
             ca.CategoryName = input.CategoryName;
+            ca.Slug = input.Slug;
             ca.SortOrder = input.SortOrder;
             ca.Description = input.Description;
             if (input.IconContent != null && input.IconContent.Length > 0)

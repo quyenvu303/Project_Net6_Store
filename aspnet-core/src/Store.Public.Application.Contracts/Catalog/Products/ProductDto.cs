@@ -15,8 +15,8 @@ namespace Store.Public.Products
         public string Origin { get; set; }
         public string Image { get; set; }
         public int? Quantity { get; set; }
-        public decimal? Price { get; set; }
-        public decimal? PriceSale { get; set; }
+        public double Price { get; set; }
+        public double PriceSale { get; set; }
         public string Parameter { get; set; }
         public string Description { get; set; }
         public bool? IsActive { get; set; }

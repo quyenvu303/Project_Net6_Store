@@ -23,5 +23,6 @@ namespace Store.Public.Products
         public bool? Status { get; set; }
         public string CategoryName { get; set; }
         public string WarehouseName { get; set; }
+        public string CategorySlug { get; set; }
     }
 }

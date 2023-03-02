@@ -18,5 +18,7 @@ namespace Store.Public.Categories
         Task<string> GetImageAsync(string fileName);
 
         Task<CategoryDto> GetByCategoryIdAsync(string CategoryId);
+
+        Task<CategoryDto> GetBySlugAsync(string slug);
     }
 }

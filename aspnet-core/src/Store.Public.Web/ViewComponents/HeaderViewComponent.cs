@@ -39,7 +39,7 @@ namespace Store.Public.Web.ViewComponents
             },
             () => new Microsoft.Extensions.Caching.Distributed.DistributedCacheEntryOptions
             {
-                AbsoluteExpiration = DateTimeOffset.Now.AddHours(12)
+                AbsoluteExpiration = DateTimeOffset.Now.AddHours(1)
             });
             return View(cacheItem.Categories);
 

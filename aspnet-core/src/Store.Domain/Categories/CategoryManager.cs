@@ -19,6 +19,7 @@ namespace Store.Categories
         public async Task<Category> CreateAsync(
             string categoryId,
             string categoryName,
+            string slug,
             int? sortOrder,
             string description, 
             //string icon, 
@@ -30,7 +31,7 @@ namespace Store.Categories
             if (await _CategoryRepository.AnyAsync(x => x.CategoryName == categoryName))
                 throw new UserFriendlyException("Tên đã tồn tại", StoreDomainErrorCodes.CategoryNameAlreadyExists);
 
-            return new Category(Guid.NewGuid(), categoryId,categoryName,sortOrder,description,null,parentId,isActive);
+            return new Category(Guid.NewGuid(), categoryId,categoryName, slug,sortOrder, description,null,parentId,isActive);
         }
     }
 }

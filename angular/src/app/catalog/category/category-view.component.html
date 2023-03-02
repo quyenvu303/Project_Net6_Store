@@ -30,6 +30,10 @@
                 <p-checkbox formControlName="isActive" binary="true" id="isActive"></p-checkbox>
                 <label for="isActive">Hiển thị</label>
             </div>
+            <div class="field col-4">
+                <label for="slug" class="block">Slug <span class="required">*</span></label>
+                <input id="slug" pInputText type="text" class="w-full" formControlName="slug" />
+              </div>
             <div class="field col-12 md:col-6">
                 <p-image [src]="icon" [alt]="selectedEntity.icon" width="250" [preview]="true"></p-image>
             </div>

@@ -32,14 +32,17 @@ namespace Store.Public.Products
     {
         private readonly IBlobContainer<ProductImageContainer> _fileContainer;
         private readonly IRepository<Category> _categoryRepository;
+        private readonly IRepository<Product, Guid> _productRepository;
         public ProductsAppService(IRepository<Product, Guid> repository,
             IBlobContainer<ProductImageContainer> fileContainer,
-            IRepository<Category, Guid> categoryrepository1
+            IRepository<Category, Guid> categoryrepository,
+            IRepository<Product, Guid> productRepository
             )
             : base(repository)
         {
             _fileContainer = fileContainer;
-            _categoryRepository = categoryrepository1;
+            _categoryRepository = categoryrepository;
+            _productRepository = productRepository;
         }
 
         public async Task<List<ProductInlistDto>> GetByIdAsync(string CategoryId)
@@ -51,6 +54,12 @@ namespace Store.Public.Products
             var data = await AsyncExecuter.ToListAsync(product);
             return ObjectMapper.Map<List<Product>, List<ProductInlistDto>>(data);
 
+        }
+
+        public async Task<ProductDto> GetBySlugAsync(string slug)
+        {
+            var product = await _productRepository.GetAsync(x => x.Slug == slug);
+            return ObjectMapper.Map<Product, ProductDto>(product);
         }
 
         public async Task<string> GetImageAsync(string fileName)
@@ -108,6 +117,16 @@ namespace Store.Public.Products
             query = query.Where(x => x.IsActive == true)
                 .OrderByDescending(x => x.CreationTime)
                 .Take(numberOfRecords);
+            var data = await AsyncExecuter.ToListAsync(query);
+            return ObjectMapper.Map<List<Product>, List<ProductInlistDto>>(data);
+        }
+
+        public async Task<List<ProductInlistDto>> GetProductBySlugAsync(string slug,string categorySlug)
+        {
+            var query = await Repository.GetQueryableAsync();
+            query = query.Where(x => x.CategorySlug == categorySlug && x.Slug != slug)
+                .OrderByDescending(x => x.CreationTime)
+                .Take(5);
             var data = await AsyncExecuter.ToListAsync(query);
             return ObjectMapper.Map<List<Product>, List<ProductInlistDto>>(data);
         }

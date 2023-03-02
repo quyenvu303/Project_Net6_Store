@@ -66,7 +66,8 @@ namespace Store.Products
                 isActive,
                 status, 
                 _categoryName?.CategoryName,
-                _warehouseName?.Title);
+                _warehouseName?.Title,
+                 _categoryName?.Slug);
         }
     }
 }

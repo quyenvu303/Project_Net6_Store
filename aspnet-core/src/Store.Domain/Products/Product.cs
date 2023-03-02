@@ -15,7 +15,7 @@ namespace Store.Products
             Guid categoryId, Guid warehouseGuid, string origin, 
             string image, int? quantity, decimal? price, decimal? priceSale, 
             string parameter, string description, bool? isActive, bool? status,
-            string categoryName, string warehouseName)
+            string categoryName, string warehouseName, string categorySlug)
         {
             Id = id;
             ProductId = productId;
@@ -34,6 +34,7 @@ namespace Store.Products
             Status = status;
             CategoryName = categoryName;
             WarehouseName = warehouseName;
+            CategorySlug = categorySlug;
         }
 
         public string ProductId { get; set; }
@@ -52,5 +53,6 @@ namespace Store.Products
         public bool? Status { get; set; }
         public string CategoryName { get; set; }
         public string WarehouseName { get; set; }
+        public string CategorySlug { get; set; }
     }
 }

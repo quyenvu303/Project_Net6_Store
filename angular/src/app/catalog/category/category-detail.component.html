@@ -10,7 +10,7 @@
             </div>
             <div class="field col-4">
                 <label for="categoryName" class="block">Tên loại sản phẩm<span class="required">*</span></label>
-                <input formControlName="categoryName" class="w-full" pInputText type="text" />
+                <input formControlName="categoryName" (keyup)="generateSlug()" class="w-full" pInputText type="text" />
                 <app-validation-message [entityForm]="form" fieldName="categoryName"
                     [validationMessages]="validationMessages"></app-validation-message>
             </div>
@@ -30,11 +30,20 @@
                 <p-checkbox formControlName="isActive" binary="true" id="isActive"></p-checkbox>
                 <label for="isActive">Hiển thị</label>
             </div>
-            <div class="field col-12 md:col-6">
+            <div class="field col-4">
+                <label for="slug" class="block">Slug <span class="required">*</span></label>
+                <input id="slug" pInputText type="text" class="w-full" formControlName="slug" />
+                <app-validation-message
+                  [entityForm]="form"
+                  fieldName="slug"
+                  [validationMessages]="validationMessages"
+                ></app-validation-message>
+              </div>
+            <div class="field col-12 md:col-4">
                 <label for="icon">Hình ảnh</label>
                 <input id="icon" type="file" (change)="onFileChange($event)" class="w-full">
             </div>
-            <div class="field col-12 md:col-6">
+            <div class="field col-12 md:col-4">
                 <p-image [src]="icon" [alt]="selectedEntity.icon" width="250" [preview]="true"></p-image>
             </div>
             <div class="field col-12">

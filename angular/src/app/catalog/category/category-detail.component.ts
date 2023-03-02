@@ -71,7 +71,10 @@ export class CategoryDetailComponent implements OnInit, OnDestroy {
       });
     });
   };
-
+  generateSlug() {
+    this.form.controls['slug'].setValue(this.utilService.MakeSeoTitle(this.form.get('categoryName').value));
+    this.form.controls['categoryId'].setValue(this.utilService.MakeSeoTitle(this.form.get('categoryName').value));
+  }
   initFormData() {
     //Load data to form
     if (this.utilService.isEmpty(this.config.data?.id) == true) {
@@ -135,6 +138,7 @@ export class CategoryDetailComponent implements OnInit, OnDestroy {
       ),
       parentId: new FormControl(this.selectedEntity.parentId),
       sortOrder: new FormControl(this.selectedEntity.sortOrder || null, Validators.required),
+      slug: new FormControl(this.selectedEntity.slug || null, Validators.required),
       description: new FormControl(this.selectedEntity.description || null, Validators.compose([Validators.required, Validators.maxLength(250)])),
       isActive: new FormControl(this.selectedEntity.isActive ),
       iconName: new FormControl(this.selectedEntity.icon || null),
@@ -146,6 +150,7 @@ export class CategoryDetailComponent implements OnInit, OnDestroy {
     if (mode == 'open') {
       this.form.controls['categoryId'].disable();
       this.form.controls['categoryName'].disable();
+      this.form.controls['slug'].disable();
       this.form.controls['parentId'].disable();
       this.form.controls['sortOrder'].disable();
       this.form.controls['isActive'].disable();

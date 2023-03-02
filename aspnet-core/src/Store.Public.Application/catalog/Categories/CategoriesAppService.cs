@@ -79,5 +79,11 @@ namespace Store.Public.Categories
             var category = await _categoryRepository.GetAsync(x=>x.CategoryId == CategoryId);
             return ObjectMapper.Map<Category, CategoryDto>(category);
         }
+
+        public async Task<CategoryDto> GetBySlugAsync(string slug)
+        {
+            var Category = await _categoryRepository.GetAsync(x => x.Slug == slug);
+            return ObjectMapper.Map<Category, CategoryDto>(Category);
+        }
     }
 }

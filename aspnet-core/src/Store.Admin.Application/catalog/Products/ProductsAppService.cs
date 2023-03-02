@@ -101,6 +101,7 @@ namespace Store.Admin.Products
                 pro.CategoryId = input.CategoryId;
                 var category = await _categoryRepository.GetAsync(x => x.Id == input.CategoryId);
                 pro.CategoryName = category.CategoryName;
+                pro.CategorySlug = category.Slug;
             }
             if (pro.WarehouseGuid != input.WarehouseGuid)
             {
