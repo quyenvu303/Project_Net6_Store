@@ -1,60 +1,16 @@
-﻿<section class="section-box shop-template mt-30">
+﻿@using Store.Public.Blogs
+@model List<BlogInlistDto>
+@inject IBlogsAppService _blogsAppService;
+
+<section class="section-box shop-template mt-30">
     <div class="container">
         <div class="row mt-30">
             <div class="col-lg-12">
                 <div class="row">
-                    <div class="col-lg-12 mb-50 display-list">
-                        <div class="card-grid-style-1">
-                            <div class="image-box"><a href="blog-single.html"><img src="/assets/imgs/page/homepage1/img-1.png" alt="Ecom"></a></div>
-                            <div class="blog-info">
-                                <a class="tag-dot font-xs" href="#">Technology</a><a class="color-gray-1100" href="blog-single.html">
-                                    <h4 class="mb-15">Augmented and Virtual Reality Challenges and Future Trends Virtual Reality Shopping</h4>
-                                </a>
-                                <p class="font-md color-gray-500">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-                                <div class="row mt-20">
-                                    <div class="col-8"><span class="color-gray-500 font-sm mr-30">August 30, 2022</span><span class="color-gray-500 font-sm">4<span>Mins read</span></span></div>
-                                    <div class="col-4 text-end"><a class="btn btn-arrow-2">Read more</a></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-6 col-12 mb-40">
-                        <div class="card-grid-style-1">
-                            <div class="image-box"><a href="blog-single.html"></a><img src="/assets/imgs/page/blog/blog-13.jpg" alt="Ecom"></div><a class="tag-dot font-xs" href="blog.html">Technology</a><a class="color-gray-1100" href="blog-single.html">
-                                <h4 class="mb-10">The latest technologies to be used for VR in 2022</h4>
-                            </a>
-                            <p class="font-xs color-gray-500">Donec rhoncus quis diam sit amet faucibus. Vivamus pellentesque, sem sed convallis ultricies, ante eros laoreet libero, vitae suscipit lorem turpis sit amet lectus.</p>
-                            <div class="row mt-20">
-                                <div class="col-8"><span class="color-gray-500 font-xs mr-30">August 30, 2022</span><span class="color-gray-500 font-xs">4<span>Mins read</span></span></div>
-                                <div class="col-4 text-end"><a class="btn btn-gray font-xs font-medium">Read more</a></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-6 col-12 mb-40">
-                        <div class="card-grid-style-1">
-                            <div class="image-box"><a href="blog-single.html"></a><img src="/assets/imgs/page/blog/blog-14.jpg" alt="Ecom"></div><a class="tag-dot font-xs" href="blog.html">Technology</a><a class="color-gray-1100" href="blog-single.html">
-                                <h4 class="mb-10">The fate of Elon Musks deal to buy Twitter</h4>
-                            </a>
-                            <p class="font-xs color-gray-500">Donec rhoncus quis diam sit amet faucibus. Vivamus pellentesque, sem sed convallis ultricies, ante eros laoreet libero, vitae suscipit lorem turpis sit amet lectus.</p>
-                            <div class="row mt-20">
-                                <div class="col-8"><span class="color-gray-500 font-xs mr-30">August 30, 2022</span><span class="color-gray-500 font-xs">4<span>Mins read</span></span></div>
-                                <div class="col-4 text-end"><a class="btn btn-gray font-xs font-medium">Read more</a></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-6 col-12 mb-40">
-                        <div class="card-grid-style-1">
-                            <div class="image-box"><a href="blog-single.html"></a><img src="/assets/imgs/page/blog/blog-15.jpg" alt="Ecom"></div><a class="tag-dot font-xs" href="blog.html">Technology</a><a class="color-gray-1100" href="blog-single.html">
-                                <h4 class="mb-10">Binance blockchain hit by $570 million crypto</h4>
-                            </a>
-                            <p class="font-xs color-gray-500">Donec rhoncus quis diam sit amet faucibus. Vivamus pellentesque, sem sed convallis ultricies, ante eros laoreet libero, vitae suscipit lorem turpis sit amet lectus.</p>
-                            <div class="row mt-20">
-                                <div class="col-8"><span class="color-gray-500 font-xs mr-30">August 30, 2022</span><span class="color-gray-500 font-xs">4<span>Mins read</span></span></div>
-                                <div class="col-4 text-end"><a class="btn btn-gray font-xs font-medium">Read more</a></div>
-                            </div>
-                        </div>
-                    </div>
-
+                    @foreach (var item in Model)
+                    {
+                        <partial name="_BlogItem" model="item" />
+                    }
                 </div>
             </div>
         </div>
@@ -65,7 +21,7 @@
         <ul class="list-col-5">
             <li>
                 <div class="item-list">
-                    <div class="icon-left"><img src="//assets/imgs/template/delivery.svg" alt="Ecom"></div>
+                    <div class="icon-left"><img src="/assets/imgs/template/delivery.svg" alt="Ecom"></div>
                     <div class="info-right">
                         <h5 class="font-lg-bold color-gray-100">Free Delivery</h5>
                         <p class="font-sm color-gray-500">From all orders over $10</p>
@@ -74,7 +30,7 @@
             </li>
             <li>
                 <div class="item-list">
-                    <div class="icon-left"><img src="//assets/imgs/template/support.svg" alt="Ecom"></div>
+                    <div class="icon-left"><img src="/assets/imgs/template/support.svg" alt="Ecom"></div>
                     <div class="info-right">
                         <h5 class="font-lg-bold color-gray-100">Support 24/7</h5>
                         <p class="font-sm color-gray-500">Shop with an expert</p>
@@ -83,7 +39,7 @@
             </li>
             <li>
                 <div class="item-list">
-                    <div class="icon-left"><img src="//assets/imgs/template/voucher.svg" alt="Ecom"></div>
+                    <div class="icon-left"><img src="/assets/imgs/template/voucher.svg" alt="Ecom"></div>
                     <div class="info-right">
                         <h5 class="font-lg-bold color-gray-100">Gift voucher</h5>
                         <p class="font-sm color-gray-500">Refer a friend</p>
@@ -92,7 +48,7 @@
             </li>
             <li>
                 <div class="item-list">
-                    <div class="icon-left"><img src="//assets/imgs/template/return.svg" alt="Ecom"></div>
+                    <div class="icon-left"><img src="/assets/imgs/template/return.svg" alt="Ecom"></div>
                     <div class="info-right">
                         <h5 class="font-lg-bold color-gray-100">Return &amp; Refund</h5>
                         <p class="font-sm color-gray-500">Free return over $200</p>
@@ -101,7 +57,7 @@
             </li>
             <li>
                 <div class="item-list">
-                    <div class="icon-left"><img src="//assets/imgs/template/secure.svg" alt="Ecom"></div>
+                    <div class="icon-left"><img src="/assets/imgs/template/secure.svg" alt="Ecom"></div>
                     <div class="info-right">
                         <h5 class="font-lg-bold color-gray-100">Secure payment</h5>
                         <p class="font-sm color-gray-500">100% Protected</p>
@@ -197,11 +153,11 @@
                         </p>
                         <div class="mt-20">
                             <a class="mr-10" href="#">
-                                <img src="//assets/imgs/template/appstore.png"
+                                <img src="/assets/imgs/template/appstore.png"
                                      alt="Ecom">
-                            </a><a href="#"><img src="//assets/imgs/template/google-play.png" alt="Ecom"></a>
+                            </a><a href="#"><img src="/assets/imgs/template/google-play.png" alt="Ecom"></a>
                         </div>
-                        <p class="font-md color-gray-900 mt-20 mb-10">Secured Payment Gateways</p><img src="//assets/imgs/template/payment-method.png" alt="Ecom">
+                        <p class="font-md color-gray-900 mt-20 mb-10">Secured Payment Gateways</p><img src="/assets/imgs/template/payment-method.png" alt="Ecom">
                     </div>
                 </div>
             </div>

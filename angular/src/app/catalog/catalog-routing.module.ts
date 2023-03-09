@@ -8,6 +8,7 @@ import { OrderComponent } from './order/order.component';
 import { WarehouseComponent } from './warehouse/warehouse.component';
 import { ContactComponent } from './contact/contact.component';
 import { BlogComponent } from './blog/blog.component';
+import { BannerComponent } from './banner/banner.component';
 
 /* const routes: Routes = [{ path: '', component: CategoryComponent }]; */
 
@@ -59,6 +60,11 @@ const routes: Routes = [
   {
     path: 'contact',
     component: ContactComponent,
+   
+  },
+  {
+    path: 'banner',
+    component: BannerComponent,
    
   },
 ];

@@ -21,6 +21,8 @@ namespace Store.Admin.Products
         public string Description { get; set; }
         public bool? IsActive { get; set; }
         public bool? Status { get; set; }
+        public bool? BestSellers { get; set; }
+        public bool? Trending { get; set; }
         public Guid Id { get; set; }
         public string CategoryName { get; set; }
         public string WarehouseName { get; set; }

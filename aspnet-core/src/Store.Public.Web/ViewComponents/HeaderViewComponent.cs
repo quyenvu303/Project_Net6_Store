@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
+using Store.Public.Banners;
+using Store.Public.Blogs;
 using Store.Public.Categories;
 using Store.Public.Web.Models;
 using System;
@@ -15,8 +17,9 @@ namespace Store.Public.Web.ViewComponents
         private readonly IDistributedCache<HeaderCacheItem> _distributedCache;
         private readonly ICategoriesAppService _categoryappService;
         public List<CategoryInlistDto> Categories { get; set; }
+        public List<BlogInlistDto> TopBlog { get; set; }
         public HeaderViewComponent(ICategoriesAppService categoryappService,
-            IDistributedCache<HeaderCacheItem> distributedCache)
+        IDistributedCache<HeaderCacheItem> distributedCache)
         {
             _categoryappService = categoryappService;
             _distributedCache = distributedCache;
@@ -34,12 +37,12 @@ namespace Store.Public.Web.ViewComponents
                 }
                 return new HeaderCacheItem()
                 {
-                    Categories = roootCategory
+                    Categories = roootCategory,
                 };
             },
             () => new Microsoft.Extensions.Caching.Distributed.DistributedCacheEntryOptions
             {
-                AbsoluteExpiration = DateTimeOffset.Now.AddHours(1)
+                AbsoluteExpiration = DateTimeOffset.Now.AddHours(0)
             });
             return View(cacheItem.Categories);
 

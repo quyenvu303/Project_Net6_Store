@@ -15,6 +15,7 @@ namespace Store.Public.Products
         Task<PagedResult<ProductInlistDto>> GetListFilterAsync(ProductFilter input);
         Task<List<ProductInlistDto>> GetListAllAsync();
         Task<List<ProductInlistDto>> GetListTopSellersAsync(int numberOfRecords);
+        Task<List<ProductInlistDto>> GetListTrendingAsync(int numberOfRecords);
         Task<string> GetImageAsync(string fileName);
 
         Task<List<ProductInlistDto>> GetByIdAsync(string CategoryId);

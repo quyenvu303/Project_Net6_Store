@@ -2,12 +2,27 @@
 @model List<CategoryInlistDto>
 @inject ICategoriesAppService _categoryappService;
 
+@{
+}
+<style>
+    .dropdown-account.dropdown-open {
+        left: -95px;
+        display: block;
+        visibility: visible;
+    }
+</style>
 <header class="header header-container sticky-bar">
     <div class="container">
         <div class="main-header">
             <div class="header-left">
-                <div class="header-logo"><a href=""><img alt="Ecom" src="/assets/imgs/template/logo.svg"></a></div>
-                <div class="header-search" style="width: 40%;">
+                <div class="header-nav" style="width: 0%;">
+                    <nav class="nav-main-menu d-none d-xl-block">
+
+                    </nav>
+                    <div class="burger-icon burger-icon-white"><span class="burger-icon-top"></span><span class="burger-icon-mid"></span><span class="burger-icon-bottom"></span></div>
+                </div>
+                <div class="header-logo"><a href="/"><img alt="Ecom" src="/assets/imgs/template/logo.svg"></a></div>
+                <div class="header-search" style="width: 100%;">
                     <div class="box-header-search">
                         <form class="form-search" method="post" action="#">
                             <div class="box-category">
@@ -16,7 +31,8 @@
                                     <option>Danh mục</option>
                                     @foreach (var item in Model)
                                     {
-                                        <option value="@item.Id"> @item.CategoryName</option>
+                                        var url = $"/products/{@item.CategoryId}.html";
+                                        <option value="@item.Id"> <a href="@url"> @item.CategoryName</a></option>
                                     }
                                 </select>
                             </div>
@@ -26,12 +42,7 @@
                         </form>
                     </div>
                 </div>
-                <div class="header-nav">
-                    <nav class="nav-main-menu d-none d-xl-block">
-                        
-                    </nav>
-                    <div class="burger-icon burger-icon-white"><span class="burger-icon-top"></span><span class="burger-icon-mid"></span><span class="burger-icon-bottom"></span></div>
-                </div>
+
                 @if (User.Identity.IsAuthenticated)
                 {
                     <div class="header-shop">
@@ -40,30 +51,24 @@
 
                             <div class="dropdown-account">
                                 <ul>
-                                    <li><a >Xin chào:  @User.Identity.Name</a></li>
-                                    <li><a href="page-account.html">My Account</a></li>
+                                    <li><a>Xin chào:  @User.Identity.Name</a></li>
+                                    <li><a href="/Account/Manage.html">My Account</a></li>
                                     <li><a href="/logout.html">Sign out</a></li>
                                 </ul>
                             </div>
                         </div>
-
-                        <div class="d-inline-block box-dropdown-cart">
-                            <span class="font-lg icon-list icon-cart">
-                                <span>Cart</span><span class="number-item font-xs">2</span>
-                            </span>
-                        </div>
-
+                        <a class="font-lg icon-list icon-cart" href="shop-cart.html"><span>Cart</span></a>
                     </div>
                 }
                 else
                 {
                     <div class="header-shop">
                         <div class="d-inline-block box-dropdown-cart">
-                            <span class="font-lg icon-list icon-account"><span>Login/Register</span></span>
+                            <span class="font-lg icon-list icon-account"><span>Đăng nhập/Đăng ký</span></span>
                             <div class="dropdown-account">
                                 <ul>
-                                    <li><a href="/login.html">Login</a></li>
-                                    <li><a href="/register.html">Register</a></li>
+                                    <li><a href="/login.html">Đăng nhập</a></li>
+                                    <li><a href="/register.html">Đăng ký</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -118,6 +123,7 @@
                             <li><a href="/logout.html">Sign out</a></li>
                         </ul>
                     </div>
+                    <a class="font-lg icon-list icon-cart" href="shop-cart.html"><span>Cart</span></a>
                 }
                 else
                 {
@@ -211,6 +217,7 @@
                             <li><a href="/logout.html">Sign out</a></li>
                         </ul>
                     </div>
+                    <a class="font-lg icon-list icon-cart" href="shop-cart.html"><span>Cart</span></a>
                 }
                 else
                 {

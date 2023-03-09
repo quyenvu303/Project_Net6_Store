@@ -17,6 +17,8 @@ using Store.Roles;
 using Store.Shippings;
 using Store.Warehouses;
 using Volo.Abp.Identity;
+using Store.Banners;
+using Store.Admin.Banners;
 
 namespace Store.Admin;
 
@@ -59,8 +61,12 @@ public class StoreAdminApplicationAutoMapperProfile : Profile
         CreateMap<Order, OrderInlistDto>();
         CreateMap<CreateUpdateOrderDto, Order>();
 
-        //Contact
-        
+        //Banner
+        CreateMap<Banner, BannerDto>();
+        CreateMap<Banner, BannerInlistDto>();
+        CreateMap<CreateUpdateBannerDto, Banner>();
+
+
 
         //Roles
         CreateMap<IdentityRole, RoleDto>().ForMember(x => x.Description,

@@ -7,13 +7,13 @@ using Volo.Abp.Domain.Entities;
 
 namespace Store.Orders
 {
-    public class OrderItem : Entity
+    public class OrderItem: Entity
     {
         public Guid OrderId { get; set; }
         public Guid ProductId { get; set; }
         public int Quantity { get; set; }
-        public decimal Price { get; set; }
-        public decimal Total { get; set; }
+        public double? Price { get; set; }
+        public double Total { get; set; }
 
         public override object[] GetKeys()
         {

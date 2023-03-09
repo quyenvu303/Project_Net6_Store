@@ -75,7 +75,10 @@ namespace Store.Admin.Products
                 input.Parameter,
                 input.Description,
                 input.IsActive,
-                input.Status);
+                input.Status,
+                input.BestSellers,
+                input.Trending
+                );
             if (input.ImageContent != null && input.ImageContent.Length > 0)
             {
                 await SaveImageAsync(input.ImageName, input.ImageContent);
@@ -122,6 +125,8 @@ namespace Store.Admin.Products
             pro.Description = input.Description;
             pro.IsActive = input.IsActive;
             pro.Status = input.Status;
+            pro.BestSellers = input.BestSellers;
+            pro.Trending = input.Trending;
 
             await Repository.UpdateAsync(pro);
 

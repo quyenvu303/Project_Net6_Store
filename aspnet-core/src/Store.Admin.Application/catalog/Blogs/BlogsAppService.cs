@@ -5,9 +5,12 @@ using Store.Blogs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
+using Volo.Abp.BlobStoring;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.ObjectMapping;
 
@@ -22,8 +25,15 @@ namespace Store.Admin.Blogs
         CreateUpdateBlogDto,
         CreateUpdateBlogDto>, IBlogAppService
     {
-        public BlogsAppService(IRepository<Blog, Guid> repository) : base(repository)
+        private readonly BlogManager _blogManager;
+        private readonly IBlobContainer<BlogImageContainer> _fileContainer;
+        public BlogsAppService(IRepository<Blog, Guid> repository,
+            BlogManager blogManager,
+            IBlobContainer<BlogImageContainer> fileContainer) : base(repository)
         {
+            _blogManager = blogManager;
+            _fileContainer = fileContainer;
+
             GetPolicyName = StorePermissions.Blog.Default;
             GetListPolicyName = StorePermissions.Blog.Default;
             CreatePolicyName = StorePermissions.Blog.Create;
@@ -35,6 +45,65 @@ namespace Store.Admin.Blogs
         {
             await Repository.DeleteManyAsync(ids);
             await UnitOfWorkManager.Current.SaveChangesAsync();
+        }
+
+        [Authorize(StorePermissions.Blog.Create)]
+        public override async Task<BlogDto> CreateAsync(CreateUpdateBlogDto input)
+        {
+            var blog = await _blogManager.CreateAsync(
+                input.Title,
+                input.Description,
+                input.Status);
+            if (input.ImageContent != null && input.ImageContent.Length > 0)
+            {
+                await SaveImageAsync(input.ImageName, input.ImageContent);
+                blog.Image = input.ImageName;
+            }
+            var result = await Repository.InsertAsync(blog);
+            return ObjectMapper.Map<Blog, BlogDto>(result);
+        }
+        [Authorize(StorePermissions.Blog.Update)]
+        public override async Task<BlogDto> UpdateAsync(Guid id, CreateUpdateBlogDto input)
+        {
+            var blog = await Repository.GetAsync(id);
+            if (blog == null)
+            {
+                throw new BusinessException(StoreDomainErrorCodes.CategoryIsNotExists);
+            }
+            blog.Title = blog.Title;
+            blog.Description = blog.Description;
+            if (input.ImageContent != null && input.ImageContent.Length > 0)
+            {
+                await SaveImageAsync(input.ImageName, input.ImageContent);
+                blog.Image = input.ImageName;
+            }
+            blog.Status = blog.Status;
+            await Repository.UpdateAsync(blog);
+            return ObjectMapper.Map<Blog, BlogDto>(blog);
+        }
+
+        private async Task SaveImageAsync(string fileName, string base64)
+        {
+            Regex regex = new Regex(@"^[\w/\:.-]+;base64,");
+            base64 = regex.Replace(base64, string.Empty);
+            byte[] bytes = Convert.FromBase64String(base64);
+            await _fileContainer.SaveAsync(fileName, bytes, overrideExisting: true);
+        }
+        [Authorize(StorePermissions.Blog.Default)]
+        public async Task<string> GetImageAsync(string fileName)
+        {
+            if (string.IsNullOrEmpty(fileName))
+            {
+                return null;
+            }
+            var thumbnailContent = await _fileContainer.GetAllBytesOrNullAsync(fileName);
+
+            if (thumbnailContent is null)
+            {
+                return null;
+            }
+            var result = Convert.ToBase64String(thumbnailContent);
+            return result;
         }
 
         [Authorize(StorePermissions.Blog.Default)]

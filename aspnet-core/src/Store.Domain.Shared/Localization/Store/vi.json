@@ -21,6 +21,10 @@
     "Permission:Catalog.Blog": "Bài viết",
     "Permission:Catalog.Blog.Create": "Tạo mới bài viết",
     "Permission:Catalog.Blog.Update": "Cập nhật bài viết",
-    "Permission:Catalog.Blog.Delete": "Xóa bài viết"
+    "Permission:Catalog.Blog.Delete": "Xóa bài viết",
+    "Permission:Catalog.Banner": "Banner quảng cáo",
+    "Permission:Catalog.Blog.Create": "Tạo mới banner quảng cáo",
+    "Permission:Catalog.Blog.Update": "Cập nhật banner quảng cáo",
+    "Permission:Catalog.Blog.Delete": "Xóa banner quảng cáo"
   }
 }

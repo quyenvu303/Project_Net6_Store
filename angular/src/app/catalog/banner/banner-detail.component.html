@@ -1,0 +1,30 @@
+<form [formGroup]="form" skipValidation (ngSubmit)="saveChange()">
+    <p-panel #pnl [toggleable]="true">
+        <!--  Form-->
+        <div class="formgrid grid">
+            <div class="field col-10">
+                <label for="title" class="block">Tiêu đề<span class="required">*</span></label>
+                <input formControlName="title" class="w-full" pInputText type="text" />
+            </div>
+            <div class="field-checkbox col-2">
+                <p-checkbox formControlName="status" binary="true" id="status"></p-checkbox>
+                <label for="status">Sử dụng</label>
+            </div>
+            <div class="field col-12 md:col-4">
+                <label for="image">Hình ảnh</label>
+                <input id="image" type="file" (change)="onFileChange($event)" class="w-full">
+            </div>
+            <div class="field col-12 md:col-4">
+                <p-image [src]="image" [alt]="selectedEntity.image" width="250" [preview]="true"></p-image>
+            </div>
+        </div>
+        <ng-template pTemplate="footer">
+            <button type="submit" [disabled]="!form.valid || btnDisabled" pButton icon="fa fa-save" iconPos="left"
+                label="Lưu lại"></button>
+        </ng-template>
+        <!--Blocked UI-->
+        <p-blockUI [blocked]="blockedPanel" [target]="pnl">
+            <p-progressSpinner></p-progressSpinner>
+        </p-blockUI>
+    </p-panel>
+</form>

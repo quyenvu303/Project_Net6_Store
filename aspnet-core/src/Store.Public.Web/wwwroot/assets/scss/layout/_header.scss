@@ -631,10 +631,13 @@
     transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
     border-radius: 0 0 4px 4px;
     border: 1px solid $color-border-1;
+
     &.dropdown-open {
+        left: -95px;
         display: block;
         visibility: visible;
     }
+
     ul {
         li {
             display: -webkit-box;
@@ -643,11 +646,14 @@
             -ms-flex-wrap: wrap;
             flex-wrap: wrap;
             margin: 0 0 20px;
+
             &:last-child {
                 margin: 0;
             }
+
             a {
                 color: $color-brand-3;
+
                 &:hover {
                     color: $color-brand-1;
                 }

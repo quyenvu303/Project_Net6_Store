@@ -24,6 +24,25 @@ namespace Store.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Store.Banners.Banner", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AppBanners", (string)null);
+                });
+
             modelBuilder.Entity("Store.Blogs.Blog", b =>
                 {
                     b.Property<Guid>("Id")
@@ -189,12 +208,15 @@ namespace Store.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal?>("Discount")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Discount")
+                        .HasColumnType("float");
 
                     b.Property<string>("ExtraProperties")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
+
+                    b.Property<double>("GrandTotal")
+                        .HasColumnType("float");
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
@@ -225,8 +247,11 @@ namespace Store.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<decimal?>("Total")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Subtotal")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Total")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -259,6 +284,9 @@ namespace Store.Migrations
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool?>("BestSellers")
+                        .HasColumnType("bit");
 
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("uniqueidentifier");
@@ -321,6 +349,9 @@ namespace Store.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Trending")
                         .HasColumnType("bit");
 
                     b.Property<Guid>("WarehouseGuid")

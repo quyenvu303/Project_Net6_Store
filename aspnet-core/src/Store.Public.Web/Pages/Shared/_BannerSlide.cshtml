@@ -1,0 +1,13 @@
+﻿@using Store.Public.Banners;
+@model Store.Public.Banners.BannerInlistDto
+@inject IBannersAppService _bannerAppService
+@{
+    var fileContent = await _bannerAppService.GetImageAsync(Model.Image);
+    var base64Image = Store.Helpers.ImageHelper.ShowBase64(Model.Image, fileContent);
+}
+<div class="swiper-slide">
+    <div class="banner-slide" style="background: url(@base64Image) no-repeat top center;">
+        <div class="banner-desc">
+        </div>
+    </div>
+</div>

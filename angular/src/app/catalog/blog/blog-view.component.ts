@@ -1,5 +1,5 @@
 import { PagedResultDto } from '@abp/ng.core';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef,Component, OnDestroy, OnInit } from '@angular/core';
 import { BlogDto, BlogInlistDto, BlogsService } from '@proxy/blogs';
 import { Subject, takeUntil } from 'rxjs';
 import { MessageService } from 'primeng/api';
@@ -7,6 +7,7 @@ import { NotificationService } from 'src/app/shared/services/notification.servic
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { UtilityService } from 'src/app/shared/services/utility.service';
+import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   providers: [MessageService],
   selector: 'app-blog-view',
@@ -17,6 +18,8 @@ export class BlogViewComponent implements OnInit, OnDestroy {
   blockedPanel: boolean = false;
   public form: FormGroup;
   selectedEntity = {} as BlogDto;
+      // Image ảnh
+      public image;
   constructor(
     private BlogService: BlogsService,
     private fb: FormBuilder,
@@ -24,6 +27,8 @@ export class BlogViewComponent implements OnInit, OnDestroy {
     private ref: DynamicDialogRef,
     private notificationSerivce: NotificationService,
     private utilService: UtilityService,
+    private cd: ChangeDetectorRef,
+    private sanitizer: DomSanitizer
   ) { }
   validationMessages = {
     title: [{ type: 'required', message: 'Không được để trống' }],
@@ -56,6 +61,7 @@ export class BlogViewComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (response: BlogDto) => {
           this.selectedEntity = response;
+          this.loadThumbnail(this.selectedEntity.image);
           this.buiLdForm();
           this.setMode('open');
           this.toggleBlockUI(false);
@@ -65,7 +71,19 @@ export class BlogViewComponent implements OnInit, OnDestroy {
         }
       });
   }
-
+  loadThumbnail(fileName: string) {
+    this.BlogService
+      .getImage(fileName)
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe({
+        next: (response: string) => {
+          var fileExt = this.selectedEntity.image?.split('.').pop();
+          this.image = this.sanitizer.bypassSecurityTrustResourceUrl(
+            `data:image/${fileExt};base64, ${response}`
+          );
+        },
+      });
+  }
   private buiLdForm() {
     this.form = this.fb.group({
       title: new FormControl(this.selectedEntity.title || null,

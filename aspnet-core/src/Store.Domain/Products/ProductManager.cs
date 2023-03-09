@@ -39,7 +39,9 @@ namespace Store.Products
             string parameter, 
             string description, 
             bool? isActive,
-            bool? status)
+            bool? status,
+            bool? bestSellers,
+            bool? trending)
         {
             if (await _productRepository.AnyAsync(x=>x.ProductId == productId))
                 throw new UserFriendlyException("Mã sản phẩm đã tồn tại", StoreDomainErrorCodes.ProductIdAlreadyExists);
@@ -65,6 +67,8 @@ namespace Store.Products
                 description, 
                 isActive,
                 status, 
+                bestSellers,
+                trending,
                 _categoryName?.CategoryName,
                 _warehouseName?.Title,
                  _categoryName?.Slug);

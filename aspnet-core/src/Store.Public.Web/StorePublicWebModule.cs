@@ -112,6 +112,10 @@ public class StorePublicWebModule : AbpModule
         ConfigureNavigationServices();
         ConfigureAutoApiControllers();
         ConfigureSwaggerServices(context.Services);
+
+        context.Services.AddSession(options => {
+            options.IdleTimeout = TimeSpan.FromMinutes(30);
+        });
     }
 
     private void ConfigureAuthentication(ServiceConfigurationContext context, IConfiguration configuration)
@@ -251,7 +255,7 @@ public class StorePublicWebModule : AbpModule
         {
             app.UseMultiTenancy();
         }
-
+        app.UseSession();
         app.UseUnitOfWork();
         app.UseAuthorization();
         app.UseSwagger();

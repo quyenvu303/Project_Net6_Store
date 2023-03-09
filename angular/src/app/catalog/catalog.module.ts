@@ -31,6 +31,10 @@ import { ContactViewComponent } from './contact/contact-view.component';
 import { BlogComponent } from './blog/blog.component';
 import { BlogDetailComponent } from './blog/blog-detail.component';
 import { BlogViewComponent } from './blog/blog-view.component';
+import { BannerComponent } from './banner/banner.component';
+import { BannerDetailComponent } from './banner/banner-detail.component';
+import { BannerViewComponent } from './banner/banner-view.component';
+
 
 import { InputNumberModule } from 'primeng/inputnumber';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -62,7 +66,10 @@ import { CalendarModule } from 'primeng/calendar';
     ContactViewComponent,
     BlogComponent,
     BlogDetailComponent,
-    BlogViewComponent
+    BlogViewComponent,
+    BannerComponent,
+    BannerDetailComponent,
+    BannerViewComponent
   ],
   imports: [
     SharedModule,
@@ -99,7 +106,9 @@ import { CalendarModule } from 'primeng/calendar';
     ContactDetailComponent,
     ContactViewComponent,
     BlogDetailComponent,
-    BlogViewComponent
+    BlogViewComponent,
+    BannerDetailComponent,
+    BannerViewComponent
   ]
 })
 export class CatalogModule { }

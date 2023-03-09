@@ -17,7 +17,8 @@ export interface BlogInlistDto extends EntityDto<string> {
 
 export interface CreateUpdateBlogDto {
   title?: string;
-  image?: string;
+  imageName?: string;
+  imageContent?: string;
   description?: string;
   status?: boolean;
 }

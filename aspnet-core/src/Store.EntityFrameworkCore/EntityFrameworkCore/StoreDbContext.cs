@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Store.Banners;
 using Store.Blogs;
 using Store.Categories;
+using Store.Configurations.Banners;
 using Store.Contacts;
 using Store.Contacts;
 using Store.IdentitySettings;
@@ -71,6 +73,7 @@ public class StoreDbContext :
     public DbSet<WarehouseDetail> WarehouseDetails { get; set; }
     public DbSet<Contact> Contacts { get; set; }
     public DbSet<Blog> Blogs { get; set; }
+    public DbSet<Banner> Banners { get; set; }
     public DbSet<IdentitySetting> IdentitySettings { get; set; }
 
     #endregion
@@ -115,6 +118,7 @@ public class StoreDbContext :
 
         builder.ApplyConfiguration(new ContactConfiguration());
         builder.ApplyConfiguration(new BlogConfiguration());
+        builder.ApplyConfiguration(new BannerConfiguration());
 
         builder.ApplyConfiguration(new IdentitySettingConfiguration());
     }

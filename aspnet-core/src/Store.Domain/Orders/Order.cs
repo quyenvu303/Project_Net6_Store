@@ -9,13 +9,23 @@ namespace Store.Orders
 {
     public class Order : FullAuditedAggregateRoot<Guid>
     {
+        public Order()
+        {
+
+        }
+        public Order(Guid id)
+        {
+            Id = id;
+        }
         public string OrderId { get; set; }
         public DateTime? AppDate { get; set; }
         public OrderStatus Status { get; set; }
         public string ShippingName { get; set; }
         public decimal? ShippingFee { get; set; }
-        public decimal? Discount { get; set; }
-        public decimal? Total { get; set; }
+        public double Total { get; set; }
+        public double Subtotal { get; set; }
+        public double Discount { get; set; }
+        public double GrandTotal { get; set; }
         public Guid? CusomerUserId { get; set; }
         public string CustomerName { get; set; }
         public string CustomerPhoneNumber { get; set; }

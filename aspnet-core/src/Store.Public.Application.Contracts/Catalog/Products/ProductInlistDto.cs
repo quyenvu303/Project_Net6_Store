@@ -16,11 +16,13 @@ namespace Store.Public.Products
         public string Image { get; set; }
         public int? Quantity { get; set; }
         public double Price { get; set; }
-        public double? PriceSale { get; set; }
+        public double PriceSale { get; set; }
         public string Parameter { get; set; }
         public string Description { get; set; }
         public bool? IsActive { get; set; }
         public bool? Status { get; set; }
+        public bool? BestSellers { get; set; }
+        public bool? Trending { get; set; }
         public string CategoryName { get; set; }
         public string WarehouseName { get; set; }
         public string CategorySlug { get; set; }

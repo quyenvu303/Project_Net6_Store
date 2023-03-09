@@ -36,6 +36,12 @@ public class StorePermissionDefinitionProvider : PermissionDefinitionProvider
         blogPermission.AddChild(StorePermissions.Blog.Create, L("Permission:Catalog.Blog.Create"));
         blogPermission.AddChild(StorePermissions.Blog.Update, L("Permission:Catalog.Blog.Update"));
         blogPermission.AddChild(StorePermissions.Blog.Delete, L("Permission:Catalog.Blog.Delete"));
+
+        //Add Banner
+        var bannerPermission = catalogGroup.AddPermission(StorePermissions.Banner.Default, L("Permission:Catalog.Banner"));
+        bannerPermission.AddChild(StorePermissions.Banner.Create, L("Permission:Catalog.Banner.Create"));
+        bannerPermission.AddChild(StorePermissions.Banner.Update, L("Permission:Catalog.Banner.Update"));
+        bannerPermission.AddChild(StorePermissions.Banner.Delete, L("Permission:Catalog.Banner.Delete"));
     }
 
     private static LocalizableString L(string name)

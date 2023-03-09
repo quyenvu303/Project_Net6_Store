@@ -1,3 +1,4 @@
+import * as Banners from './banners';
 import * as Blogs from './blogs';
 import * as Categories from './categories';
 import * as Contacts from './contacts';
@@ -11,4 +12,4 @@ import * as Users from './users';
 import * as Volo from './volo';
 import * as Warehouses from './warehouses';
 export * from './models';
-export { Blogs, Categories, Contacts, Orders, Products, Roles, Shippings, Store, System, Users, Volo, Warehouses };
+export { Banners, Blogs, Categories, Contacts, Orders, Products, Roles, Shippings, Store, System, Users, Volo, Warehouses };

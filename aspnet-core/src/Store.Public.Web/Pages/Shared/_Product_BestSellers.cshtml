@@ -36,10 +36,13 @@
             </div>
             <a class="color-brand-3 font-sm-bold" href="@url">@Model.ProductName</a>
             <div class="price-info">
-                @*<span class="color-gray-500 price-line">@Model.Price.ToString("N0")đ</span>*@
                 <strong class="font-lg-bold color-brand-3 price-main">@Model.Price.ToString("N0") đ</strong>
+                <span class="color-gray-500 price-line">@Model.PriceSale.ToString("N0") đ</span>
             </div>
-            <div class="mt-20 box-btn-cart"><a class="btn btn-cart" href="shop-cart.html">Add To Cart</a></div>
+            @if (User.Identity.IsAuthenticated)
+            {
+            <div class="mt-20 box-btn-cart"><a class="btn btn-cart" href="/shop-cart.html?action=add&id=@Model.Id">Add To Cart</a></div>
+            }
 
         </div>
 

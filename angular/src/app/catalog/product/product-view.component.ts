@@ -179,6 +179,8 @@ export class ProductViewComponent implements OnInit, OnDestroy {
       description: new FormControl(this.selectedEntity.description || null, Validators.compose([Validators.required, Validators.maxLength(250)])),
       isActive: new FormControl(this.selectedEntity.isActive),
       status: new FormControl(this.selectedEntity.status),
+      bestSellers: new FormControl(this.selectedEntity.bestSellers),
+      trending: new FormControl(this.selectedEntity.trending),
       image: new FormControl(this.selectedEntity.image|| null),
       imageName: new FormControl(this.selectedEntity.image || null),
       imageContent: new FormControl(null),
@@ -197,6 +199,8 @@ export class ProductViewComponent implements OnInit, OnDestroy {
       this.form.controls['priceSale'].disable();
       this.form.controls['isActive'].disable();
       this.form.controls['status'].disable();
+      this.form.controls['bestSellers'].disable();
+      this.form.controls['trending'].disable();
       this.form.controls['parameter'].disable();
       this.form.controls['description'].disable();
     } 

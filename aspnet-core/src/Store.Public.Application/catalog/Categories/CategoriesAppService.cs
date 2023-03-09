@@ -25,12 +25,15 @@ namespace Store.Public.Categories
     {
         private readonly IBlobContainer<CategoryIconContainer> _fileContainer;
         private readonly IRepository<Category,Guid> _categoryRepository;
+        private readonly IRepository<Product> _produtRepository;
         public CategoriesAppService(IRepository<Category, Guid> repository, CategoryManager categoryManager,
-            IBlobContainer<CategoryIconContainer> fileContainer)
+            IBlobContainer<CategoryIconContainer> fileContainer,
+            IRepository<Product> produtRepository)
             : base(repository)
         {
             _fileContainer = fileContainer;
             _categoryRepository = repository;
+            _produtRepository = produtRepository;
         }
         public async Task<List<CategoryInlistDto>> GetListAllAsync()
         {
@@ -39,7 +42,7 @@ namespace Store.Public.Categories
             var data = await AsyncExecuter.ToListAsync(query);
             return ObjectMapper.Map<List<Category>, List<CategoryInlistDto>>(data);
         }
-
+        
         public async Task<PagedResult<CategoryInlistDto>> GetListFilterAsync(BaseListFilterDto input)
         {
             var query = await Repository.GetQueryableAsync();
@@ -84,6 +87,14 @@ namespace Store.Public.Categories
         {
             var Category = await _categoryRepository.GetAsync(x => x.Slug == slug);
             return ObjectMapper.Map<Category, CategoryDto>(Category);
+        }
+
+        public async Task<int> GetProductCountByCategory(Guid? Id)
+        {
+            int categoryCount = await _categoryRepository.CountAsync<Category>();
+            int productCount = await _produtRepository.CountAsync(p => p.CategoryId == Id);
+
+            return productCount;
         }
     }
 }

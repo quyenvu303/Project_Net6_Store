@@ -114,13 +114,21 @@ namespace Store.Public.Products
         public async Task<List<ProductInlistDto>> GetListTopSellersAsync(int numberOfRecords)
         {
             var query = await Repository.GetQueryableAsync();
-            query = query.Where(x => x.IsActive == true)
+            query = query.Where(x => x.IsActive == true && x.BestSellers == true)
                 .OrderByDescending(x => x.CreationTime)
                 .Take(numberOfRecords);
             var data = await AsyncExecuter.ToListAsync(query);
             return ObjectMapper.Map<List<Product>, List<ProductInlistDto>>(data);
         }
-
+        public async Task<List<ProductInlistDto>> GetListTrendingAsync(int numberOfRecords)
+        {
+            var query = await Repository.GetQueryableAsync();
+            query = query.Where(x => x.IsActive == true && x.Trending == true)
+                .OrderByDescending(x => x.CreationTime)
+                .Take(numberOfRecords);
+            var data = await AsyncExecuter.ToListAsync(query);
+            return ObjectMapper.Map<List<Product>, List<ProductInlistDto>>(data);
+        }
         public async Task<List<ProductInlistDto>> GetProductBySlugAsync(string slug,string categorySlug)
         {
             var query = await Repository.GetQueryableAsync();

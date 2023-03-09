@@ -10,6 +10,8 @@ namespace Store.Public
         {
             public const string HomeData = "HomeData";
             public const string HeaderData = "HeaderData";
+            public const string FooterData = "FooterData";
+            public const string ProductData = "ProductData";
 
         }
     }

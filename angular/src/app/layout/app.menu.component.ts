@@ -72,6 +72,11 @@ export class AppMenuComponent implements OnInit {
                 label: 'Contact',
                 icon: 'fa fa-address-card',
                 routerLink: ['/catalog/contact']
+              },
+              {
+                label: 'Banner',
+                icon: 'fa fa-address-card',
+                routerLink: ['/catalog/banner']
               }
             ]
           },

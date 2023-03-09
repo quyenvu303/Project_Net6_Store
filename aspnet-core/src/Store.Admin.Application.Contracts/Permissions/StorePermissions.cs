@@ -42,4 +42,11 @@ public static class StorePermissions
         public const string Update = Default + ".Update";
         public const string Delete = Default + ".Delete";
     }
+    public static class Banner
+    {
+        public const string Default = CatalogGroupName + ".Banner";
+        public const string Create = Default + ".Create";
+        public const string Update = Default + ".Update";
+        public const string Delete = Default + ".Delete";
+    }
 }

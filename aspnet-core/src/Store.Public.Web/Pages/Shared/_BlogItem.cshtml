@@ -1,0 +1,17 @@
+﻿@using Store.Public.Blogs;
+@model Store.Public.Blogs.BlogInlistDto
+@inject IBlogsAppService _blogsAppService
+@{
+    var url = $"/blogs/{Model.Id}/{Model.Title}.html";
+    var fileContent = await _blogsAppService.GetImageAsync(Model.Image);
+    var base64Image = Store.Helpers.ImageHelper.ShowBase64(Model.Image, fileContent);
+}
+<div class="col-lg-4 col-md-6 col-sm-6 col-12 mb-40">
+    <div class="card-grid-style-1">
+        <div class="image-box"><a href="@url"></a><img src="@base64Image" alt="@url"></div>
+        <a class="color-gray-1100" href="@url">
+            <h4 class="mb-10">@Model.Title</h4>
+        </a>
+
+    </div>
+</div>

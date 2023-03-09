@@ -10,6 +10,13 @@
                 <p-checkbox formControlName="status" binary="true" id="status"></p-checkbox>
                 <label for="status">Sử dụng</label>
             </div>
+            <div class="field col-12 md:col-4">
+                <label for="image">Hình ảnh</label>
+                <input id="image" type="file" (change)="onFileChange($event)" class="w-full">
+            </div>
+            <div class="field col-12 md:col-4">
+                <p-image [src]="image" [alt]="selectedEntity.image" width="250" [preview]="true"></p-image>
+            </div>
             <div class="field col-12">
                 <label for="description" class="block">Mô tả</label>
                 <p-editor formControlName="description" [style]="{'height':'250px'}" skipValidation></p-editor>

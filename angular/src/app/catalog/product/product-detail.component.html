@@ -53,12 +53,20 @@
                 <p-checkbox formControlName="status" binary="true" id="status"></p-checkbox>
                 <label for="status">Xuất bán</label>
             </div>
+            <div class="field-checkbox col-2">
+                <p-checkbox formControlName="bestSellers" binary="true" id="bestSellers"></p-checkbox>
+                <label for="bestSellers">Best Sellers</label>
+            </div>
+            <div class="field-checkbox col-2">
+                <p-checkbox formControlName="trending" binary="true" id="trending"></p-checkbox>
+                <label for="trending">Trending</label>
+            </div>
 
-            <div class="field col-12 md:col-6">
+            <div class="field col-12 md:col-5">
                 <label for="image">Hình ảnh</label>
                 <input id="image" type="file" (change)="onFileChange($event)" class="w-full">
             </div>
-            <div class="field col-12 md:col-6">
+            <div class="field col-12 md:col-5">
                 <p-image [src]="image" [alt]="selectedEntity.image" width="250" [preview]="true"></p-image>
             </div>
 

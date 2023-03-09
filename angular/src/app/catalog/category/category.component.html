@@ -2,8 +2,8 @@
     <!--  Filter Search-->
     <div class="grid">
         <div class="col-4">
-            <button pButton type="button" (click)="showAddModal()" icon="fa fa-plus-square-o" iconPos="left"
-                label=""appAction="CREATE"></button>
+            <button pButton type="button" (click)="showAddModal()" icon="fa fa-plus-square-o" iconPos="left" label=""
+                appAction="CREATE"></button>
 
             <button pButton type="button" (click)="showOpenModal()" *ngIf="selectedItems.length == 1"
                 class="ml-1 p-button-help" icon="fa fa-eye" iconPos="left" label="" appAction="open"></button>
@@ -23,8 +23,8 @@
                         [style]="{ width: '100%' }" />
                 </div>
                 <div class="field">
-                    <p-dropdown [options]="ListStatus" [(ngModel)]="status" placeholder="sử dụng"
-                        [showClear]="true" autoWidth="false" [style]="{ width: '100%' }" skipValidation></p-dropdown>
+                    <p-dropdown [options]="ListStatus" [(ngModel)]="status" placeholder="sử dụng" [showClear]="true"
+                        autoWidth="false" [style]="{ width: '100%' }" skipValidation></p-dropdown>
                 </div>
                 <button type="button" pButton (click)="loadData()" icon="fa fa-search" iconPos="left"
                     label="Tìm"></button>

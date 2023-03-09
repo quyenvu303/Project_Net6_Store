@@ -17,5 +17,6 @@ namespace Store.Admin.Blogs
         Task<PagedResultDto<BlogInlistDto>> GetListFilterAsync(BaseListFilterDto input);
         Task<List<BlogInlistDto>> GetListAllAsync();
         Task DeleteMultileAsync(IEnumerable<Guid> ids);
+        Task<string> GetImageAsync(string fileName);
     }
 }

@@ -17,6 +17,8 @@ export interface CreateUpdateProductDto {
   description?: string;
   isActive?: boolean;
   status?: boolean;
+  bestSellers?: boolean;
+  trending?: boolean;
 }
 
 export interface ProductDto {
@@ -34,6 +36,8 @@ export interface ProductDto {
   description?: string;
   isActive?: boolean;
   status?: boolean;
+  bestSellers?: boolean;
+  trending?: boolean;
   id?: string;
   categoryName?: string;
   warehouseName?: string;
@@ -60,6 +64,8 @@ export interface ProductInlistDto extends EntityDto<string> {
   description?: string;
   isActive?: boolean;
   status?: boolean;
+  bestSellers?: boolean;
+  trending?: boolean;
   categoryName?: string;
   warehouseName?: string;
   categorySlug?: string;
