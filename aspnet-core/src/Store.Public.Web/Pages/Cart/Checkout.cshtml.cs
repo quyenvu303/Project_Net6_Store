@@ -137,16 +137,17 @@ namespace Store.Public.Web.Pages.Cart
 
             if (order != null)
             {
-                if (User.Identity.IsAuthenticated)
-                {
-                    //var email = User.GetSpecificClaim(ClaimTypes.Email);
-                    var email = order.CustomerEmail;
-                    await _localEventBus.PublishAsync(new NewOrderCreatedEvent()
-                    {
-                        CustomerEmail = email,
-                        Message = "Tạo đơn hàng thành công. Vui lòng đợi hệ thống sửa lý"
-                    });
-                }
+                //if (User.Identity.IsAuthenticated)
+                //{
+                //    ////var email = User.GetSpecificClaim(ClaimTypes.Email);
+                //    //var email = order.CustomerEmail;
+                //    //await _localEventBus.PublishAsync(new NewOrderCreatedEvent()
+                //    //{
+                //    //    CustomerEmail = email,
+                //    //    Message = "Tạo đơn hàng thành công. Vui lòng đợi hệ thống sửa lý"
+                //    //});
+                //    Message = "Tạo đơn hàng thành công. Vui lòng đợi hệ thống sửa lý"
+                //}
                 CreateStatus = true;
             }
             else

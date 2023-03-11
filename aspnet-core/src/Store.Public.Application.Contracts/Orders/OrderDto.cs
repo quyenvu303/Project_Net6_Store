@@ -10,7 +10,8 @@ namespace Store.Public.Orders
     {
         public string OrderId { get; set; }
         public DateTime? AppDate { get; set; }
-        public OrderStatus Status { get; set; }
+        //public OrderStatus Status { get; set; }
+        public int? Status { get; set; }
         public string ShippingName { get; set; }
         public decimal? ShippingFee { get; set; }
         public double Total { get; set; }

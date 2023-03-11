@@ -71,7 +71,8 @@ namespace Store.Products
                 trending,
                 _categoryName?.CategoryName,
                 _warehouseName?.Title,
-                 _categoryName?.Slug);
+                 _categoryName?.Slug,
+                 _categoryName.ParentId);
         }
     }
 }

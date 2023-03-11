@@ -12,11 +12,24 @@
         </div>
     </div>
 </div>
+
 <div class="section-box shop-template mt-30">
     <div class="container">
         <div class="row">
             <div class="col-lg-9 order-first order-lg-last">
-                
+                <div class="container">
+                    <div class="box-swiper">
+                        <div class="swiper-container swiper-group-9">
+                            <div class="swiper-wrapper pt-5">
+                                @foreach (var item in Model.ItemByCategories)
+                                {
+                                    <partial name="_ItemByCategories" model="item" />
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="row mt-20">
                     @foreach (var item in Model.ProductData.Results)
                     {
@@ -30,6 +43,7 @@
                 <partial name="_Paginator" model="Model.ProductData" />
             </div>
             <div class="col-lg-3 order-last order-lg-first">
+
                 <div class="sidebar-border mb-0">
                     <div class="sidebar-head">
                         <h6 class="color-gray-900">Product Categories</h6>
@@ -89,7 +103,7 @@
                         </ul>
                     </div>
                 </div>
-                
+
                 <div class="box-slider-item">
                     <div class="head pb-15 border-brand-2">
                         <h5 class="color-gray-900">Product Tags</h5>

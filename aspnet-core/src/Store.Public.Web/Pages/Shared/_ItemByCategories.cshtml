@@ -1,0 +1,22 @@
+﻿@using Store.Public.Categories;
+@model Store.Public.Categories.CategoryInlistDto
+@inject ICategoriesAppService _categoriesAppService
+@{
+    var url = $"/products/{Model.CategoryId}.html";
+    var fileContent = await _categoriesAppService.GetImageAsync(Model.Icon);
+    var base64Image = Store.Helpers.ImageHelper.ShowBase64(Model.Icon, fileContent);
+
+    var CountProduct = await _categoriesAppService.GetProductCountByCategory(@Model.Id);
+}
+<div class="">
+    <div class="item-cat" style=" width: 64%;">
+        <div class="box-category-1">
+            <div class="box-image">
+                 <div class="inner-image"><img src="@base64Image" alt="@Model.CategoryName"></div>
+            </div>
+            <div class="box-info">
+                <a class="color-gray-900 font-md-bold" href="@url">@Model.CategoryName</a>
+            </div>
+        </div>
+    </div>
+</div>

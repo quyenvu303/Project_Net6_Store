@@ -69,7 +69,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Store.Public.Web", "src\Sto
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Store.Domain.Tests", "test\Store.Domain.Tests\Store.Domain.Tests.csproj", "{63D13C5A-5CEF-4AE6-B10E-33D088068FF5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Store.BackgroundWorkers", "src\Store.BackgroundWorkers\Store.BackgroundWorkers.csproj", "{E131A280-CA18-4374-B01F-8917A433E114}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Store.BackgroundWorkers", "src\Store.BackgroundWorkers\Store.BackgroundWorkers.csproj", "{E131A280-CA18-4374-B01F-8917A433E114}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -6,8 +6,8 @@ using Store.Orders;
 using Store.Products;
 using Store.Public.Banners;
 using Store.Public.Blogs;
-using Store.Public.Categories;
 using Store.Public.Orders;
+using Store.Public.Categories;
 using Store.Public.Products;
 
 namespace Store.Public;

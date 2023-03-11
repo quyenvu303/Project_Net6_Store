@@ -1,6 +1,9 @@
 ﻿using AutoMapper.Internal.Mappers;
 using Store.Orders;
 using Store.Products;
+using Store.Public.Orders;
+using Store.Public.Orders;
+using Store.Public.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +12,7 @@ using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
+using Volo.Abp.ObjectMapping;
 
 namespace Store.Public.Orders
 {
@@ -23,15 +27,19 @@ namespace Store.Public.Orders
         private readonly IRepository<OrderItem> _orderItemRepository;
         private readonly OrderCodeGenerator _orderCodeGenerator;
         private readonly IRepository<Product, Guid> _productRepository;
+
+        private readonly IRepository<Order> _orderRepository;
         public OrdersAppService(IRepository<Order, Guid> repository,
             OrderCodeGenerator orderCodeGenerator,
             IRepository<OrderItem> orderItemRepository,
+            IRepository<Order> orderRepository,
             IRepository<Product, Guid> productRepository)
             : base(repository)
         {
             _orderItemRepository = orderItemRepository;
             _orderCodeGenerator = orderCodeGenerator;
             _productRepository = productRepository;
+            _orderRepository = orderRepository;
         }
 
         public override async Task<OrderDto> CreateAsync(CreateOrderDto input)
@@ -77,6 +85,26 @@ namespace Store.Public.Orders
             return ObjectMapper.Map<Order, OrderDto>(result);
         }
 
+        public async Task<PagedResult<OrderDto>> GetOrderItemsAsync(ProductFilter input)
+        {
+            var query = await Repository.GetQueryableAsync();
 
+            var order = await _orderRepository.GetListAsync(x => x.CusomerUserId == input.UserId);
+           
+            query = query.Where(x => x.CusomerUserId == input.UserId);
+
+            var totalCount = await AsyncExecuter.LongCountAsync(query);
+            var data = await AsyncExecuter
+               .ToListAsync(
+                  query.Skip((input.CurrentPage - 1) * input.PageSize)
+               .Take(input.PageSize));
+
+            return new PagedResult<OrderDto>(
+                ObjectMapper.Map<List<Order>, List<OrderDto>>(data),
+                totalCount,
+                input.CurrentPage,
+                input.PageSize
+            );
+        }
     }
 }

@@ -15,7 +15,7 @@ namespace Store.Products
             Guid categoryId, Guid warehouseGuid, string origin, 
             string image, int? quantity, decimal? price, decimal? priceSale, 
             string parameter, string description, bool? isActive, bool? status,
-            bool? bestSellers, bool? trending,string categoryName, string warehouseName, string categorySlug
+            bool? bestSellers, bool? trending,string categoryName, string warehouseName, string categorySlug, Guid? categoryParentId
             )
         {
             Id = id;
@@ -38,6 +38,7 @@ namespace Store.Products
             CategoryName = categoryName;
             WarehouseName = warehouseName;
             CategorySlug = categorySlug;
+            CategoryParentId = categoryParentId;
             
         }
 
@@ -60,5 +61,6 @@ namespace Store.Products
         public string CategoryName { get; set; }
         public string WarehouseName { get; set; }
         public string CategorySlug { get; set; }
+        public Guid? CategoryParentId { get; set; }
     }
 }

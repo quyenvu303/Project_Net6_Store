@@ -1,26 +1,13 @@
-﻿using AutoMapper.Internal.Mappers;
-using Microsoft.AspNetCore.Authorization;
-using Store.Categories;
+﻿using Store.Categories;
 using Store.Products;
-using Store.Warehouses;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.BlobStoring;
 using Volo.Abp.Domain.Repositories;
-using Volo.Abp.ObjectMapping;
-using Volo.Abp.Uow;
-using static System.Net.Mime.MediaTypeNames;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Store.Public.Products
 {
@@ -95,7 +82,7 @@ namespace Store.Public.Products
             product = product.Where(x => x.CategoryId == category.Id);
 
             query = query.WhereIf(!string.IsNullOrWhiteSpace(input.Keyword), x => x.ProductName.Contains(input.Keyword) || x.CategoryName.Contains(input.Keyword));
-            query = query.Where(x => x.CategoryId == category.Id);
+            query = query.Where(x => x.CategoryId == category.Id || x.CategoryParentId == category.Id);
 
             var totalCount = await AsyncExecuter.LongCountAsync(query);
             var data = await AsyncExecuter
@@ -138,5 +125,7 @@ namespace Store.Public.Products
             var data = await AsyncExecuter.ToListAsync(query);
             return ObjectMapper.Map<List<Product>, List<ProductInlistDto>>(data);
         }
+
+       
     }
 }

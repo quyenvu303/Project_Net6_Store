@@ -17,6 +17,7 @@ namespace Store.Public.Web.Pages.Home.Products
         private readonly IDistributedCache<ProductCacheItem> _distributedCache;
         public CategoryDto Category { set; get; }
         public List<CategoryInlistDto> Categories { set; get; }
+        public List<CategoryInlistDto> ItemByCategories { set; get; }
         public List<ProductInlistDto> Product { set; get; }
         public PagedResult<ProductInlistDto> ProductData { set; get; }
         private readonly ICategoriesAppService _categoriesAppService;
@@ -40,6 +41,11 @@ namespace Store.Public.Web.Pages.Home.Products
                 var allCategories = await _categoriesAppService.GetListAllAsync();
                 var rootCategories = allCategories.Where(x => x.ParentId == null).ToList();
 
+                var ItemByCategories = await _categoriesAppService.GetListItemByCategoryAsync(new ProductFilter()
+                {
+                    CateId = CategoryId,
+                });
+
                 var ProductData = await _productsAppService.GetListFilterAsync(new ProductFilter()
                 {
                     CurrentPage = page,
@@ -51,6 +57,7 @@ namespace Store.Public.Web.Pages.Home.Products
                     Product = Product,
                     Categories = rootCategories,
                     ProductData = ProductData,
+                    ItemByCategories = ItemByCategories,
                 };
             },
             () => new DistributedCacheEntryOptions
@@ -61,6 +68,7 @@ namespace Store.Public.Web.Pages.Home.Products
             Product = cacheItem.Product;
             Categories = cacheItem.Categories;
             ProductData = cacheItem.ProductData;
+            ItemByCategories = cacheItem.ItemByCategories;
         }
     }
 }

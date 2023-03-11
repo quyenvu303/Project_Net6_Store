@@ -26,5 +26,6 @@ namespace Store.Public.Products
         public string CategoryName { get; set; }
         public string WarehouseName { get; set; }
         public string CategorySlug { get; set; }
+        public Guid? CategoryParentId { get; set; }
     }
 }

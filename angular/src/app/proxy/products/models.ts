@@ -42,6 +42,7 @@ export interface ProductDto {
   categoryName?: string;
   warehouseName?: string;
   categorySlug?: string;
+  categoryParentId?: string;
 }
 
 export interface ProductFilter extends BaseListFilterDto {
@@ -69,4 +70,5 @@ export interface ProductInlistDto extends EntityDto<string> {
   categoryName?: string;
   warehouseName?: string;
   categorySlug?: string;
+  categoryParentId?: string;
 }

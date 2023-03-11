@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Store.Public.Products;
+using System;
 using System.Collections.Generic;
 using System.Linq.Dynamic.Core;
 using System.Text;
@@ -21,5 +22,8 @@ namespace Store.Public.Categories
 
         Task<CategoryDto> GetBySlugAsync(string slug);
         Task<int> GetProductCountByCategory(Guid? Id);
+
+        Task<List<CategoryInlistDto>> GetListItemByCategoryAsync(ProductFilter input);
+
     }
 }

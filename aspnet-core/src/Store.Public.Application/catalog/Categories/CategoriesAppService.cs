@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Store.Categories;
 using Store.Products;
+using Store.Public.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -96,5 +97,19 @@ namespace Store.Public.Categories
 
             return productCount;
         }
+
+        public async Task<List<CategoryInlistDto>> GetListItemByCategoryAsync(ProductFilter input)
+        {
+
+            var category = await _categoryRepository.GetAsync(x => x.CategoryId == input.CateId);
+            var query = await Repository.GetQueryableAsync();
+            query = query.Where(x => x.ParentId == category.Id);
+
+            var totalCount = await AsyncExecuter.LongCountAsync(query);
+            var data = await AsyncExecuter.ToListAsync(query);
+            return ObjectMapper.Map<List<Category>, List<CategoryInlistDto>>(data);
+        }
+
+       
     }
 }

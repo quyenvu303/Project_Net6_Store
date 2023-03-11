@@ -9,6 +9,7 @@ namespace Store.Public.Web.Models
     {
         public CategoryDto Category { set; get; }
         public List<CategoryInlistDto> Categories { set; get; }
+        public List<CategoryInlistDto> ItemByCategories { set; get; }
         public List<ProductInlistDto> Product { set; get; }
         public PagedResult<ProductInlistDto> ProductData { set; get; }
 

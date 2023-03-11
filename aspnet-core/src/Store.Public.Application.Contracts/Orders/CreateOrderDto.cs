@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Store.Public.Orders;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
