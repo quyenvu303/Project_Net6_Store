@@ -45,14 +45,17 @@
 
                 @if (User.Identity.IsAuthenticated)
                 {
+                    var userId = User.Claims.FirstOrDefault();
+                    var Id = userId.Value;
                     <div class="header-shop">
                         <div class="d-inline-block box-dropdown-cart">
                             <span class="font-lg icon-list icon-account"><span>Account</span></span>
 
                             <div class="dropdown-account">
                                 <ul>
-                                    <li><a>Xin chào:  @User.Identity.Name</a></li>
-                                    <li><a href="/Account/Manage.html">My Account</a></li>
+                                    <li style="text-align:left"><a>Xin chào:  @User.Identity.Name</a></li>
+                                    <li><a href="/Account/Profile.html?id=@Id">Hồ sơ</a></li>
+                                    <li><a href="/Account/History.html?id=@Id">Lịch sửa đặt hàng</a></li>
                                     <li><a href="/logout.html">Sign out</a></li>
                                 </ul>
                             </div>
@@ -108,6 +111,8 @@
                 </div>
                 @if (User.Identity.IsAuthenticated)
                 {
+                    var userId = User.Claims.FirstOrDefault();
+                    var Id = userId.Value;
                     <div class="mobile-account">
                         <div class="mobile-header-top">
                             <div class="user-account">
@@ -118,8 +123,9 @@
                             </div>
                         </div>
                         <ul class="mobile-menu">
-                            <li><a>Xin chào:  @User.Identity.Name</a></li>
-                            <li><a href="page-account.html">My Account</a></li>
+                            <li style ="text-align:left"><a>Xin chào:  @User.Identity.Name</a></li>
+                            <li><a href="/Account/Profile.html?id=@Id">Hồ sơ</a></li>
+                            <li><a href="/Account/History.html?id=@Id">Lịch sửa đặt hàng</a></li>
                             <li><a href="/logout.html">Sign out</a></li>
                         </ul>
                     </div>
@@ -203,17 +209,20 @@
                 </div>
                 @if (User.Identity.IsAuthenticated)
                 {
+                    var userId = User.Claims.FirstOrDefault();
+                    var Id = userId.Value;
                     <div class="mobile-account">
                         <div class="mobile-header-top">
                             <div class="user-account">
                                 <a href="page-account.html"><img src="assets/imgs/template/ava_1.png" alt="Ecom"></a>
                                 <div class="content">
-                                    <h6 class="user-name">Xin chào: <span class="text-brand"> @User.Identity.Name</span></h6>
+                                    <h6 class="user-name" style="text-align:left">Xin chào: <span class="text-brand"> @User.Identity.Name</span></h6>
                                 </div>
                             </div>
                         </div>
                         <ul class="mobile-menu">
-                            <li><a href="page-account.html">My Account</a></li>
+                            <li><a href="/Account/Profile.html?id=@Id">Hồ sơ</a></li>
+                            <li><a href="/Account/History.html?id=@Id">Lịch sửa đặt hàng</a></li>
                             <li><a href="/logout.html">Sign out</a></li>
                         </ul>
                     </div>

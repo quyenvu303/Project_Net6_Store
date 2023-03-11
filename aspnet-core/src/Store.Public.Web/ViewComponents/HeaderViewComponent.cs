@@ -47,5 +47,6 @@ namespace Store.Public.Web.ViewComponents
             return View(cacheItem.Categories);
 
         }
+
     }
 }
