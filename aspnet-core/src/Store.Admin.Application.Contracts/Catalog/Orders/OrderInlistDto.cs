@@ -9,18 +9,21 @@ namespace Store.Admin.Orders
     public class OrderInlistDto : EntityDto<Guid>
     {
         public string OrderId { get; set; }
-        public DateTime? AppDate { get; set; }
+        public DateTime? ApplyDate { get; set; }
         public OrderStatus Status { get; set; }
         public string ShippingName { get; set; }
-        public decimal? ShippingFee { get; set; }
-        public decimal? Discount { get; set; }
-        public decimal? Total { get; set; }
+        public double ShippingFee { get; set; }
+        public double Total { get; set; }
+        public double Subtotal { get; set; }
+        public double Discount { get; set; }
+        public double GrandTotal { get; set; }
         public Guid? CusomerUserId { get; set; }
         public string CustomerName { get; set; }
         public string CustomerPhoneNumber { get; set; }
         public string CustomerEmail { get; set; }
         public string CustomerAddress { get; set; }
         public string Description { get; set; }
+        public string Request { get; set; }
         public PaymentMethod PaymentId { get; set; }
     }
 }

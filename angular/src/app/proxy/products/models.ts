@@ -10,6 +10,7 @@ export interface CreateUpdateProductDto {
   origin?: string;
   imageName?: string;
   imageContent?: string;
+  totalQuantity?: number;
   quantity?: number;
   price?: number;
   priceSale?: number;
@@ -29,6 +30,7 @@ export interface ProductDto {
   warehouseGuid?: string;
   origin?: string;
   image?: string;
+  totalQuantity?: number;
   quantity?: number;
   price?: number;
   priceSale?: number;
@@ -58,6 +60,7 @@ export interface ProductInlistDto extends EntityDto<string> {
   warehouseGuid?: string;
   origin?: string;
   image?: string;
+  totalQuantity?: number;
   quantity?: number;
   price?: number;
   priceSale?: number;

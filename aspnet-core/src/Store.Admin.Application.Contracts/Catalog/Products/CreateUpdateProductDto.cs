@@ -14,6 +14,7 @@ namespace Store.Admin.Products
         public string Origin { get; set; }
         public string ImageName { get; set; }
         public string ImageContent { get; set; }
+        public int? TotalQuantity { get; set; }
         public int? Quantity { get; set; }
         public decimal? Price { get; set; }
         public decimal? PriceSale { get; set; }

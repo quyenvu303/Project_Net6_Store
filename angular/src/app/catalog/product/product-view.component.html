@@ -21,7 +21,7 @@
                     [showClear]="true" autoWidth="false" [style]="{ width: '100%' }"></p-dropdown>
             </div>
             <div class="field col-2">
-                <label for="quantity" class="block">Số lượng<span class="required">*</span></label>
+                <label for="quantity" class="block">Số lượng xuất bán<span class="required">*</span></label>
                 <p-inputNumber formControlName="quantity"></p-inputNumber>
             </div>
             <div class="field col-2">
@@ -39,6 +39,10 @@
             <div class="field col-2">
                 <label for="priceSale" class="block">Giá Sale<span class="required">*</span></label>
                 <p-inputNumber formControlName="priceSale"></p-inputNumber>
+            </div>
+            <div class="field col-2">
+                <label for="totalQuantity" class="block">Số lượng tổng<span class="required">*</span></label>
+                <p-inputNumber formControlName="totalQuantity"></p-inputNumber>
             </div>
             <div class="field-checkbox col-1">
                 <p-checkbox formControlName="isActive" binary="true" id="isActive" ></p-checkbox>

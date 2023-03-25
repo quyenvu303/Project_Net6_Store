@@ -13,8 +13,8 @@ using Volo.Abp.EntityFrameworkCore;
 namespace Store.Migrations
 {
     [DbContext(typeof(StoreDbContext))]
-    [Migration("20230305143249_updatebanner")]
-    partial class updatebanner
+    [Migration("20230324170137_updateApplyDateOrder")]
+    partial class updateApplyDateOrder
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -168,7 +168,7 @@ namespace Store.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("AppDate")
+                    b.Property<DateTime?>("ApplyDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -211,12 +211,15 @@ namespace Store.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal?>("Discount")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Discount")
+                        .HasColumnType("float");
 
                     b.Property<string>("ExtraProperties")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
+
+                    b.Property<double>("GrandTotal")
+                        .HasColumnType("float");
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
@@ -238,6 +241,9 @@ namespace Store.Migrations
                     b.Property<int>("PaymentId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Request")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal?>("ShippingFee")
                         .HasColumnType("decimal(18,2)");
 
@@ -247,8 +253,11 @@ namespace Store.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<decimal?>("Total")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Subtotal")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Total")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -263,14 +272,20 @@ namespace Store.Migrations
                     b.Property<Guid>("OrderId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double?>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<string>("ProductImage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProductName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("Total")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Total")
+                        .HasColumnType("float");
 
                     b.HasKey("ProductId", "OrderId");
 
@@ -282,11 +297,17 @@ namespace Store.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool?>("BestSellers")
+                        .HasColumnType("bit");
+
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CategoryName")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("CategoryParentId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CategorySlug")
                         .HasColumnType("nvarchar(max)");
@@ -343,6 +364,12 @@ namespace Store.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("TotalQuantity")
+                        .HasColumnType("int");
+
+                    b.Property<bool?>("Trending")
                         .HasColumnType("bit");
 
                     b.Property<Guid>("WarehouseGuid")

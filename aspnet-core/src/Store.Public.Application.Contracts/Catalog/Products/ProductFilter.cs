@@ -10,5 +10,6 @@ namespace Store.Public.Products
         public string CateId { get; set; }
         public Guid? UserId { get; set; }
         public Guid? WarehouseGuid { get; set; }
+        public string OrderId { get; set; }
     }
 }

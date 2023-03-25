@@ -14,6 +14,7 @@
     <link href="/assets/css/style.css?v=3.0.0" rel="stylesheet">
     <title>ĐQ Store</title>
     @RenderSection("styles", required: false)
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
 <body>
@@ -45,6 +46,47 @@
     <script src="/assets/js/main.js?v=3.0.0"></script>
     <script src="/assets/js/shop.js?v=1.2.1"></script>
     @RenderSection("scripts", required: false)
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+    <script>
+        function openPopupCannelItem() {
+            $('#openPopupCannelItem').modal('show');
+        }
+
+    </script>
+    <script>
+        function openPopupRequestCancel() {
+            $('#openPopupRequestCancel').modal('show');
+        }
+
+    </script>
+
+
+    <script>
+        document.getElementById("shipping-select").addEventListener("change", function () {
+            var shippingId = this.value;
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("OnPostGetFreeAsync", "CheckOut" )',
+                data: { shippingId: shippingId },
+                dataType: "json",
+                success: function (result) {
+                    // Gán kết quả vào ShippingFee của Model.Shipping
+                    var shippingFee = result.shippingFee;
+                },
+                error: function (xhr, status, error) {
+                    // Xử lý lỗi ở đây
+                }
+            });
+        });
+
+    </script>
 </body>
 
 </html>

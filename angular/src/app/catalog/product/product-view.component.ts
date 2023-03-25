@@ -173,6 +173,7 @@ export class ProductViewComponent implements OnInit, OnDestroy {
       origin: new FormControl(this.selectedEntity.origin || null, Validators.required),
       slug: new FormControl(this.selectedEntity.slug || null, Validators.required),
       quantity: new FormControl(this.selectedEntity.quantity || null, Validators.required),
+      totalQuantity: new FormControl(this.selectedEntity.totalQuantity || null, Validators.required),
       price: new FormControl(this.selectedEntity.price || null, Validators.required),
       priceSale: new FormControl(this.selectedEntity.priceSale || null, Validators.required),
       parameter: new FormControl(this.selectedEntity.parameter || null, Validators.required),
@@ -193,6 +194,7 @@ export class ProductViewComponent implements OnInit, OnDestroy {
       this.form.controls['categoryId'].disable();
       this.form.controls['warehouseGuid'].disable();
       this.form.controls['quantity'].disable();
+      this.form.controls['totalQuantity'].disable();
       this.form.controls['origin'].disable();
       this.form.controls['slug'].disable();
       this.form.controls['price'].disable();

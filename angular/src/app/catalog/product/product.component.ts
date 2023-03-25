@@ -131,7 +131,7 @@ export class ProductComponent implements OnInit, OnDestroy {
   showAddModal() {
     const ref = this.dialogService.open(ProductDetailComponent,{
       header: 'Thêm mới loại sản phẩm',
-      width: '80%',
+      width: '100%',
       height: '100%'
     });
     ref.onClose.subscribe((data: ProductDto) => {

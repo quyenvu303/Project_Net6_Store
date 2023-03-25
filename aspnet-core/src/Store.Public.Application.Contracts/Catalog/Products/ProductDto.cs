@@ -14,6 +14,7 @@ namespace Store.Public.Products
         public Guid WarehouseGuid { get; set; }
         public string Origin { get; set; }
         public string Image { get; set; }
+        public int? TotalQuantity { get; set; }
         public int? Quantity { get; set; }
         public double Price { get; set; }
         public double PriceSale { get; set; }

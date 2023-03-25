@@ -40,6 +40,7 @@
                 </th>
                 <th pSortableColumn="categoryId">Mã loại sản phẩm <p-sortIcon field="categoryId"></p-sortIcon></th>
                 <th pSortableColumn="categoryName">Tên loại sản phẩm <p-sortIcon field="categoryName"></p-sortIcon></th>
+                <th pSortableColumn="categoryName">Icon <p-sortIcon field="icon"></p-sortIcon></th>
                 <th pSortableColumn="sortOrder">Thứ tự<p-sortIcon field="sortOrder"></p-sortIcon></th>
                 <th>Trạng thái</th>
             </tr>
@@ -51,7 +52,10 @@
                     <p-tableCheckbox [value]="row"></p-tableCheckbox>
                 </td>
                 <td style="width: 20%;">{{row.categoryId}}</td>
-                <td style="width: 60%;">{{row.categoryName}}</td>
+                <td style="width: 40%;">{{row.categoryName}}</td>
+                <td style="width: 20%;">
+                    <img [src]="row.icon" alt="item.icon">
+                </td>
                 <td style="width: 10%;">{{row.sortOrder}}</td>
                 <td style="width: 20%;">
                     <p-badge *ngIf="row.isActive == 1" severity="success" value="Hiển thị"></p-badge>

@@ -5,6 +5,7 @@ using Store.Emailing;
 using Store.Orders.Events;
 using Store.Public.Orders;
 using Store.Public.Products;
+using Store.Public.Shippings;
 using Store.Public.Web.Extensions;
 using Store.Public.Web.Models;
 using System;
@@ -25,20 +26,26 @@ namespace Store.Public.Web.Pages.Cart
         private readonly IOrdersAppService _ordersAppService;
         private readonly ILocalEventBus _localEventBus;
         private readonly IProductsAppService _productsAppService;
+        private readonly IShippingAppService _shippingAppService;
 
         public CheckoutModel(IOrdersAppService ordersAppService,
             IProductsAppService productsAppService,
+            IShippingAppService shippingAppService,
             ILocalEventBus localEventBus
             )
         {
             _ordersAppService = ordersAppService;
             _localEventBus = localEventBus;
+            _shippingAppService = shippingAppService;
             _productsAppService = productsAppService;
         }
         public List<CartItem> CartItems { get; set; }
+
+        public List<ShippingInlistDto> Shipping { get; set; }
         public bool? CreateStatus { set; get; }
         [BindProperty]
         public OrderDto Order { set; get; }
+        public ShippingInlistDto ShippingFree { set; get; }
 
         private List<CartItem> GetCartItems()
         {
@@ -59,7 +66,7 @@ namespace Store.Public.Web.Pages.Cart
             {
                 productCarts = JsonSerializer.Deserialize<Dictionary<string, CartItem>>(cart);
             }
-            var _Cart =  productCarts.Values.ToList();
+            var _Cart = productCarts.Values.ToList();
 
 
 
@@ -97,10 +104,18 @@ namespace Store.Public.Web.Pages.Cart
                     HttpContext.Session.SetString(StoreConsts.Cart, JsonSerializer.Serialize(productCarts));
                 }
                 CartItems = productCarts.Values.ToList();
+                //ShippingFree = await _shippingAppService.GetShipingFreeAsync();
+                Shipping = await _shippingAppService.GetListAllAsync();
+            }
+            else if (_Cart.Count > 0)
+            {
+                CartItems = productCarts.Values.ToList();
+                //ShippingFree = await _shippingAppService.GetShipingFreeAsync();
+                Shipping = await _shippingAppService.GetListAllAsync();
             }
             else
             {
-                CartItems = productCarts.Values.ToList();
+
             }
         }
         public async Task OnPostAsync()
@@ -114,9 +129,11 @@ namespace Store.Public.Web.Pages.Cart
                 var total = item.Product.Price * item.Quantity;
                 cartItems.Add(new OrderItemDto()
                 {
-                    
+
                     Price = item.Product.Price,
                     ProductId = item.Product.Id,
+                    ProductName = item.Product.ProductName,
+                    ProductImage = item.Product.Image,
                     Quantity = item.Quantity,
                     Total = total,
                 }); ;
@@ -128,8 +145,8 @@ namespace Store.Public.Web.Pages.Cart
                 CustomerUserId = currentUserId,
                 CustomerName = Order.CustomerName,
                 CustomerEmail = Order.CustomerEmail,
-                CustomerAddress= Order.CustomerAddress,
-                CustomerPhoneNumber= Order.CustomerPhoneNumber,
+                CustomerAddress = Order.CustomerAddress,
+                CustomerPhoneNumber = Order.CustomerPhoneNumber,
                 Description = Order.Description,
 
             });
@@ -153,5 +170,15 @@ namespace Store.Public.Web.Pages.Cart
             else
                 CreateStatus = false;
         }
+
+        [HttpPost]
+        public ContentResult GetFree(Guid id)
+        {
+            // Do something here
+            var result = new { shippingFee = 0 };
+            var jsonResult = JsonSerializer.Serialize(result);
+            return Content(jsonResult, "application/json");
+        }
+
     }
 }

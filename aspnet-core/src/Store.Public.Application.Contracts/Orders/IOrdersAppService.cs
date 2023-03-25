@@ -14,5 +14,11 @@ namespace Store.Public.Orders
         PagedResultRequestDto, CreateOrderDto, CreateOrderDto>
     {
         Task<PagedResult<OrderDto>> GetOrderItemsAsync(ProductFilter input);
+
+        Task<OrderDto> GetOrderByIdAsync(string Id);
+        Task<List<OrderItemDto>> GetOrderItemByIdAsync(string Id);
+
+        Task<OrderDto> UpdateRequestCancelAsync(Guid Id);
+        Task<OrderDto> UpdateCancelItemAsync(Guid Id);
     }
 }

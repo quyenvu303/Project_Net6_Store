@@ -25,6 +25,8 @@ import { ProductComponent } from './product/product.component';
 import { ProductDetailComponent } from './product/product-detail.component';
 import { ProductViewComponent } from './product/product-view.component';
 import { OrderComponent } from './order/order.component';
+import { OrderDetailComponent } from './order/order.component-detail';
+
 import { ContactComponent } from './contact/contact.component';
 import { ContactDetailComponent } from './contact/contact-detail.component';
 import { ContactViewComponent } from './contact/contact-view.component';
@@ -46,6 +48,7 @@ import { ImageModule } from 'primeng/image';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CalendarModule } from 'primeng/calendar';
 
+
 @NgModule({
   declarations: [
     CategoryComponent, 
@@ -55,6 +58,7 @@ import { CalendarModule } from 'primeng/calendar';
     ShippingDetailComponent,
     ShippingViewComponent,
     OrderComponent,
+    OrderDetailComponent,
     ProductComponent,
     ProductDetailComponent,
     ProductViewComponent,
@@ -69,7 +73,8 @@ import { CalendarModule } from 'primeng/calendar';
     BlogViewComponent,
     BannerComponent,
     BannerDetailComponent,
-    BannerViewComponent
+    BannerViewComponent,
+
   ],
   imports: [
     SharedModule,
@@ -108,7 +113,8 @@ import { CalendarModule } from 'primeng/calendar';
     BlogDetailComponent,
     BlogViewComponent,
     BannerDetailComponent,
-    BannerViewComponent
+    BannerViewComponent,
+    OrderDetailComponent
   ]
 })
 export class CatalogModule { }

@@ -13,6 +13,6 @@ public static class StoreConsts
 
     public const string Cart = "Cart";
 
-    public const string OrderIdentitySettingId = "Order";
+    public const string OrderIdentitySettingId = "Orders";
     public const string OrderIdentitySettingPrefix = "ĐH_";
 }

@@ -10,6 +10,9 @@ namespace Store.Public.Web.Models
     public class ProfileCacheItem
     {
         public PagedResult<OrderDto> OrderData { set; get; }
+        public PagedResult<OrderItemDto> OrderItems { get; set; }
+
+        public bool isOrderDetailReady { get; set; }
 
     }
 }

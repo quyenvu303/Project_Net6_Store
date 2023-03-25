@@ -7,6 +7,7 @@ export enum OrderStatus {
   Shipping = 4,
   Finished = 5,
   Canceled = 6,
+  RequestCancel = 7,
 }
 
 export const orderStatusOptions = mapEnumToOptions(OrderStatus);

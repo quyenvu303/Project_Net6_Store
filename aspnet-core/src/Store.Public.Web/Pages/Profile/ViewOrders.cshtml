@@ -1,0 +1,254 @@
+﻿@page "/ViewOrder/{Id}.html"
+@model Store.Public.Web.Pages.Profile.ViewOrdersModel
+@*@using Store.Orders;*@
+@using Store.Public.Products;
+@inject IProductsAppService _productsAppService;
+@{
+    //var fileContent = await _productsAppService.GetImageAsync(Model.OrderItems.Pro);
+    //var base64Image = Store.Helpers.ImageHelper.ShowBase64(Model.Image, fileContent);
+}
+<style>
+
+    .popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 20px;
+        border: 1px solid black;
+        z-index: 999;
+    }
+
+        .popup h3 {
+            margin-top: 0;
+        }
+
+        .popup button {
+            margin-right: 10px;
+        }
+
+</style>
+
+<section class="section-box shop-template mt-30">
+    <div class="container box-account-template">
+        <div class="box-tabs mb-100">
+            <div class="tab-content mt-30">
+                <div class="border-bottom mb-20 mt-20"></div>
+                @if (Model.CreateStatus != null)
+                {
+                    <div class="row">
+                        @if (Model.CreateStatus == true)
+                        {
+                            <div class="alert alert-success" role="alert">
+                                Yêu cầu thành công !
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="alert alert-danger" role="alert">
+                                Yêu cầu không thành công. Vui lòng thử lại !
+                            </div>
+                        }
+                    </div>
+                }
+                <div class="row">
+                    <div class="col-md-8">
+                        <h3 class="mb-12">
+                            Mã đơn hàng: #@Model.OrderData.OrderId:
+                            @*<span class="color-success">@Model.OrderData.Status.ToString()</span>*@
+                            <span class="color-success">@Html.DisplayFor(@Model => @Model.OrderData.Status) </span>
+                        </h3>
+
+                    </div>
+                    <div class="col-md-3">
+                        @if (@Model.OrderData.Status == Store.Orders.OrderStatus.New)
+                        {
+                            <div class="col-lg-12 col-12 mb-20 text-end">
+                                <button class="btn btn-danger" type="button" style="font-family: emoji" onclick="openPopupCannelItem()">Yêu cầu hủy</button>
+                            </div>
+
+                        }
+                        @if (@Model.OrderData.Status == Store.Orders.OrderStatus.RequestCancel)
+                        {
+                            <div class="col-lg-12 col-12 mb-20 text-end">
+                                <button class="btn btn-danger" type="button" style="font-family: emoji" onclick="openPopupRequestCancel()">Hủy yêu cầu</button>
+                            </div>
+
+                        }
+                    </div>
+                    <div class="col-md-1">
+                    </div>
+                </div>
+                <hr>
+                <h6 class="color-gray-500">Ngày tạo đơn: @Model.OrderData.ApplyDate</h6>
+                <h6 class="color-gray-500">Người đặt hàng: @Model.OrderData.CustomerName</h6>
+                <h6 class="color-gray-500">Số điện thoại: @Model.OrderData.CustomerPhoneNumber</h6>
+                <h6 class="color-gray-500">Email: @Model.OrderData.CustomerEmail</h6>
+                <h6 class="color-gray-500">Địa chỉ nhận hàng: @Model.OrderData.CustomerAddress</h6>
+                <h6 class="color-gray-500">Ghi chú: @Model.OrderData.Description</h6>
+                <hr>
+                <h5 class="color-black-500">Phương thức thanh toán: @Html.DisplayFor(@Model => @Model.OrderData.PaymentId)</h5>
+                <hr>
+
+                <div class="table-responsive">
+                    <div class="list-steps">
+                        <div class="item-step">
+                            <div class="rounded-step">
+                                <div class="icon-step step-1 active"></div>
+                                <h6 class="mb-5">Order Placed</h6>
+                                <p class="font-md color-gray-500">15 August 2022</p>
+                            </div>
+                        </div>
+                        <div class="item-step">
+                            <div class="rounded-step">
+                                <div class="icon-step step-2 active"></div>
+                                <h6 class="mb-5">In Producttion</h6>
+                                <p class="font-md color-gray-500">16 August 2022</p>
+                            </div>
+                        </div>
+                        <div class="item-step">
+                            <div class="rounded-step">
+                                <div class="icon-step step-3 active"></div>
+                                <h6 class="mb-5">International shipping</h6>
+                                <p class="font-md color-gray-500">17 August 2022</p>
+                            </div>
+                        </div>
+                        <div class="item-step">
+                            <div class="rounded-step">
+                                <div class="icon-step step-4"></div>
+                                <h6 class="mb-5">Shipping Final Mile</h6>
+                                <p class="font-md color-gray-500">18 August 2022</p>
+                            </div>
+                        </div>
+                        <div class="item-step">
+                            <div class="rounded-step">
+                                <div class="icon-step step-5"></div>
+                                <h6 class="mb-5">Delivered</h6>
+                                <p class="font-md color-gray-500">19 August 2022</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box-orders">
+                    <div class="body-orders">
+                        <div class="list-orders">
+                            @foreach (var item in Model.OrderItems)
+                            {
+                                var fileContent = await _productsAppService.GetImageAsync(item.ProductImage);
+                                var base64Image = Store.Helpers.ImageHelper.ShowBase64(item.ProductImage, fileContent);
+                                <div class="item-orders">
+                                    <div class="image-orders"><img src="@base64Image" alt="@item.ProductName"></div>
+                                    <div class="info-orders">
+                                        <h6>@item.ProductName</h6>
+                                    </div>
+                                    <div class="quantity-orders">
+                                        <h6>x @item.Quantity</h6>
+                                    </div>
+                                    <div class="price-orders" style="text-align: right;">
+                                        <h6>đ @item.Total.ToString("N0")</h6>
+                                    </div>
+                                </div>
+
+                            }
+                            <div class="item-orders">
+                                <div class="info-orders" style="text-align: left;">
+                                    <h6>Tổng tiền hàng</h6>
+                                </div>
+                                <div class="info-orders">
+                                    <h5></h5>
+                                </div>
+                                <div class="quantity-orders">
+                                    <h5></h5>
+                                </div>
+                                <div class="price-orders" style="text-align: right;">
+                                    <h6>đ @Model.OrderData.GrandTotal.ToString("N0")</h6>
+                                </div>
+                            </div>
+                            <div class="item-orders">
+                                <div class="info-orders" style="text-align: left;">
+                                    <h6>Phí vận chuyển</h6>
+                                </div>
+                                <div class="info-orders">
+                                    <h5></h5>
+                                </div>
+                                <div class="quantity-orders">
+                                    <h5></h5>
+                                </div>
+                                <div class="price-orders" style="text-align: right;">
+                                    <h6> đ @Model.OrderData.ShippingFee.ToString("N0")</h6>
+                                </div>
+                            </div>
+                            <div class="item-orders">
+                                <div class="info-orders" style="text-align: left;">
+                                    <h6>Thành tiền</h6>
+                                </div>
+                                <div class="info-orders">
+                                    <h5></h5>
+                                </div>
+                                <div class="quantity-orders">
+                                    <h5></h5>
+                                </div>
+                                <div class="price-orders" style="text-align: right;">
+                                    <h6>đ @Model.OrderData.Total.ToString("N0")</h6>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6-col-6">
+                                <a class="btn btn-buy w-auto arrow-back mb-10" href="/Account/Profile.html">Trở về</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<!-- Popup -->
+<div id="openPopupCannelItem" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Nội dung popup -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Xác nhận hủy đơn hàng</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn có chắc chắn muốn hủy đơn hàng này?</p>
+            </div>
+            <div class="modal-footer">
+                <form method="post" asp-page-handler="CancelItem">
+                    <button type="submit" class="btn btn-danger">Có</button>
+                </form>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Không</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Popup -->
+<div id="openPopupRequestCancel" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Nội dung popup -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Xác nhận hủy đơn hàng</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn có chắc chắn muốn hủy yêu cầu hủy đơn hàng này?</p>
+            </div>
+            <div class="modal-footer">
+                <form method="post" asp-page-handler="RequestCancel">
+                    <button type="submit" class="btn btn-danger">Có</button>
+                </form>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Không</button>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -165,7 +165,7 @@ namespace Store.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("AppDate")
+                    b.Property<DateTime?>("ApplyDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -238,6 +238,9 @@ namespace Store.Migrations
                     b.Property<int>("PaymentId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Request")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal?>("ShippingFee")
                         .HasColumnType("decimal(18,2)");
 
@@ -266,8 +269,17 @@ namespace Store.Migrations
                     b.Property<Guid>("OrderId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<double?>("Price")
                         .HasColumnType("float");
+
+                    b.Property<string>("ProductImage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProductName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -353,6 +365,9 @@ namespace Store.Migrations
 
                     b.Property<bool?>("Status")
                         .HasColumnType("bit");
+
+                    b.Property<int?>("TotalQuantity")
+                        .HasColumnType("int");
 
                     b.Property<bool?>("Trending")
                         .HasColumnType("bit");

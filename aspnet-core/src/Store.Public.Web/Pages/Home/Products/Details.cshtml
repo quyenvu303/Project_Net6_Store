@@ -22,7 +22,7 @@
     </div>
 </div>
 <section class="section-box shop-template">
-    <div class="container">
+    <div class="container" style="max-width:91%">
         <div class="row">
             <div class="col-lg-12">
                 <h3 class="color-brand-3 mb-5 mw-80">@Model.Product.ProductName</h3>
@@ -31,17 +31,17 @@
                 <div class="gallery-image">
                     <div class="galleries">
                         <div class="detail-gallery">
-                            @*<label class="label">-17%</label>*@
                             <div class="product-image-slider">
-                                <figure class="border-radius-10"><img src="@base64Image" alt="@Model.Product.ProductName" style="height: 100%;"></figure>
+                                <figure class="border-radius-10"><img src="@base64Image" alt="@Model.Product.ProductName"></figure>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
             <div class="col-lg-7">
                 <div class="row">
-                    <div class="col-lg-8 col-md-8 mb-30">
+                    <div class="col-lg-7 col-md-7 mb-30">
                         <div class="box-product-price">
                             <h3 class="color-brand-3 price-main d-inline-block mr-10">@Model.Product.PriceSale.ToString("N0") đ</h3><span class="color-gray-500 price-line font-xl line-througt">@Model.Product.Price.ToString("N0") đ</span>
                         </div>
@@ -68,14 +68,14 @@
                                     </div>
 
                                     <div class="button-buy">
-                                        <a class="btn btn-cart" href="/shop-cart.html?action=add&id=@Model.Product.Id">Thêm vào giỏ hàng</a>
+                                        <a class="btn btn-cart" href="/shop-cart.html?action=add&id=@Model.Product.Id">Thêm giỏ hàng</a>
                                         <a class="btn btn-buy" href="/checkout.html?id=@Model.Product.Id">Mua hàng</a>
                                     </div>
                                 </div>
                             </div>
                         }
                     </div>
-                    <div class="col-lg-4 col-md-4">
+                    <div class="col-lg-5 col-md-5">
                         <div class="pl-30 pl-mb-0">
                             <div class="box-featured-product">
                                 <div class="item-featured">

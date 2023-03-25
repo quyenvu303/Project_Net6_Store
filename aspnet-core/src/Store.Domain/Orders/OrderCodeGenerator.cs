@@ -23,7 +23,7 @@ namespace Store.Orders
             var identitySetting = await _identitySettingRepository.FindAsync(StoreConsts.OrderIdentitySettingId);
             if (identitySetting == null)
             {
-                identitySetting = await _identitySettingRepository.InsertAsync(new IdentitySetting(StoreConsts.OrderIdentitySettingId, "Đơn hàng", StoreConsts.OrderIdentitySettingId, 1, 1));
+                identitySetting = await _identitySettingRepository.InsertAsync(new IdentitySetting(StoreConsts.OrderIdentitySettingId, "Đơn hàng", StoreConsts.OrderIdentitySettingPrefix, 1, 1));
                 newCode = identitySetting.Prefix + identitySetting.CurrentNumber;
 
             }

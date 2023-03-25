@@ -1,55 +1,48 @@
 ﻿@using Store.Public.Orders;
 @model Store.Public.Orders.OrderDto
 @inject IOrdersAppService _ordersAppService
-
-@*@using Store.Public.Products;
-@model Store.Public.Products.ProductInlistDto
-@inject IProductsAppService _productsAppService;*@
-
 @{
-    var url = $"/products/{Model.Id}/{Model.OrderId}.html";
-    //var fileContent = await _ordersAppService.GetImageAsync(Model.Icon);
-    //var base64Image = Store.Helpers.ImageHelper.ShowBase64(Model.Icon, fileContent);
-
+    var url = $"/ViewOrder/{Model.Id}.html";
 }
+
 <div class="box-orders">
     <div class="head-orders">
-        <div class="head-left" style="width:50%">
+        <div class="head-left" style="width:60%">
             <h5 class="mr-20">Mã đơn hàng: @Model.OrderId</h5>
-            <span class="font-md color-brand-3 mr-20">Date: @Model.AppDate</span>
+            <span class="font-md color-brand-3 mr-20">Ngày đặt hàng: @Model.ApplyDate</span>
             @*<span class="label-delivery">@Model.Status</span>*@
-            @if (@Model.Status == 1)
+            @if (@Model.Status == Store.Orders.OrderStatus.New)
             {
                 <span class="label-delivery" style="background:#00ffff; color:black">Chờ xác nhận</span>
             }
-            else if (@Model.Status == 2)
+            else if (@Model.Status == Store.Orders.OrderStatus.Confirmed)
             {
                 <span class="label-delivery" style="background:#F3A90A; color:black">Đã xác nhận</span>
             }
-            else if (@Model.Status == 3)
+            else if (@Model.Status == Store.Orders.OrderStatus.Processing)
             {
                 <span class="label-delivery" style="background:#C21CBB; color:black">Đang xử lý</span>
             }
-            else if (@Model.Status == 4)
+            else if (@Model.Status == Store.Orders.OrderStatus.Shipping)
             {
                 <span class="label-delivery" style="background:#1B94D1 ; color:black">Đang giao hàng</span>
             }
-            else if (@Model.Status == 5)
+            else if (@Model.Status == Store.Orders.OrderStatus.Finished)
             {
                 <span class="label-delivery" style="background:#09ED09; color:black">Giao hàng thành công</span>
             }
-            else if (@Model.Status == 6)
+            else if (@Model.Status == Store.Orders.OrderStatus.Canceled)
             {
                 <span class="label-delivery" style="background:red; color:black">Đơn hàng bị hủy</span>
             }
+            else if (@Model.Status == Store.Orders.OrderStatus.RequestCancel)
+            {
+                <span class="label-delivery" style="background:red; color:black">Yêu cầu hủy đơn</span>
+            }
         </div>
         <h5 class="">Tổng tiền: @Model.Total.ToString("n0")</h5>
-        <h5 class="">Tổng tiền: @Model.Total.ToString("n0")</h5>
-        <div class="head-right"><a class="btn btn-buy font-sm-bold w-auto">View Order</a></div>
-    </div>
-    <div class="body-orders">
-        <div class="list-orders">
-            
+        <div class="head-right" style="margin-left100%">
+            <a class="btn btn-primary" href="@url">Chi tiết đơn hàng</a>
         </div>
     </div>
 </div>

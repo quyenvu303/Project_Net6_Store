@@ -69,6 +69,7 @@ namespace Store.Admin.Products
                 input.WarehouseGuid,
                 input.Origin,
                 //input.Image, 
+                input.TotalQuantity,
                 input.Quantity,
                 input.Price,
                 input.PriceSale,
@@ -119,6 +120,7 @@ namespace Store.Admin.Products
                 await SaveImageAsync(input.ImageName, input.ImageContent);
                 pro.Image = input.ImageName;
             }
+            pro.TotalQuantity = input.TotalQuantity;
             pro.Quantity = input.Quantity;
             pro.Price = input.Price;
             pro.PriceSale = input.PriceSale;

@@ -8,7 +8,7 @@ namespace Store.Admin.Orders
     public class CreateUpdateOrderDto
     {
         public string OrderId { get; set; }
-        public DateTime? AppDate { get; set; }
+        public DateTime? ApplyDate { get; set; }
         public OrderStatus Status { get; set; }
         public string ShippingName { get; set; }
         public decimal? ShippingFee { get; set; }
@@ -20,6 +20,7 @@ namespace Store.Admin.Orders
         public string CustomerEmail { get; set; }
         public string CustomerAddress { get; set; }
         public string Description { get; set; }
+        public string Request { get; set; }
         public PaymentMethod PaymentId { get; set; }
     }
 }

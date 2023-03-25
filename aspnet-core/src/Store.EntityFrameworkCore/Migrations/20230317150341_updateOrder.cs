@@ -5,14 +5,14 @@
 namespace Store.Migrations
 {
     /// <inheritdoc />
-    public partial class updatebanner : Migration
+    public partial class updateOrder : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "Title",
-                table: "AppBanners",
+                name: "Request",
+                table: "AppOrders",
                 type: "nvarchar(max)",
                 nullable: true);
         }
@@ -21,8 +21,8 @@ namespace Store.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Title",
-                table: "AppBanners");
+                name: "Request",
+                table: "AppOrders");
         }
     }
 }

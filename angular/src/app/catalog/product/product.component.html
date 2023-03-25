@@ -66,9 +66,9 @@
                 <td style="width: 10%;">{{row.categoryName}}</td>
                 <td style="width: 10%;">{{row.warehouseName}}</td>
                 <td style="width: 10%;">{{row.origin}}</td>
-                <td style="width: 7%;">{{row.quantity}}</td>
-                <td style="width: 10%;">{{row.price}}</td>
-                <td style="width: 10%;">{{row.priceSale}}</td>
+                <td style="width: 7%;">{{row.quantity | number}}</td>
+                <td style="width: 10%;">{{row.price | number}}</td>
+                <td style="width: 10%;">{{row.priceSale | number}}</td>
                 <td style="width: 10%;">
                     <p-badge *ngIf="row.isActive == 1" severity="success" value="Sử dụng"></p-badge>
                     <p-badge *ngIf="row.isActive == 0" severity="danger" value="Không sử dụng"></p-badge>

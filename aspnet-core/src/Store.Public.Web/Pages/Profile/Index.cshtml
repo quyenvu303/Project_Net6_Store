@@ -6,21 +6,17 @@
 @{
     var identity = HttpContext.User.Identity as ClaimsIdentity;
     var userName = _currentUser.Name;
+    var PhoneNumber = _currentUser.PhoneNumber;
     var email = identity?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
 }
-
-
 <section class="section-box shop-template mt-30">
     <div class="container box-account-template">
-        <h3>Hello : @userName</h3>
-        <h3>Hello : @email</h3>
         <div class="box-tabs mb-100">
             <ul class="nav nav-tabs nav-tabs-account" role="tablist">
                 <li><a class="active" href="#tab-setting" data-bs-toggle="tab" role="tab" aria-controls="tab-setting" aria-selected="true">Thông tin tài khoản</a></li>
                 <li><a href="#tab-changePassword" data-bs-toggle="tab" role="tab" aria-controls="tab-setting" aria-selected="true">Thay đổi mật khẩu</a></li>
                 <li><a href="#tab-orders" data-bs-toggle="tab" role="tab" aria-controls="tab-orders" aria-selected="true">Lịch sử đặt hàng</a></li>
             </ul>
-            <div class="border-bottom mt-20 mb-40"></div>
             <div class="tab-content mt-30">
                 <div class="tab-pane fade active show" id="tab-setting" role="tabpanel" aria-labelledby="tab-setting">
                     <div class="row">
@@ -30,17 +26,21 @@
                                     <div class="col-lg-12 mb-20">
                                         <h5 class="font-md-bold color-brand-3 text-sm-start text-center">Thông tin tài khoản</h5>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <input class="form-control font-sm" type="text" value="@userName">
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <input class="form-control font-sm" type="text" value="@email">
                                         </div>
                                     </div>
-                                    
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <input class="form-control font-sm" type="text" value="@PhoneNumber">
+                                        </div>
+                                    </div>
                                     <div class="col-lg-12">
                                         <div class="form-group mt-20">
                                             <input class="btn btn-buy w-auto h54 font-md-bold" value="Save change">
@@ -65,32 +65,28 @@
                                             <input class="form-control font-sm" type="text" placeholder="First name*">
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                             </form>
                         </div>
                         <div class="col-lg-1 mb-20"></div>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="tab-orders" role="tabpanel" aria-labelledby="tab-orders">
+                <div class="tab-pane fade w" id="tab-orders" role="tabpanel" aria-labelledby="tab-orders">
                     @foreach (var item in Model.OrderData.Results)
                     {
                         <partial name="_HistoryItem" model="item" />
                     }
-                    <nav>
-                        <ul class="pagination">
-                            <li class="page-item"><a class="page-link page-prev" href="#"></a></li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link active" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">4</a></li>
-                            <li class="page-item"><a class="page-link" href="#">5</a></li>
-                            <li class="page-item"><a class="page-link" href="#">6</a></li>
-                            <li class="page-item"><a class="page-link page-next" href="#"></a></li>
-                        </ul>
-                    </nav>
+                    <partial name="_Paginator" model="Model.OrderData" />
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+
+
+
+
+
+

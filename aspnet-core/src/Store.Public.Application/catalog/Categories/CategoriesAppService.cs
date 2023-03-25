@@ -93,7 +93,7 @@ namespace Store.Public.Categories
         public async Task<int> GetProductCountByCategory(Guid? Id)
         {
             int categoryCount = await _categoryRepository.CountAsync<Category>();
-            int productCount = await _produtRepository.CountAsync(p => p.CategoryId == Id);
+            int productCount = await _produtRepository.CountAsync(p => p.CategoryId == Id || p.CategoryParentId == Id);
 
             return productCount;
         }

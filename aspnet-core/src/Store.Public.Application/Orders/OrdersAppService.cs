@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
@@ -42,6 +43,7 @@ namespace Store.Public.Orders
             _orderRepository = orderRepository;
         }
 
+        // Create Order 
         public override async Task<OrderDto> CreateAsync(CreateOrderDto input)
         {
             var subTotal = input.Items.Sum(x => x.Quantity * x.Price);
@@ -50,10 +52,10 @@ namespace Store.Public.Orders
             var order = new Order(orderId)
             {
                 OrderId = await _orderCodeGenerator.GenerateAsync(),
-                AppDate = DateTime.Now,
+                ApplyDate = DateTime.Now,
                 Status = OrderStatus.New,
                 ShippingName = "",
-                ShippingFee = 0,
+                ShippingFee = 30,
                 Total = subTotal,
                 Subtotal = subTotal,
                 Discount = 0,
@@ -64,6 +66,7 @@ namespace Store.Public.Orders
                 CustomerEmail = input.CustomerEmail,
                 CustomerAddress = input.CustomerAddress,
                 Description = input.Description,
+                Request = "0",
                 PaymentId = PaymentMethod.COD,
             };
             var items = new List<OrderItem>();
@@ -73,9 +76,12 @@ namespace Store.Public.Orders
 
                 items.Add(new OrderItem()
                 {
+                    Id = orderId,
                     OrderId = orderId,
                     Price = item.Price,
                     ProductId = item.ProductId,
+                    ProductName = product.ProductName,
+                    ProductImage = product.Image,
                     Quantity = item.Quantity,
                     Total = item.Price * item.Quantity,
                 });
@@ -85,6 +91,24 @@ namespace Store.Public.Orders
             return ObjectMapper.Map<Order, OrderDto>(result);
         }
 
+        // yeu cau huy don hang
+        public async Task<OrderDto> UpdateCancelItemAsync(Guid Id)
+        {
+            var order = await Repository.GetAsync(Id);
+            order.Status = OrderStatus.RequestCancel;
+            await Repository.UpdateAsync(order);
+            return ObjectMapper.Map<Order, OrderDto>(order);
+        }
+
+        public async Task<OrderDto> UpdateRequestCancelAsync(Guid Id)
+        {
+            var order = await Repository.GetAsync(Id);
+            order.Status = OrderStatus.New;
+            await Repository.UpdateAsync(order);
+            return ObjectMapper.Map<Order, OrderDto>(order);
+        }
+
+        // Get List All Order
         public async Task<PagedResult<OrderDto>> GetOrderItemsAsync(ProductFilter input)
         {
             var query = await Repository.GetQueryableAsync();
@@ -105,6 +129,22 @@ namespace Store.Public.Orders
                 input.CurrentPage,
                 input.PageSize
             );
+        }
+
+        // Get OrderItem By Id
+        public async Task<List<OrderItemDto>> GetOrderItemByIdAsync(string Id)
+        {
+            var query = await _orderItemRepository.GetQueryableAsync();
+            query = query.Where(x => x.OrderId.ToString() == Id);
+
+            var data = await AsyncExecuter.ToListAsync(query);
+            return ObjectMapper.Map<List<OrderItem>, List<OrderItemDto>>(data);
+        }
+
+        public async Task<OrderDto> GetOrderByIdAsync(string Id)
+        {
+            var order = await _orderRepository.GetAsync(x => x.Id.ToString() == Id);
+            return ObjectMapper.Map<Order, OrderDto>(order);
         }
     }
 }

@@ -19,6 +19,7 @@ using Store.Warehouses;
 using Volo.Abp.Identity;
 using Store.Banners;
 using Store.Admin.Banners;
+using Store.Admin.OrderItems;
 
 namespace Store.Admin;
 
@@ -60,6 +61,11 @@ public class StoreAdminApplicationAutoMapperProfile : Profile
         CreateMap<Order, OrderDto>();
         CreateMap<Order, OrderInlistDto>();
         CreateMap<CreateUpdateOrderDto, Order>();
+
+        //OrderItem
+        CreateMap<OrderItem, OrderItemDto>();
+        CreateMap<OrderItem, OrderItemInlistDto>();
+
 
         //Banner
         CreateMap<Banner, BannerDto>();

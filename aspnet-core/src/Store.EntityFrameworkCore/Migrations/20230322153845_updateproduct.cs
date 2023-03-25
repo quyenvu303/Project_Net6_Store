@@ -5,21 +5,15 @@
 namespace Store.Migrations
 {
     /// <inheritdoc />
-    public partial class UpdateProduct : Migration
+    public partial class updateproduct : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<bool>(
-                name: "BestSellers",
+            migrationBuilder.AddColumn<int>(
+                name: "TotalQuantity",
                 table: "AppProducts",
-                type: "bit",
-                nullable: true);
-
-            migrationBuilder.AddColumn<bool>(
-                name: "Trending",
-                table: "AppProducts",
-                type: "bit",
+                type: "int",
                 nullable: true);
         }
 
@@ -27,11 +21,7 @@ namespace Store.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "BestSellers",
-                table: "AppProducts");
-
-            migrationBuilder.DropColumn(
-                name: "Trending",
+                name: "TotalQuantity",
                 table: "AppProducts");
         }
     }

@@ -1,0 +1,19 @@
+﻿<div id="orderDetailPopup" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Chi tiết đơn hàng: @Model.isOrderDetailReady </h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="orderDetailContent">
+                    @foreach (var item in Model.OrderItems.Results)
+                    {
+                        <p>@item.OrderId</p>
+                    }
+                    <p>1212121</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

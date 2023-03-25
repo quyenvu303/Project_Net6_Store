@@ -13,7 +13,7 @@ namespace Store.Products
 
         public Product(Guid id, string productId, string productName, string slug,
             Guid categoryId, Guid warehouseGuid, string origin, 
-            string image, int? quantity, decimal? price, decimal? priceSale, 
+            string image, int? quantity,int? totalquantity, decimal? price, decimal? priceSale, 
             string parameter, string description, bool? isActive, bool? status,
             bool? bestSellers, bool? trending,string categoryName, string warehouseName, string categorySlug, Guid? categoryParentId
             )
@@ -27,6 +27,7 @@ namespace Store.Products
             Origin = origin;
             Image = image;
             Quantity = quantity;
+            TotalQuantity = totalquantity;
             Price = price;
             PriceSale = priceSale;
             Parameter = parameter;
@@ -49,6 +50,7 @@ namespace Store.Products
         public Guid WarehouseGuid { get; set; }
         public string Origin { get; set; }
         public string Image { get; set; }
+        public int? TotalQuantity { get; set; }
         public int? Quantity { get; set; }
         public decimal? Price { get; set; }
         public decimal? PriceSale { get; set; }

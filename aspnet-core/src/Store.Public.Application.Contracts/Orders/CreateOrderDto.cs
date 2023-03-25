@@ -13,7 +13,7 @@ namespace Store.Public.Orders
         public string CustomerAddress { get; set; }
         public string CustomerEmail { get; set; }
         public string Description { get; set; }
-
+        public string Request { get; set; }
         public List<OrderItemDto> Items { get; set; }
     }
 }

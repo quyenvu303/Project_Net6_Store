@@ -2,12 +2,11 @@
     <!--  Filter Search-->
     <div class="grid">
         <div class="col-4">
-            <!-- <button pButton type="button" (click)="showAddModal()" icon="fa fa-plus" iconPos="left"
-                label="Thêm"></button>
+            <button pButton type="button" (click)="showOpenModal()" *ngIf="selectedItems.length == 1"
+                class="ml-1 p-button-help" icon="fa fa-eye" iconPos="left" label="" appAction="open"></button>
+
             <button pButton type="button" (click)="showEditModal()" *ngIf="selectedItems.length == 1"
-                class="ml-1 p-button-help" icon="fa fa-minus" iconPos="left" label="Sửa"></button>
-            <button pButton type="button" (click)="deleteItems()" *ngIf="selectedItems.length > 0"
-                class="ml-1 p-button-danger" icon="fa fa-minus" iconPos="left" label="xóa"></button> -->
+                class="ml-1 p-button-help" icon="fas fa-edit" iconPos="left" label="" appAction="UPDATE"></button>
         </div>
         <div class="col-4"></div>
         <div class="col-4">
@@ -22,41 +21,48 @@
         </div>
     </div>
     <!--  Table-->
-<!--     <p-table #pnl [value]="items" [(selection)]="selectedItems" selectionMode="multiple"> -->
-    <p-table #pnl [value]="items" >
+    <p-table #pnl [value]="items" [(selection)]="selectedItems" selectionMode="multiple" >
         <ng-template pTemplate="header">
             <tr>
-               <!--  <th style="width: 10px">
+                <th style="width: 10px">
                     <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                </th> -->
-                <th>Mã đơn hàng</th>
-                <th>Ngày đặt hàng</th>
-                <th>ĐV vận chuyển</th>
-                <th>Tổng tiền</th>
-                <th>Tên khách hàng</th>
-                <th>SĐT</th>
-                <th>Email</th>
-                <th>Thanh toán</th>
-                <th>Trạng thái</th>
+                </th>
+                <th pSortableColumn="orderId">Mã đơn hàng<p-sortIcon field="orderId"></p-sortIcon></th>
+                <th pSortableColumn="applyDate">Ngày đặt<p-sortIcon field="applyDate"></p-sortIcon></th>
+                <th pSortableColumn="shippingName">ĐVVC <p-sortIcon field="shippingName"></p-sortIcon></th>
+                <th pSortableColumn="shippingFee">Phí ship<p-sortIcon field="shippingFee"></p-sortIcon></th>
+                <th pSortableColumn="paymentId">Thanh toán<p-sortIcon field="paymentId"></p-sortIcon></th>
+                <th pSortableColumn="customerName">Người đặt<p-sortIcon field="customerName"></p-sortIcon></th>
+                <th pSortableColumn="customerPhoneNumber">SĐT<p-sortIcon field="customerPhoneNumber"></p-sortIcon></th>
+                <th pSortableColumn="total">Total<p-sortIcon field="total"></p-sortIcon></th>
+                <th pSortableColumn="status">trạng thái<p-sortIcon field="status"></p-sortIcon></th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-row>
             <tr>
-                <!-- <td style="width: 10px">
+                <td style="width: 10px">
                     <span class="ui-column-title"></span>
                     <p-tableCheckbox [value]="row"></p-tableCheckbox>
-                </td> -->
-                <td style="width: 20%;">{{row.orderId}}</td>
-                <td style="width: 20%;">{{row.appDate}}</td>
-                <td style="width: 50%;">{{row.shippingName}}</td>
-                <td style="width: 50%;">{{row.total}}</td>
-                <td style="width: 50%;">{{row.customerName}}</td>
-                <td style="width: 50%;">{{row.customerPhoneNumber}}</td>
-                <td style="width: 50%;">{{row.customerEmail}}</td>
-                <td style="width: 50%;">{{row.paymentId}}</td>
+                </td>
+                <td style="width: 10%;">{{row.orderId}}</td>
+                <td style="width: 10%;">{{row.applyDate | date:'dd/MM/yyyy'}}</td>
+                <td style="width: 10%;">{{row.shippingName}}</td>
+                <td style="width: 10%;">{{row.shippingFee | number}}</td>
+                <td style="width: 20%;">
+                    <p-badge *ngIf="row.paymentId == 1" severity="success" value="Thanh toán khi nhận hàng"></p-badge>
+                    <p-badge *ngIf="row.paymentId == 2" severity="success" value="Thanh toán Online"></p-badge>
+                </td>
+                <td style="width: 10%;">{{row.customerName}}</td>
+                <td style="width: 10%;">{{row.customerPhoneNumber}}</td>
+                <td style="width: 10%;">{{row.total | number}}</td>
                 <td style="width: 40%;">
-                    <p-badge *ngIf="row.status == 1" severity="success" value="Hiển thị"></p-badge>
-                    <p-badge *ngIf="row.status == 0" severity="danger" value="Ẩn"></p-badge>
+                    <p-badge *ngIf="row.status == 1" severity="success" value="Chờ xử lý"></p-badge>
+                    <p-badge *ngIf="row.status == 2" severity="danger" value="Đã xác nhận"></p-badge>
+                    <p-badge *ngIf="row.status == 3" severity="danger" value="Đang xử lý"></p-badge>
+                    <p-badge *ngIf="row.status == 4" severity="danger" value="Đang giao hàng"></p-badge>
+                    <p-badge *ngIf="row.status == 5" severity="danger" value="Giao hàng thành công"></p-badge>
+                    <p-badge *ngIf="row.status == 6" severity="danger" value="Giao hàng không thành công"></p-badge>
+                    <p-badge *ngIf="row.status == 7" severity="danger" value="Yêu cầu hủy đơn"></p-badge>
                 </td>
             </tr>
         </ng-template>
